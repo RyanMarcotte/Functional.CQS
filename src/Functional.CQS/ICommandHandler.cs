@@ -1,7 +1,7 @@
 ﻿namespace Functional.CQS
 {
 	/// <summary>
-	/// Interface for synchronous command handlers.  Intended to encapsulate application logic that changes the state of the system and can potentially fail.
+	/// Interface for synchronous command handlers.  Intended to encapsulate application logic that changes the state of the system and that can potentially fail.
 	/// </summary>
 	/// <typeparam name="TCommand">The command type.</typeparam>
 	/// <typeparam name="TError">The error type.</typeparam>
