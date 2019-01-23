@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Functional.CQS
 {
 	/// <summary>
-	/// Interface for asynchronous command handlers.
+	/// Interface for asynchronous command handlers.  Intended to encapsulate application logic that changes the state of the system and can potentially fail.
 	/// </summary>
 	/// <typeparam name="TCommand">The command type.</typeparam>
 	/// <typeparam name="TError">The error type.</typeparam>

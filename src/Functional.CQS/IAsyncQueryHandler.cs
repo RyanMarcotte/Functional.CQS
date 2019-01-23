@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Functional.CQS
 {
 	/// <summary>
-	/// Interface for asynchronous query handlers.
+	/// Interface for asynchronous query handlers.  Intended to encapsulate application logic that returns a result and is free of side effects (i.e. no observable changes made to system).
 	/// </summary>
 	/// <typeparam name="TQuery">The query type.</typeparam>
 	/// <typeparam name="TResult">The result type.</typeparam>

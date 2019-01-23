@@ -3,7 +3,7 @@
 namespace Functional.CQS
 {
 	/// <summary>
-	/// Interface for synchronous query handlers.
+	/// Interface for synchronous query handlers.  Intended to encapsulate application logic that returns a result and is free of side effects (i.e. no observable changes made to system).
 	/// </summary>
 	/// <typeparam name="TQuery">The query type.</typeparam>
 	/// <typeparam name="TResult">The result type.</typeparam>
