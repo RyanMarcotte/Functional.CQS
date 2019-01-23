@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS\Functional.CQS.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS\Functional.CQS.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="IQueryHandler.cs~RF17d4a98.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+  </ItemGroup>
+
+</Project>
