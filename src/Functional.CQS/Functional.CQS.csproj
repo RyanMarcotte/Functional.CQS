@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>2019</Copyright>
+    <Authors>Ryan Marcotte</Authors>
+    <Description>Provides CQS-style generic contracts built over Functional.Primitives
+- IQueryHandler&lt;TQuery, TResult&gt; returning TResult
+- IAsyncQueryHandler&lt;TQuery, TResult&gt; returning Task&lt;TResult&gt;
+- ICommandHandler&lt;TCommand, TError&gt; returning Result&lt;Unit, TError&gt;
+- IAsyncCommandHandler&lt;TCommand, TError&gt; returning Task&lt;Result&lt;Unit, TError&gt;&gt;</Description>
+    <PackageTags>functional CQS netstandard netcore</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

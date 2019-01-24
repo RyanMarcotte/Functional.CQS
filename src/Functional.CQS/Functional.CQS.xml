@@ -6,7 +6,7 @@
     <members>
         <member name="T:Functional.CQS.IAsyncCommandHandler`2">
             <summary>
-            Interface for asynchronous command handlers.
+            Interface for asynchronous command handlers.  Intended to encapsulate application logic that changes the state of the system and that can potentially fail.
             </summary>
             <typeparam name="TCommand">The command type.</typeparam>
             <typeparam name="TError">The error type.</typeparam>
@@ -21,7 +21,7 @@
         </member>
         <member name="T:Functional.CQS.IAsyncQueryHandler`2">
             <summary>
-            Interface for asynchronous query handlers.
+            Interface for asynchronous query handlers.  Intended to encapsulate application logic that returns a result and is free of side effects (i.e. no observable changes made to system).
             </summary>
             <typeparam name="TQuery">The query type.</typeparam>
             <typeparam name="TResult">The result type.</typeparam>
@@ -36,7 +36,7 @@
         </member>
         <member name="T:Functional.CQS.ICommandHandler`2">
             <summary>
-            Interface for synchronous command handlers.
+            Interface for synchronous command handlers.  Intended to encapsulate application logic that changes the state of the system and that can potentially fail.
             </summary>
             <typeparam name="TCommand">The command type.</typeparam>
             <typeparam name="TError">The error type.</typeparam>
@@ -56,7 +56,7 @@
         </member>
         <member name="T:Functional.CQS.IQueryHandler`2">
             <summary>
-            Interface for synchronous query handlers.
+            Interface for synchronous query handlers.  Intended to encapsulate application logic that returns a result and is free of side effects (i.e. no observable changes made to system).
             </summary>
             <typeparam name="TQuery">The query type.</typeparam>
             <typeparam name="TResult">The result type.</typeparam>
