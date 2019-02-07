@@ -3,7 +3,7 @@
 	/// <summary>
 	/// 
 	/// </summary>
-	public class DummyCommandThatSucceeds : ICommandParameters<DummyCommandError>
+	public class DummyCommandThatFails : ICommandParameters<DummyCommandError>
 	{
 
 	}

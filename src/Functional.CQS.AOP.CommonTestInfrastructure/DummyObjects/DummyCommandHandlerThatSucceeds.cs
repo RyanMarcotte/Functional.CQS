@@ -1,12 +1,11 @@
 ﻿using System.Reflection;
-using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.Metadata;
 
 namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 {
 	/// <summary>
 	/// Sample <see cref="ICommandHandler{TCommand, TError}"/> implementation.  Returns a success result.
 	/// </summary>
-	public class DummyCommandHandlerThatSucceeds : ICommandHandler<DummyCommandThatSucceeds, DummyCommandError>, IProvideInformationAboutCQSHandlerDummyImplementation
+	public class DummyCommandHandlerThatSucceeds : ICommandHandler<DummyCommandThatSucceeds, DummyCommandError>
 	{
 		private static readonly DummyCommandThatSucceeds _command = new DummyCommandThatSucceeds();
 
@@ -21,21 +20,6 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// <param name="command">The command parameters.</param>
 		/// <returns></returns>
 		public Result<Unit, DummyCommandError> Handle(DummyCommandThatSucceeds command)
-		{
-			return _result;
-		}
-
-		MethodInfo IProvideInformationAboutCQSHandlerDummyImplementation.GetHandleMethodInfo()
-		{
-			return GetType().GetMethod(nameof(Handle));
-		}
-
-		object[] IProvideInformationAboutCQSHandlerDummyImplementation.GetArgumentsThatWillBePassedIntoDummyImplementationHandleMethod()
-		{
-			return new object[] { _command };
-		}
-
-		object IProvideInformationAboutCQSHandlerDummyImplementation.GetValueThatWillBeReturnedFromDummyImplementationHandleMethod()
 		{
 			return _result;
 		}

@@ -1,14 +1,13 @@
 ﻿using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.Metadata;
 
 namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 {
 	/// <summary>
 	/// Sample <see cref="IAsyncCommandHandler{TCommand, TError}"/> implementation.  Returns a success result.
 	/// </summary>
-	public class DummyAsyncCommandHandlerThatSucceeds : IAsyncCommandHandler<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError>, IProvideInformationAboutCQSHandlerDummyImplementation
+	public class DummyAsyncCommandHandlerThatSucceeds : IAsyncCommandHandler<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError>
 	{
 		private static readonly DummyAsyncCommandThatSucceeds _command = new DummyAsyncCommandThatSucceeds();
 		private static readonly Result<Unit, DummyAsyncCommandError> _result = Result.Success<Unit, DummyAsyncCommandError>(Unit.Value);
@@ -22,23 +21,6 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		public async Task<Result<Unit, DummyAsyncCommandError>> HandleAsync(DummyAsyncCommandThatSucceeds command, CancellationToken cancellationToken)
 		{
 			return await Task.Run(() => _result, cancellationToken);
-		}
-
-		MethodInfo IProvideInformationAboutCQSHandlerDummyImplementation.GetHandleMethodInfo()
-		{
-			return GetType().GetMethod(nameof(HandleAsync));
-		}
-
-		object[] IProvideInformationAboutCQSHandlerDummyImplementation.GetArgumentsThatWillBePassedIntoDummyImplementationHandleMethod()
-		{
-			return new object[] { _command, new CancellationToken() };
-		}
-
-		object IProvideInformationAboutCQSHandlerDummyImplementation.GetValueThatWillBeReturnedFromDummyImplementationHandleMethod()
-		{
-			var asyncResultCommandSuccessReturnValue = new Task<Result<Unit, DummyAsyncCommandError>>(() => _result);
-			asyncResultCommandSuccessReturnValue.RunSynchronously();
-			return asyncResultCommandSuccessReturnValue;
 		}
 	}
 }

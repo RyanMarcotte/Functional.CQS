@@ -17,6 +17,14 @@
     <Company>Ryan Marcotte</Company>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Functional.Primitives" Version="1.9.0" />
     <PackageReference Include="Functional.Primitives.Extensions" Version="1.9.0" />
