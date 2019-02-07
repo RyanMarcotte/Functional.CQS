@@ -19,7 +19,7 @@ With CQS, we keep code modular and easy to understand.  If you design the busine
 Note the flow of control (represented by the blue arrow).  A user action in the UI or an incoming HTTP request handled by some service API controller delegates execution to one CQS handler (labelled `query` or `command` above).  The individual query and command handlers are kept independent from each other so that they can evolve independently according to changing business requirements.  In the example flow above, once query handler execution has completed (represented by the circle), the service / UI frontend is responsible for returning / displaying the results of that query in an appropriate format.
 
 # Why use Functional.CQS.AOP?
-`Functional.CQS.AOP` makes it easy to apply cross-cutting concerns to [`Functional.CQS` handler implementations](https://github.com/RyanMarcotte/Functional.CQS/tree/master/src/Functional.CQS) by supplying pluggable abstractions and - when DI containers are involved - handling common bootstrapping.  The separation of cross-cutting concerns from business logic is [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming) (AOP).
+`Functional.CQS.AOP` makes it easy to apply cross-cutting concerns to [`Functional.CQS` handler implementations](../src/Functional.CQS) by supplying pluggable abstractions and - when DI containers are involved - handling common bootstrapping.  The separation of cross-cutting concerns from business logic is [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming) (AOP).
 
 ![example CQS architecture with AOP](images/CQS_architecture_with_aop.png)
 
