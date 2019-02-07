@@ -1,4 +1,6 @@
+using FluentAssertions;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
+using Functional.Primitives.FluentAssertions;
 using Xunit;
 
 namespace Functional.CQS.AOP.IoC.SimpleInjector.Tests
