@@ -3,7 +3,7 @@
 namespace Functional.CQS.AOP.IoC.SimpleInjector.Models
 {
 	/// <summary>
-	/// Encapsulates the command and error types associated with <see cref="IResultCommandHandler{TCommand, TError}"/> and <see cref="IAsyncResultCommandHandler{TCommand, TError}"/>.
+	/// Encapsulates the command and error types associated with <see cref="ICommandHandler{TCommand, TError}"/> and <see cref="IAsyncCommandHandler{TCommand, TError}"/>.
 	/// </summary>
 	public struct CommandAndErrorType : IEquatable<CommandAndErrorType>
 	{

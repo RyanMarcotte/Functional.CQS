@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 
+// Ambiguous reference in cref attribute (for Option.Some)
+#pragma warning disable CS0419
+#pragma warning disable 1574
+
 namespace Functional.CQS.AOP.IoC.SimpleInjector
 {
 	/// <summary>
@@ -77,3 +81,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector
 		};
 	}
 }
+
+// Ambiguous reference in cref attribute (for Option.Some)
+#pragma warning restore 1574
+#pragma warning restore CS0419
