@@ -79,7 +79,7 @@
         </member>
         <member name="T:Functional.CQS.AOP.IoC.SimpleInjector.Models.CommandAndErrorType">
             <summary>
-            Encapsulates the command and error types associated with <see cref="!:IResultCommandHandler&lt;TCommand, TError&gt;"/> and <see cref="!:IAsyncResultCommandHandler&lt;TCommand, TError&gt;"/>.
+            Encapsulates the command and error types associated with <see cref="T:Functional.CQS.ICommandHandler`2"/> and <see cref="T:Functional.CQS.IAsyncCommandHandler`2"/>.
             </summary>
         </member>
         <member name="M:Functional.CQS.AOP.IoC.SimpleInjector.Models.CommandAndErrorType.#ctor(System.Type,System.Type)">
