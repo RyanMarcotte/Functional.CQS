@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="DummyObjects\DummyCommandThatSucceeds.cs~RF107b333.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
   </ItemGroup>
 

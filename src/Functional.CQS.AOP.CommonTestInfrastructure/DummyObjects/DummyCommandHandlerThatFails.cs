@@ -6,9 +6,9 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 	/// <summary>
 	/// Sample <see cref="ICommandHandler{TCommand, TError}"/> implementation.  Returns a failure result.
 	/// </summary>
-	public class DummyResultCommandHandlerThatFails : ICommandHandler<DummyCommand, DummyCommandError>, IProvideInformationAboutCQSHandlerDummyImplementation
+	public class DummyCommandHandlerThatFails : ICommandHandler<DummyCommandThatFails, DummyCommandError>, IProvideInformationAboutCQSHandlerDummyImplementation
 	{
-		private static readonly DummyCommand _command = new DummyCommand();
+		private static readonly DummyCommandThatFails _command = new DummyCommandThatFails();
 
 		/// <summary>
 		/// Gets the return value for this handler.
@@ -20,7 +20,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// </summary>
 		/// <param name="command">The command parameters.</param>
 		/// <returns></returns>
-		public Result<Unit, DummyCommandError> Handle(DummyCommand command)
+		public Result<Unit, DummyCommandError> Handle(DummyCommandThatFails command)
 		{
 			return _result;
 		}
