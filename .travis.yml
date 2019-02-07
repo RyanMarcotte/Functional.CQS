@@ -4,7 +4,14 @@ sudo: required
 dist: xenial
 dotnet: 2.2
 
+services:
+ - docker
+ 
+install:
+ - docker pull ellerbrock/link-checker
+  
 script:
+ - docker run ellerbrock/link-checker README.md
  - cd src
  - dotnet restore
  - dotnet build -c Release
