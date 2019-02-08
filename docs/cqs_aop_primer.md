@@ -5,7 +5,7 @@ An example CQS-based architecture is illustrated below:
 
 ![example CQS architecture with AOP](images/CQS_architecture.png)
 
-With `Functional.CQS.AOP`, we achieve the following:
+With `Functional.CQS.AOP`, we achieve something similar to the following:
 
 ![example CQS architecture with AOP](images/CQS_architecture_with_aop.png)
 
