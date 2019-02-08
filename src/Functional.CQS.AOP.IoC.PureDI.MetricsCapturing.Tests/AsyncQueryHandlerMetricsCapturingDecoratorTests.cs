@@ -5,8 +5,6 @@ using AutoFixture;
 using AutoFixture.Xunit2;
 using FakeItEasy;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests._Customizations;
 using Functional.CQS.AOP.MetricsCapturing;
 using Xunit;
 
@@ -42,30 +40,14 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationException(query, A<Exception>._, A<TimeSpan>._)).MustHaveHappenedOnceExactly();
 		}
 
-		[Theory]
-		[AsyncQueryHandlerCompletesSuccessfullyAndDecoratorIsDisabled]
-		[AsyncQueryHandlerThrowsExceptionAndDecoratorIsDisabled]
-		public async Task DoesNotExecuteAnyDecorationCodeIfDecoratorIsDisabled(
-			AsyncQueryHandlerMetricsCapturingDecorator<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> sut,
-			IMetricsCapturingStrategyForQuery<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> metricsCapturingStrategy)
-		{
-			var query = new DummyQueryReturnsValueType();
-			await Result.Try(async () => await sut.HandleAsync(query));
-
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationStart(query)).MustNotHaveHappened();
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationCompletedSuccessfully(query, A<DummyQueryReturnsValueTypeResult>._, A<TimeSpan>._)).MustNotHaveHappened();
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationException(query, A<Exception>._, A<TimeSpan>._)).MustNotHaveHappened();
-		}
-
 		#region Arrangements
 
 		private abstract class AsyncQueryHandlerMetricsCapturingDecoratorTestsArrangementBase : AutoDataAttribute
 		{
-			protected AsyncQueryHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Task<DummyQueryReturnsValueTypeResult>> resultFactory, bool decoratorEnabled)
+			protected AsyncQueryHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Task<DummyQueryReturnsValueTypeResult>> resultFactory)
 				: base(() => new Fixture()
 					.Customize(new AsyncQueryHandlerCustomization(resultFactory))
-					.Customize(new MetricsCapturingStrategyCustomization())
-					.Customize(new MetricsCapturingModuleConfigurationParametersCustomization(new MetricsCapturingModuleConfigurationParameters(decoratorEnabled, decoratorEnabled, decoratorEnabled))))
+					.Customize(new MetricsCapturingStrategyCustomization()))
 			{
 
 			}
@@ -74,7 +56,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class AsyncQueryHandlerCompletesSuccessfully : AsyncQueryHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public AsyncQueryHandlerCompletesSuccessfully()
-				: base(() => Task.FromResult(new DummyQueryReturnsValueTypeResult()), true)
+				: base(() => Task.FromResult(new DummyQueryReturnsValueTypeResult()))
 			{
 			}
 		}
@@ -82,23 +64,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class AsyncQueryHandlerThrowsException : AsyncQueryHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public AsyncQueryHandlerThrowsException()
-				: base(() => Task.FromException<DummyQueryReturnsValueTypeResult>(new Exception()), true)
-			{
-			}
-		}
-
-		private class AsyncQueryHandlerCompletesSuccessfullyAndDecoratorIsDisabled : AsyncQueryHandlerMetricsCapturingDecoratorTestsArrangementBase
-		{
-			public AsyncQueryHandlerCompletesSuccessfullyAndDecoratorIsDisabled()
-				: base(() => Task.FromResult(new DummyQueryReturnsValueTypeResult()), false)
-			{
-			}
-		}
-
-		private class AsyncQueryHandlerThrowsExceptionAndDecoratorIsDisabled : AsyncQueryHandlerMetricsCapturingDecoratorTestsArrangementBase
-		{
-			public AsyncQueryHandlerThrowsExceptionAndDecoratorIsDisabled()
-				: base(() => Task.FromException<DummyQueryReturnsValueTypeResult>(new Exception()), false)
+				: base(() => Task.FromException<DummyQueryReturnsValueTypeResult>(new Exception()))
 			{
 			}
 		}

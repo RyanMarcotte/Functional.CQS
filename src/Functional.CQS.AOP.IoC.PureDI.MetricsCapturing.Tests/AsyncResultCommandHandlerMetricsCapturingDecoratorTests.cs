@@ -5,8 +5,6 @@ using AutoFixture;
 using AutoFixture.Xunit2;
 using FakeItEasy;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests._Customizations;
 using Functional.CQS.AOP.MetricsCapturing;
 using Xunit;
 
@@ -42,30 +40,14 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationException(command, A<Exception>._, A<TimeSpan>._)).MustHaveHappenedOnceExactly();
 		}
 
-		[Theory]
-		[AsyncCommandHandlerCompletesSuccessfullyAndDecoratorIsDisabled]
-		[AsyncCommandHandlerThrowsExceptionAndDecoratorIsDisabled]
-		public async Task DoesNotExecuteAnyDecorationCodeIfDecoratorIsDisabled(
-			AsyncCommandHandlerMetricsCapturingDecorator<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError> sut,
-			IMetricsCapturingStrategyForCommand<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError> metricsCapturingStrategy)
-		{
-			var command = new DummyAsyncCommandThatSucceeds();
-			await Result.Try(async () => await sut.HandleAsync(command, new CancellationToken()));
-
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationStart(command)).MustNotHaveHappened();
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationCompletedSuccessfully(command, A<Result<Unit, DummyAsyncCommandError>>._, A<TimeSpan>._)).MustNotHaveHappened();
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationException(command, A<Exception>._, A<TimeSpan>._)).MustNotHaveHappened();
-		}
-
 		#region Arrangements
 
 		private abstract class AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase : AutoDataAttribute
 		{
-			protected AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Task<Result<Unit, DummyAsyncCommandError>>> resultFactory, bool decoratorEnabled)
+			protected AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Task<Result<Unit, DummyAsyncCommandError>>> resultFactory)
 				: base(() => new Fixture()
 					.Customize(new AsyncCommandHandlerCustomization(resultFactory))
-					.Customize(new MetricsCapturingStrategyCustomization())
-					.Customize(new MetricsCapturingModuleConfigurationParametersCustomization(new MetricsCapturingModuleConfigurationParameters(decoratorEnabled, decoratorEnabled, decoratorEnabled))))
+					.Customize(new MetricsCapturingStrategyCustomization()))
 			{
 
 			}
@@ -74,7 +56,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class AsyncCommandHandlerCompletesSuccessfully : AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public AsyncCommandHandlerCompletesSuccessfully()
-				: base(() => Task.FromResult(Result.Success<Unit, DummyAsyncCommandError>(Unit.Value)), true)
+				: base(() => Task.FromResult(Result.Success<Unit, DummyAsyncCommandError>(Unit.Value)))
 			{
 			}
 		}
@@ -82,23 +64,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class AsyncCommandHandlerThrowsException : AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public AsyncCommandHandlerThrowsException()
-				: base(() => Task.FromException<Result<Unit, DummyAsyncCommandError>>(new Exception()), true)
-			{
-			}
-		}
-
-		private class AsyncCommandHandlerCompletesSuccessfullyAndDecoratorIsDisabled : AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase
-		{
-			public AsyncCommandHandlerCompletesSuccessfullyAndDecoratorIsDisabled()
-				: base(() => Task.FromResult(Result.Success<Unit, DummyAsyncCommandError>(Unit.Value)), false)
-			{
-			}
-		}
-
-		private class AsyncCommandHandlerThrowsExceptionAndDecoratorIsDisabled : AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase
-		{
-			public AsyncCommandHandlerThrowsExceptionAndDecoratorIsDisabled()
-				: base(() => Task.FromException<Result<Unit, DummyAsyncCommandError>>(new Exception()), false)
+				: base(() => Task.FromException<Result<Unit, DummyAsyncCommandError>>(new Exception()))
 			{
 			}
 		}

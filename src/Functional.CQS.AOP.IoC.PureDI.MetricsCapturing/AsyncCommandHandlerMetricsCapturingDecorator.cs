@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
 using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Extensions;
 using Functional.CQS.AOP.MetricsCapturing;
 
@@ -17,22 +16,18 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing
 	{
 		private readonly IAsyncCommandHandler<TCommand, TError> _handler;
 		private readonly IMetricsCapturingStrategyForCommand<TCommand, TError> _strategy;
-		private readonly MetricsCapturingModuleConfigurationParameters _configurationParameters;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AsyncCommandHandlerMetricsCapturingDecorator{TCommand,TError}"/> class.
 		/// </summary>
 		/// <param name="handler">The handler to decorate.</param>
 		/// <param name="strategy">The metrics-capturing strategy.</param>
-		/// <param name="configurationParameters">The configuration parameters.</param>
 		public AsyncCommandHandlerMetricsCapturingDecorator(
 			IAsyncCommandHandler<TCommand, TError> handler,
-			IMetricsCapturingStrategyForCommand<TCommand, TError> strategy,
-			MetricsCapturingModuleConfigurationParameters configurationParameters)
+			IMetricsCapturingStrategyForCommand<TCommand, TError> strategy)
 		{
 			_handler = handler ?? throw new ArgumentNullException(nameof(handler));
 			_strategy = strategy ?? throw new ArgumentNullException(nameof(strategy));
-			_configurationParameters = configurationParameters ?? throw new ArgumentNullException(nameof(configurationParameters));
 		}
 
 		/// <summary>
@@ -43,9 +38,6 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing
 		/// <returns></returns>
 		public async Task<Result<Unit, TError>> HandleAsync(TCommand command, CancellationToken cancellationToken)
 		{
-			if (!_configurationParameters.CommandSpecificMetricsCapturingDecoratorEnabled)
-				return await _handler.HandleAsync(command, cancellationToken);
-
 			return await _handler.HandleAsyncWithMetricsCapturing(command, cancellationToken,
 				c => _strategy.OnInvocationStart(c),
 				(c, result, timeElapsed) => _strategy.OnInvocationCompletedSuccessfully(c, result, timeElapsed),

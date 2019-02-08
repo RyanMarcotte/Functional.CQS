@@ -32,13 +32,11 @@ Then, in your application's startup code (i.e. composition root), instantiate al
 ```
 // instantiate handler and all decorator dependencies
 var queryHandler = new GetSystemSettingsForCompanyQueryHandler();
-var metricsCapturingConfigurationParameters = new MetricsCapturingModuleConfigurationParameters(true, true, true);
 var metricsCapturingStrategy = new GetSystemSettingsForCompanyQueryMetricsCapturingStrategy();
 
 // decorate the original query handler
 // supply this instance to any components with a IQueryHandler<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>> dependency
 var decoratedQueryHandler = new QueryHandlerMetricsCapturingDecorator<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>>(
     queryHandler,
-    metricsCapturingStrategy,
-    metricsCapturingConfigurationParameters);
+    metricsCapturingStrategy);
 ```

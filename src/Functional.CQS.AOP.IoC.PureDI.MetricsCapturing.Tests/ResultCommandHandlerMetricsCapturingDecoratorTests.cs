@@ -3,8 +3,6 @@ using AutoFixture;
 using AutoFixture.Xunit2;
 using FakeItEasy;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests._Customizations;
 using Functional.CQS.AOP.MetricsCapturing;
 using Xunit;
 
@@ -40,30 +38,14 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationException(command, A<Exception>._, A<TimeSpan>._)).MustHaveHappenedOnceExactly();
 		}
 
-		[Theory]
-		[CommandHandlerCompletesSuccessfullyAndDecoratorIsDisabled]
-		[CommandHandlerThrowsExceptionAndDecoratorIsDisabled]
-		public void DoesNotExecuteAnyDecorationCodeIfDecoratorIsDisabled(
-			CommandHandlerMetricsCapturingDecorator<DummyCommandThatSucceeds, DummyCommandError> sut,
-			IMetricsCapturingStrategyForCommand<DummyCommandThatSucceeds, DummyCommandError> metricsCapturingStrategy)
-		{
-			var command = new DummyCommandThatSucceeds();
-			Result.Try(() => sut.Handle(command));
-
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationStart(command)).MustNotHaveHappened();
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationCompletedSuccessfully(command, A<Result<Unit, DummyCommandError>>._, A<TimeSpan>._)).MustNotHaveHappened();
-			A.CallTo(() => metricsCapturingStrategy.OnInvocationException(command, A<Exception>._, A<TimeSpan>._)).MustNotHaveHappened();
-		}
-
 		#region Arrangements
 
 		private abstract class CommandHandlerMetricsCapturingDecoratorTestsArrangementBase : AutoDataAttribute
 		{
-			protected CommandHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Result<Unit, DummyCommandError>> resultFactory, bool decoratorEnabled)
+			protected CommandHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Result<Unit, DummyCommandError>> resultFactory)
 				: base(() => new Fixture()
 					.Customize(new CommandHandlerCustomization(resultFactory))
-					.Customize(new MetricsCapturingStrategyCustomization())
-					.Customize(new MetricsCapturingModuleConfigurationParametersCustomization(new MetricsCapturingModuleConfigurationParameters(decoratorEnabled, decoratorEnabled, decoratorEnabled))))
+					.Customize(new MetricsCapturingStrategyCustomization()))
 			{
 
 			}
@@ -72,7 +54,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class CommandHandlerCompletesSuccessfully : CommandHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public CommandHandlerCompletesSuccessfully()
-				: base(() => Result.Success<Unit, DummyCommandError>(Unit.Value), true)
+				: base(() => Result.Success<Unit, DummyCommandError>(Unit.Value))
 			{
 			}
 		}
@@ -80,23 +62,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class CommandHandlerThrowsException : CommandHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public CommandHandlerThrowsException()
-				: base(() => throw new Exception(), true)
-			{
-			}
-		}
-
-		private class CommandHandlerCompletesSuccessfullyAndDecoratorIsDisabled : CommandHandlerMetricsCapturingDecoratorTestsArrangementBase
-		{
-			public CommandHandlerCompletesSuccessfullyAndDecoratorIsDisabled()
-				: base(() => Result.Success<Unit, DummyCommandError>(Unit.Value), false)
-			{
-			}
-		}
-
-		private class CommandHandlerThrowsExceptionAndDecoratorIsDisabled : CommandHandlerMetricsCapturingDecoratorTestsArrangementBase
-		{
-			public CommandHandlerThrowsExceptionAndDecoratorIsDisabled()
-				: base(() => throw new Exception(), false)
+				: base(() => throw new Exception())
 			{
 			}
 		}
