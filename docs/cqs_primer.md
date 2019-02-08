@@ -4,7 +4,7 @@ CQS stands for "command-query separation".  Rather than duplicating effort for e
 - [Wikipedia page on CQS](https://en.wikipedia.org/wiki/Command%E2%80%93query_separation)
 - [Meanwhile... on the command side of my architecture](https://cuttingedge.it/blogs/steven/pivot/entry.php?id=91), by Steven van Deursen (recommended! more theory for commands; includes code examples) 
 - [Meanwhile... on the query side of my architecture](https://cuttingedge.it/blogs/steven/pivot/entry.php?id=92), by Steven van Deursen (recommended! more theory for queries; includes code examples)
-- [SOLID Architecture in Slices not Layers](https://vimeo.com/190925521), by Jimmy Bogard
+- [SOLID Architecture in Slices not Layers](https://www.vimeo.com/190925521), by Jimmy Bogard
 
 Conceptually, *CQS handler implementations are specifically for interacting with the underlying system state*.  This is derived from Martin Fowler's page linked above:
 >The fundamental idea is that we should divide an [application]'s methods into two sharply separated categories:
