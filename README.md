@@ -19,6 +19,7 @@ Defines [CQS-style contracts](https://github.com/RyanMarcotte/Functional.CQS/tre
 ## Library Usage Cookbook
 
 You can find examples demonstrating how to use the various `Functional.CQS.AOP` libraries via the links below.  Note that a general understanding of [dependency injection](https://en.wikipedia.org/wiki/Dependency_injection), the [decorator pattern](https://en.wikipedia.org/wiki/Decorator_pattern), and [onion architecture](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/) is assumed.
+- [Integrating `Functional.CQS.AOP` when using Pure DI (no dependency injection container)](docs/pureDI/README.md)
 - [Integrating `Functional.CQS.AOP` when using the `SimpleInjector` dependency injection container](docs/simpleinjector/README.md)
 
 ## Information
