@@ -79,8 +79,6 @@ namespace SimpleInjector
 		private static void RegisterUniversalMetricsCapturingDecorator<TUniversalMetricsCapturingStrategy>(this ConventionBasedDecoratorRegistrationGateway gateway, MetricsCapturingModuleConfigurationParameters configurationParameters)
 			where TUniversalMetricsCapturingStrategy : class, IUniversalMetricsCapturingStrategy
 		{
-			gateway.Container.RegisterInstance(configurationParameters);
-
 			gateway.Container.RegisterSingleton<IUniversalMetricsCapturingStrategy, TUniversalMetricsCapturingStrategy>();
 			gateway.Container.RegisterDecorator(typeof(IQueryHandler<,>), typeof(QueryHandlerMetricsCapturingDecoratorForUniversalStrategy<,>), gateway.Lifestyle);
 			gateway.Container.RegisterDecorator(typeof(IAsyncQueryHandler<,>), typeof(AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy<,>), gateway.Lifestyle);

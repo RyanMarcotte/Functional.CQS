@@ -386,5 +386,25 @@
             <param name="exception">The exception that caused the command handler to fail.</param>
             <param name="timeElapsed">The time elapsed since the start of invocation.</param>
         </member>
+        <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.TestUtility">
+            <summary>
+            Contains common test infrastructure.
+            </summary>
+        </member>
+        <member name="P:Functional.CQS.AOP.CommonTestInfrastructure.TestUtility.CQSHandlerContractTypes">
+            <summary>
+            Gets the collection of Functional.CQS dummy contract types.
+            </summary>
+        </member>
+        <member name="P:Functional.CQS.AOP.CommonTestInfrastructure.TestUtility.ImplementationTypeLookupByCQSHandlerContractType">
+            <summary>
+            Gets the collection of Functional.CQS dummy implementation types associated with elements in <see cref="P:Functional.CQS.AOP.CommonTestInfrastructure.TestUtility.CQSHandlerContractTypes"/>.
+            </summary>
+        </member>
+        <member name="P:Functional.CQS.AOP.CommonTestInfrastructure.TestUtility.MetricsCapturingDecoratorTypeLookupByCQSHandlerContractType">
+            <summary>
+            Gets the collection of Functional.CQS metrics-capturing strategy implementation types associated with elements in <see cref="P:Functional.CQS.AOP.CommonTestInfrastructure.TestUtility.CQSHandlerContractTypes"/>.
+            </summary>
+        </member>
     </members>
 </doc>
