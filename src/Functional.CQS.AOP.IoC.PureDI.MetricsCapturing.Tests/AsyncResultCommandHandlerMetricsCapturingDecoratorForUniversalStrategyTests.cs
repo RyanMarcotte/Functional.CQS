@@ -4,14 +4,13 @@ using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.Xunit2;
 using FakeItEasy;
-using Functional;
-using Functional.CQS;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
+using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests._Customizations;
 using Functional.CQS.AOP.MetricsCapturing;
-using IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests._Customizations;
+using IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing;
 using Xunit;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
+namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 {
 	public class AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategyTests
 	{
@@ -66,7 +65,7 @@ namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 				: base(() => new Fixture()
 					.Customize(new AsyncCommandHandlerCustomization(resultFactory))
 					.Customize(new MetricsCapturingStrategyCustomization())
-					.Customize(new MetricsCapturingModuleConfigurationParametersCustomization(new Configuration.MetricsCapturingModuleConfigurationParameters(decoratorEnabled, decoratorEnabled, decoratorEnabled))))
+					.Customize(new MetricsCapturingModuleConfigurationParametersCustomization(new IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters(decoratorEnabled, decoratorEnabled, decoratorEnabled))))
 			{
 
 			}
