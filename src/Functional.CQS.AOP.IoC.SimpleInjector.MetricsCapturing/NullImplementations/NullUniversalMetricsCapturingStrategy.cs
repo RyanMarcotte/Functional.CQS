@@ -1,7 +1,7 @@
 ﻿using System;
-using IQ.Vanilla.CQS.AOP.MetricsCapturing;
+using Functional.CQS.AOP.MetricsCapturing;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.NullImplementations
+namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.NullImplementations
 {
 	internal class NullUniversalMetricsCapturingStrategy : IUniversalMetricsCapturingStrategy
 	{

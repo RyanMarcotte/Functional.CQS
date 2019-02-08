@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing</name>
+    </assembly>
+    <members>
+        <member name="T:SimpleInjector.ConventionBasedDecoratorRegistrationGatewayExtensions">
+            <summary>
+            Extension methods for <see cref="T:Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways.ConventionBasedDecoratorRegistrationGateway"/>.
+            </summary>
+        </member>
+        <member name="M:SimpleInjector.ConventionBasedDecoratorRegistrationGatewayExtensions.WithMetricsCapturingDecorator(Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways.ConventionBasedDecoratorRegistrationGateway,Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+            <summary>
+            Register all core components required for applying metrics-capturing decorators to IQ.Vanilla.CQS handler implementations.
+            Only handlers with corresponding <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery`2"/> and <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand`2"/> implementations will have the handler-specific metrics-capturing decorator applied to them.
+            </summary>
+            <param name="gateway">The gateway.</param>
+            <param name="configurationParameters">The configuration parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SimpleInjector.ConventionBasedDecoratorRegistrationGatewayExtensions.WithMetricsCapturingDecorator``1(Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways.ConventionBasedDecoratorRegistrationGateway,Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+            <summary>
+            Register all core components required for applying metrics-capturing decorators to IQ.Vanilla.CQS handler implementations.
+            Only handlers with corresponding <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery`2"/> and <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand`2"/> implementations will have the handler-specific metrics-capturing decorator applied to them.
+            All handler implementations will have the universal metrics-capturing decorator applied to them.
+            </summary>
+            <typeparam name="TUniversalMetricsCapturingStrategy">The universal metrics capturing strategy type.</typeparam>
+            <param name="gateway">The gateway.</param>
+            <param name="configurationParameters">The configuration parameters.</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Installation;
-using IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Installation.Models;
+using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.MetricsCapturing
+namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing
 {
 	internal static class ServiceAndImplementationTypeExtensions
 	{
@@ -15,16 +14,9 @@ namespace IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.MetricsCapturing
 				() => false);
 		}
 
-		public static bool HasMetricsCapturingStrategyDefined(this ServiceAndImplementationType context, IEnumerable<Type> commandTypeWithMetricsCapturingStrategyDefinedCollection)
-		{
-			return context.ServiceType.GetGenericParametersForCommandHandlerType().Match(
-				parameters => commandTypeWithMetricsCapturingStrategyDefinedCollection.Contains(parameters),
-				() => false);
-		}
-
 		public static bool HasMetricsCapturingStrategyDefined(this ServiceAndImplementationType context, IEnumerable<CommandAndErrorType> commandAndErrorTypeWithMetricsCapturingStrategyDefinedCollection)
 		{
-			return context.ServiceType.GetGenericParametersForResultCommandHandlerType().Match(
+			return context.ServiceType.GetGenericParametersForCommandHandlerType().Match(
 				parameters => commandAndErrorTypeWithMetricsCapturingStrategyDefinedCollection.Contains(parameters),
 				() => false);
 		}

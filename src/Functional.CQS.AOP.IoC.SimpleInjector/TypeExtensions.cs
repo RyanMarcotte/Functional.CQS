@@ -58,7 +58,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector
 		/// </summary>
 		/// <param name="type">The type to analyze.</param>
 		/// <returns></returns>
-		public static Option<CommandAndErrorType> GetGenericParametersForResultCommandHandlerType(this Type type)
+		public static Option<CommandAndErrorType> GetGenericParametersForCommandHandlerType(this Type type)
 		{
 			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceTypes(_commandHandlerTypeCollection).Select(resultCommandHandlerInterface =>
 			{
