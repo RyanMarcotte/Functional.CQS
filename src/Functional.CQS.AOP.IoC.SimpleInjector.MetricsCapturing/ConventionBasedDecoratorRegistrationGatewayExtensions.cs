@@ -20,7 +20,7 @@ namespace SimpleInjector
 	public static class ConventionBasedDecoratorRegistrationGatewayExtensions
 	{
 		/// <summary>
-		/// Register all core components required for applying metrics-capturing decorators to IQ.Vanilla.CQS handler implementations.
+		/// Register all core components required for applying metrics-capturing decorators to Functional.CQS handler implementations.
 		/// Only handlers with corresponding <see cref="IMetricsCapturingStrategyForQuery{TQuery, TResult}"/> and <see cref="IMetricsCapturingStrategyForCommand{TCommand, TError}"/> implementations will have the handler-specific metrics-capturing decorator applied to them.
 		/// </summary>
 		/// <param name="gateway">The gateway.</param>
@@ -32,7 +32,7 @@ namespace SimpleInjector
 		}
 
 		/// <summary>
-		/// Register all core components required for applying metrics-capturing decorators to IQ.Vanilla.CQS handler implementations.
+		/// Register all core components required for applying metrics-capturing decorators to Functional.CQS handler implementations.
 		/// Only handlers with corresponding <see cref="IMetricsCapturingStrategyForQuery{TQuery, TResult}"/> and <see cref="IMetricsCapturingStrategyForCommand{TCommand, TError}"/> implementations will have the handler-specific metrics-capturing decorator applied to them.
 		/// All handler implementations will have the universal metrics-capturing decorator applied to them.
 		/// </summary>

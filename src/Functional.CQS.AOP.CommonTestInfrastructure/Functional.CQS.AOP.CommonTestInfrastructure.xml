@@ -40,6 +40,33 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns></returns>
         </member>
+        <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandMetricsCapturingStrategy">
+            <summary>
+            Metrics capturing strategy for <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandHandlerThatSucceeds"/> and <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandHandlerThatFails"/>.
+            </summary>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandMetricsCapturingStrategy.OnInvocationStart(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandThatSucceeds)">
+            <summary>
+            Called immediately prior to handling the command.
+            </summary>
+            <param name="parameters">The command parameters.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandMetricsCapturingStrategy.OnInvocationCompletedSuccessfully(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandThatSucceeds,Functional.Result{Functional.Unit,Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandError},System.TimeSpan)">
+            <summary>
+            Called immediately after successfully handling the query and receiving a result.
+            </summary>
+            <param name="parameters">The command parameters.</param>
+            <param name="result">The command result.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandMetricsCapturingStrategy.OnInvocationException(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandThatSucceeds,System.Exception,System.TimeSpan)">
+            <summary>
+            Called immediately after the command failed due to an uncaught exception.
+            </summary>
+            <param name="parameters">The command parameters.</param>
+            <param name="exception">The exception that caused the command handler to fail.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
+        </member>
         <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncCommandThatFails">
             <summary>
             Dummy command parameter object.
@@ -91,6 +118,33 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns></returns>
         </member>
+        <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceTypeMetricsCapturingStrategy">
+            <summary>
+            Metrics capturing strategy for <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceType"/>.
+            </summary>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceTypeMetricsCapturingStrategy.OnInvocationStart(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceType)">
+            <summary>
+            Called immediately prior to handling the query.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceTypeMetricsCapturingStrategy.OnInvocationCompletedSuccessfully(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceType,Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceTypeResult,System.TimeSpan)">
+            <summary>
+            Called immediately after successfully handling the query and receiving a result.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="result">The query result.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceTypeMetricsCapturingStrategy.OnInvocationException(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceType,System.Exception,System.TimeSpan)">
+            <summary>
+            Called immediately after the query failed.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="exception">The exception that caused the query handler to fail.</param>
+            <param name="timeElapsed"></param>
+        </member>
         <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsReferenceTypeResult">
             <summary>
             Dummy query result object.
@@ -113,6 +167,33 @@
             <param name="query">The query parameters.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns></returns>
+        </member>
+        <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueTypeMetricsCapturingStrategy">
+            <summary>
+            Metrics capturing strategy for <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueTypeHandler"/>.
+            </summary>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueTypeMetricsCapturingStrategy.OnInvocationStart(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueType)">
+            <summary>
+            Called immediately prior to handling the query.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueTypeMetricsCapturingStrategy.OnInvocationCompletedSuccessfully(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueType,Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueTypeResult,System.TimeSpan)">
+            <summary>
+            Called immediately after successfully handling the query and receiving a result.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="result">The query result.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueTypeMetricsCapturingStrategy.OnInvocationException(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueType,System.Exception,System.TimeSpan)">
+            <summary>
+            Called immediately after the query failed.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="exception">The exception that caused the query handler to fail.</param>
+            <param name="timeElapsed"></param>
         </member>
         <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyAsyncQueryReturnsValueTypeResult">
             <summary>
@@ -197,6 +278,33 @@
             <param name="query">The query parameters.</param>
             <returns></returns>
         </member>
+        <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceTypeMetricsCapturingStrategy">
+            <summary>
+            Metrics capturing strategy for <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceType"/>.
+            </summary>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceTypeMetricsCapturingStrategy.OnInvocationStart(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceType)">
+            <summary>
+            Called immediately prior to handling the query.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceTypeMetricsCapturingStrategy.OnInvocationCompletedSuccessfully(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceType,Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceTypeResult,System.TimeSpan)">
+            <summary>
+            Called immediately after successfully handling the query and receiving a result.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="result">The query result.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceTypeMetricsCapturingStrategy.OnInvocationException(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceType,System.Exception,System.TimeSpan)">
+            <summary>
+            Called immediately after the query failed.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="exception">The exception that caused the query handler to fail.</param>
+            <param name="timeElapsed"></param>
+        </member>
         <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsReferenceTypeResult">
             <summary>
             Dummy query result object.
@@ -219,10 +327,64 @@
             <param name="query">The query parameters.</param>
             <returns></returns>
         </member>
+        <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueTypeMetricsCapturingStrategy">
+            <summary>
+            Metrics capturing strategy for <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueTypeHandler"/>.
+            </summary>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueTypeMetricsCapturingStrategy.OnInvocationStart(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueType)">
+            <summary>
+            Called immediately prior to handling the query.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueTypeMetricsCapturingStrategy.OnInvocationCompletedSuccessfully(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueType,Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueTypeResult,System.TimeSpan)">
+            <summary>
+            Called immediately after successfully handling the query and receiving a result.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="result">The query result.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueTypeMetricsCapturingStrategy.OnInvocationException(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueType,System.Exception,System.TimeSpan)">
+            <summary>
+            Called immediately after the query failed.
+            </summary>
+            <param name="parameters">The query parameters.</param>
+            <param name="exception">The exception that caused the query handler to fail.</param>
+            <param name="timeElapsed"></param>
+        </member>
         <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyQueryReturnsValueTypeResult">
             <summary>
             Dummy query result object.
             </summary>
+        </member>
+        <member name="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandMetricsCapturingStrategy">
+            <summary>
+            Metrics capturing strategy for <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandHandlerThatSucceeds"/> and <see cref="T:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandHandlerThatFails"/>.
+            </summary>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandMetricsCapturingStrategy.OnInvocationStart(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandThatSucceeds)">
+            <summary>
+            Called immediately prior to handling the command.
+            </summary>
+            <param name="parameters">The command parameters.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandMetricsCapturingStrategy.OnInvocationCompletedSuccessfully(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandThatSucceeds,Functional.Result{Functional.Unit,Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandError},System.TimeSpan)">
+            <summary>
+            Called immediately after successfully handling the query and receiving a result.
+            </summary>
+            <param name="parameters">The command parameters.</param>
+            <param name="result">The command result.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
+        </member>
+        <member name="M:Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandMetricsCapturingStrategy.OnInvocationException(Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects.DummyCommandThatSucceeds,System.Exception,System.TimeSpan)">
+            <summary>
+            Called immediately after the command failed due to an uncaught exception.
+            </summary>
+            <param name="parameters">The command parameters.</param>
+            <param name="exception">The exception that caused the command handler to fail.</param>
+            <param name="timeElapsed">The time elapsed since the start of invocation.</param>
         </member>
     </members>
 </doc>
