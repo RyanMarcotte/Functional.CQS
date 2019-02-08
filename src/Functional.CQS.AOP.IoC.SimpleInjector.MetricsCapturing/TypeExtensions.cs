@@ -1,15 +1,14 @@
 ﻿using System;
-using IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Installation;
-using IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Installation.Models;
-using IQ.Vanilla.CQS.AOP.MetricsCapturing;
+using Functional.CQS.AOP.IoC.SimpleInjector.Models;
+using Functional.CQS.AOP.MetricsCapturing;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.MetricsCapturing
+namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing
 {
 	internal static class TypeExtensions
 	{
 		public static Option<QueryAndResultType> GetGenericParametersForQueryMetricsCapturingStrategyType(this Type type)
 		{
-			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceType(typeof(IMetricsCapturingStrategyForQuery<,>)).Map(queryHandlerInterface =>
+			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceType(typeof(IMetricsCapturingStrategyForQuery<,>)).Select(queryHandlerInterface =>
 			{
 				var queryType = queryHandlerInterface.GenericTypeArguments[0];
 				var resultType = queryHandlerInterface.GenericTypeArguments[1];
@@ -17,17 +16,12 @@ namespace IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.MetricsCapturing
 			});
 		}
 
-		public static Option<Type> GetGenericParametersForCommandMetricsCapturingStrategyType(this Type type)
+		public static Option<CommandAndErrorType> GetGenericParametersForCommandMetricsCapturingStrategyType(this Type type)
 		{
-			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceType(typeof(IMetricsCapturingStrategyForCommand<>)).Map(commandHandlerInterface => commandHandlerInterface.GenericTypeArguments[0]);
-		}
-
-		public static Option<CommandAndErrorType> GetGenericParametersForResultCommandMetricsCapturingStrategyType(this Type type)
-		{
-			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceType(typeof(IMetricsCapturingStrategyForResultCommand<,>)).Map(resultCommandHandlerInterface =>
+			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceType(typeof(IMetricsCapturingStrategyForCommand<,>)).Select(commandHandlerInterface =>
 			{
-				var commandType = resultCommandHandlerInterface.GenericTypeArguments[0];
-				var errorType = resultCommandHandlerInterface.GenericTypeArguments[1];
+				var commandType = commandHandlerInterface.GenericTypeArguments[0];
+				var errorType = commandHandlerInterface.GenericTypeArguments[1];
 				return new CommandAndErrorType(commandType, errorType);
 			});
 		}
