@@ -8,11 +8,13 @@ Defines [CQS-style contracts](https://github.com/RyanMarcotte/Functional.CQS/tre
 - [`ICommandHandler<TCommand, TError>`](src/Functional.CQS/ICommandHandler.cs), for synchronous command handling
 - [`IAsyncCommandHandler<TCommand, TError>`](src/Functional.CQS/IAsyncCommandHandler.cs), for asynchronous command handling
 
+[What is CQS?  Why use CQS?](docs/cqs_primer.md)
+
 # Functional.CQS.AOP
 
 `Functional.CQS.AOP` is a set of NuGet packages that provide decoration facilities over implementations of `Functional.CQS` contracts (listed above), specifically for [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming) / applying [cross-cutting concerns](https://stackoverflow.com/questions/23700540/cross-cutting-concern-example).
 
-[What is CQS?  Why use CQS?  Why use Functional.CQS.AOP?](docs/cqs_primer.md)
+[Why use Functional.CQS.AOP?](docs/cqs_aop_primer.md)
 
 ## Library Usage Cookbook
 
