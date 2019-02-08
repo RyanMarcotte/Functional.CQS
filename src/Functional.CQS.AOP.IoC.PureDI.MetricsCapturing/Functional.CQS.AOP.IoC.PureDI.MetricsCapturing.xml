@@ -4,22 +4,22 @@
         <name>Functional.CQS.AOP.IoC.PureDI.MetricsCapturing</name>
     </assembly>
     <members>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2">
             <summary>
             Decorator for applying metrics-capturing concerns to <see cref="T:Functional.CQS.IAsyncCommandHandler`2"/>.
             </summary>
             <typeparam name="TCommand">The command type.</typeparam>
             <typeparam name="TError">The error type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.IAsyncCommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand{`0,`1},IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.IAsyncCommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand{`0,`1},Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2.HandleAsync(`0,System.Threading.CancellationToken)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecorator`2.HandleAsync(`0,System.Threading.CancellationToken)">
             <summary>
             Handle the command.
             </summary>
@@ -27,22 +27,22 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns></returns>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
             <summary>
             Decorator for applying universal metrics-capturing concerns to <see cref="T:Functional.CQS.IAsyncCommandHandler`2"/>.
             </summary>
             <typeparam name="TCommand">The command type.</typeparam>
             <typeparam name="TError">The error type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.IAsyncCommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.IAsyncCommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.HandleAsync(`0,System.Threading.CancellationToken)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.HandleAsync(`0,System.Threading.CancellationToken)">
             <summary>
             Handle the command.
             </summary>
@@ -50,22 +50,22 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns></returns>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2">
             <summary>
             Decorator for applying metrics-capturing concerns to <see cref="T:Functional.CQS.IAsyncQueryHandler`2"/>.
             </summary>
             <typeparam name="TQuery">The query type.</typeparam>
             <typeparam name="TResult">The result type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.IAsyncQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery{`0,`1},IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.IAsyncQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery{`0,`1},Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2.HandleAsync(`0,System.Threading.CancellationToken)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecorator`2.HandleAsync(`0,System.Threading.CancellationToken)">
             <summary>
             Handle the query.
             </summary>
@@ -73,22 +73,22 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns></returns>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
             <summary>
             Decorator for applying universal metrics-capturing concerns to <see cref="T:Functional.CQS.IAsyncQueryHandler`2"/>.
             </summary>
             <typeparam name="TQuery">The query type.</typeparam>
             <typeparam name="TResult">The result type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.IAsyncQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.IAsyncQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.HandleAsync(`0,System.Threading.CancellationToken)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.HandleAsync(`0,System.Threading.CancellationToken)">
             <summary>
             Handle the query.
             </summary>
@@ -96,116 +96,116 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns></returns>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2">
             <summary>
             Decorator for applying metrics-capturing concerns to <see cref="T:Functional.CQS.ICommandHandler`2"/>.
             </summary>
             <typeparam name="TCommand">The command type.</typeparam>
             <typeparam name="TError">The error type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.ICommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand{`0,`1},IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.ICommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand{`0,`1},Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2.Handle(`0)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecorator`2.Handle(`0)">
             <summary>
             Handle the command.
             </summary>
             <param name="command">The command parameters.</param>
             <returns></returns>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
             <summary>
             Decorator for applying universal metrics-capturing concerns to <see cref="T:Functional.CQS.ICommandHandler`2"/>.
             </summary>
             <typeparam name="TCommand">The command type.</typeparam>
             <typeparam name="TError">The error type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.ICommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.ICommandHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.Handle(`0)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.CommandHandlerMetricsCapturingDecoratorForUniversalStrategy`2.Handle(`0)">
             <summary>
             Handle the command.
             </summary>
             <param name="command">The command parameters.</param>
             <returns></returns>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters">
             <summary>
-            Encapsulates configuration parameters used by IQ.Vanilla.CQS.AOP.IoC.CastleWindsor.MetricsCapturing components.
+            Encapsulates configuration parameters used by Functional.CQS.AOP.IoC.CastleWindsor.MetricsCapturing components.
             </summary>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.#ctor(System.Boolean,System.Boolean,System.Boolean)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.#ctor(System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters"/> class.
             </summary>
             <param name="universalMetricsCapturingDecoratorEnabled">Indicates if the universal metrics-capturing decorator is enabled.</param>
             <param name="commandSpecificMetricsCapturingDecoratorEnabled">Indicates if the metrics-capturing decorator for <see cref="T:Functional.CQS.ICommandHandler`2"/> and <see cref="T:Functional.CQS.IAsyncCommandHandler`2"/> is enabled.</param>
             <param name="querySpecificMetricsCapturingDecoratorEnabled">Indicates if the metrics-capturing decorator for <see cref="T:Functional.CQS.IQueryHandler`2"/> and <see cref="T:Functional.CQS.IAsyncQueryHandler`2"/> is enabled.</param>
         </member>
-        <member name="P:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.UniversalMetricsCapturingDecoratorEnabled">
+        <member name="P:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.UniversalMetricsCapturingDecoratorEnabled">
             <summary>
             Indicates if the universal metrics-capturing decorator is enabled.
             </summary>
         </member>
-        <member name="P:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.CommandSpecificMetricsCapturingDecoratorEnabled">
+        <member name="P:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.CommandSpecificMetricsCapturingDecoratorEnabled">
             <summary>
             Indicates if the metrics-capturing decorator for <see cref="T:Functional.CQS.ICommandHandler`2"/> and <see cref="T:Functional.CQS.IAsyncCommandHandler`2"/> is enabled.
             </summary>
         </member>
-        <member name="P:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.QuerySpecificMetricsCapturingDecoratorEnabled">
+        <member name="P:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters.QuerySpecificMetricsCapturingDecoratorEnabled">
             <summary>
             Indicates if the metrics-capturing decorator for <see cref="T:Functional.CQS.IQueryHandler`2"/> and <see cref="T:Functional.CQS.IAsyncQueryHandler`2"/> is enabled.
             </summary>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2">
             <summary>
             Decorator for applying metrics-capturing concerns to <see cref="T:Functional.CQS.IQueryHandler`2"/>.
             </summary>
             <typeparam name="TQuery">The query type.</typeparam>
             <typeparam name="TResult">The result type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.IQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery{`0,`1},IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2.#ctor(Functional.CQS.IQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery{`0,`1},Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2.Handle(`0)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecorator`2.Handle(`0)">
             <summary>
             Handle the query.
             </summary>
             <param name="query">The query parameters.</param>
             <returns></returns>
         </member>
-        <member name="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
+        <member name="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2">
             <summary>
             Decorator for applying universal metrics-capturing concerns to <see cref="T:Functional.CQS.IQueryHandler`2"/>.
             </summary>
             <typeparam name="TQuery">The query type.</typeparam>
             <typeparam name="TResult">The result type.</typeparam>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.IQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.#ctor(Functional.CQS.IQueryHandler{`0,`1},Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy,Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration.MetricsCapturingModuleConfigurationParameters)">
             <summary>
-            Initializes a new instance of the <see cref="T:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
+            Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2"/> class.
             </summary>
             <param name="handler">The handler to decorate.</param>
             <param name="strategy">The metrics-capturing strategy.</param>
             <param name="configurationParameters">The configuration parameters.</param>
         </member>
-        <member name="M:IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.Handle(`0)">
+        <member name="M:Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.QueryHandlerMetricsCapturingDecoratorForUniversalStrategy`2.Handle(`0)">
             <summary>
             Handle the query.
             </summary>

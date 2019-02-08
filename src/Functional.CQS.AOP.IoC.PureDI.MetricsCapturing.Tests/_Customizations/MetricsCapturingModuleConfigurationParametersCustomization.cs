@@ -1,6 +1,6 @@
 ﻿using System;
 using AutoFixture;
-using IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
+using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
 
 namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests._Customizations
 {

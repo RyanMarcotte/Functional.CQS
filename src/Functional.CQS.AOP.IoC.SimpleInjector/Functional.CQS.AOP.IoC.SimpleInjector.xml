@@ -16,7 +16,7 @@
             </summary>
             <param name="container">The container.</param>
             <param name="lifestyle">The lifestyle.</param>
-            <param name="assemblies">The assemblies containing IQ.Vanilla.CQS handler implementations.</param>
+            <param name="assemblies">The assemblies containing Functional.CQS handler implementations.</param>
         </member>
         <member name="T:SimpleInjector.DecoratorPredicateContextExtensions">
             <summary>
@@ -32,16 +32,16 @@
         </member>
         <member name="T:Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways.ConventionBasedDecoratorRegistrationGateway">
             <summary>
-            Gateway for applying decorators to IQ.Vanilla.CQS handler implementations that have been registered via convention.
+            Gateway for applying decorators to Functional.CQS handler implementations that have been registered via convention.
             </summary>
         </member>
         <member name="M:Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways.ConventionBasedDecoratorRegistrationGateway.#ctor(SimpleInjector.Container,System.Collections.Generic.IEnumerable{System.Reflection.Assembly},SimpleInjector.Lifestyle)">
             <summary>
             Initializes a new instance of the <see cref="T:Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways.ConventionBasedDecoratorRegistrationGateway"/> class.
             </summary>
-            <param name="container">The container containing prior registration of IQ.Vanilla.CQS handler implementations.</param>
+            <param name="container">The container containing prior registration of Functional.CQS handler implementations.</param>
             <param name="assemblies">The collection of assemblies to scan for performing further registrations.</param>
-            <param name="lifestyle">The lifestyle that was specified when registering all IQ.Vanilla.CQS handler implementations.</param>
+            <param name="lifestyle">The lifestyle that was specified when registering all Functional.CQS handler implementations.</param>
         </member>
         <member name="P:Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways.ConventionBasedDecoratorRegistrationGateway.Container">
             <summary>

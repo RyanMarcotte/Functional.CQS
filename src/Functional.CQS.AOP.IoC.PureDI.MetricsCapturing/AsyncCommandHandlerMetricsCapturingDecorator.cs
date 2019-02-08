@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Functional;
-using Functional.CQS;
+using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
+using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Extensions;
 using Functional.CQS.AOP.MetricsCapturing;
-using IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
-using IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Extensions;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing
+namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing
 {
 	/// <summary>
 	/// Decorator for applying metrics-capturing concerns to <see cref="IAsyncCommandHandler{TCommand, TError}"/>.

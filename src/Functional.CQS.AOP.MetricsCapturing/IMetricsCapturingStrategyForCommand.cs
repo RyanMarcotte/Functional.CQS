@@ -4,7 +4,7 @@ namespace Functional.CQS.AOP.MetricsCapturing
 {
 	/// <summary>
 	/// Marker interface for metrics capturing strategies used by <see cref="ICommandHandler{TCommand,TError}"/> and <see cref="IAsyncCommandHandler{TCommand, TError}"/>.
-	/// Used internally by IQ.Vanilla.CQS.AOP.  Implement <see cref="IMetricsCapturingStrategyForCommand{TCommand, TError}"/> instead.
+	/// Used internally by Functional.CQS.AOP.  Implement <see cref="IMetricsCapturingStrategyForCommand{TCommand, TError}"/> instead.
 	/// </summary>
 	public interface IMetricsCapturingStrategyForCommand
 	{

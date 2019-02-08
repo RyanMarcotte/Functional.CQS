@@ -16,7 +16,7 @@ namespace SimpleInjector
 		/// </summary>
 		/// <param name="container">The container.</param>
 		/// <param name="lifestyle">The lifestyle.</param>
-		/// <param name="assemblies">The assemblies containing IQ.Vanilla.CQS handler implementations.</param>
+		/// <param name="assemblies">The assemblies containing Functional.CQS handler implementations.</param>
 		public static ConventionBasedDecoratorRegistrationGateway RegisterAllFunctionalCQSHandlers(this Container container, Lifestyle lifestyle, params Assembly[] assemblies)
 		{
 			container.Register(typeof(IQueryHandler<,>), assemblies, lifestyle);

@@ -3,7 +3,7 @@
 namespace Functional.CQS.AOP.MetricsCapturing
 {
 	/// <summary>
-	/// Interface for a metrics capturing strategy that is applied to all IQ.Vanilla.CQS handlers.
+	/// Interface for a metrics capturing strategy that is applied to all Functional.CQS handlers.
 	/// </summary>
 	public interface IUniversalMetricsCapturingStrategy
     {

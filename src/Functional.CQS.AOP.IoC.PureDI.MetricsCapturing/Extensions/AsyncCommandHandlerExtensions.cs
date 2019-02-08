@@ -2,10 +2,8 @@
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Functional;
-using Functional.CQS;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Extensions
+namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Extensions
 {
 	internal static class AsyncCommandHandlerExtensions
 	{

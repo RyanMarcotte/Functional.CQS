@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Functional.CQS;
-
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration
+﻿namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration
 {
 	/// <summary>
-	/// Encapsulates configuration parameters used by IQ.Vanilla.CQS.AOP.IoC.CastleWindsor.MetricsCapturing components.
+	/// Encapsulates configuration parameters used by Functional.CQS.AOP.IoC.CastleWindsor.MetricsCapturing components.
 	/// </summary>
 	public class MetricsCapturingModuleConfigurationParameters
 	{

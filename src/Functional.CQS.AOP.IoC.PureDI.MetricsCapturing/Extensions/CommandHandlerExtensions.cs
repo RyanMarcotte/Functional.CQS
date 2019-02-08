@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using Functional;
-using Functional.CQS;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Extensions
+namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Extensions
 {
 	internal static class CommandHandlerExtensions
 	{

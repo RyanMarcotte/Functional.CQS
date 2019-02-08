@@ -4,7 +4,7 @@ namespace Functional.CQS.AOP.MetricsCapturing
 {
 	/// <summary>
 	/// Marker interface for metrics capturing strategies used by <see cref="IQueryHandler{TQuery, TResult}"/> and <see cref="IAsyncQueryHandler{TQuery, TResult}"/>.
-	/// Used internally by IQ.Vanilla.CQS.AOP.  Implement <see cref="IMetricsCapturingStrategyForQuery{TQuery,TResult}"/> instead.
+	/// Used internally by Functional.CQS.AOP.  Implement <see cref="IMetricsCapturingStrategyForQuery{TQuery,TResult}"/> instead.
 	/// </summary>
 	public interface IMetricsCapturingStrategyForQuery
 	{

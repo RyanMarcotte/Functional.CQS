@@ -8,16 +8,16 @@ using Container = SimpleInjector.Container;
 namespace Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways
 {
 	/// <summary>
-	/// Gateway for applying decorators to IQ.Vanilla.CQS handler implementations that have been registered via convention.
+	/// Gateway for applying decorators to Functional.CQS handler implementations that have been registered via convention.
 	/// </summary>
 	public sealed class ConventionBasedDecoratorRegistrationGateway
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ConventionBasedDecoratorRegistrationGateway"/> class.
 		/// </summary>
-		/// <param name="container">The container containing prior registration of IQ.Vanilla.CQS handler implementations.</param>
+		/// <param name="container">The container containing prior registration of Functional.CQS handler implementations.</param>
 		/// <param name="assemblies">The collection of assemblies to scan for performing further registrations.</param>
-		/// <param name="lifestyle">The lifestyle that was specified when registering all IQ.Vanilla.CQS handler implementations.</param>
+		/// <param name="lifestyle">The lifestyle that was specified when registering all Functional.CQS handler implementations.</param>
 		public ConventionBasedDecoratorRegistrationGateway(Container container, IEnumerable<Assembly> assemblies, Lifestyle lifestyle)
 		{
 			Container = container ?? throw new ArgumentNullException(nameof(container));

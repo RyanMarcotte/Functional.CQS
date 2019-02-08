@@ -5,10 +5,9 @@ using AutoFixture;
 using AutoFixture.Xunit2;
 using FakeItEasy;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
+using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
 using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests._Customizations;
 using Functional.CQS.AOP.MetricsCapturing;
-using IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing;
-using IQ.Vanilla.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
 using Xunit;
 
 namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests

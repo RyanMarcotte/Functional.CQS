@@ -7,7 +7,7 @@
         <member name="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand">
             <summary>
             Marker interface for metrics capturing strategies used by <see cref="T:Functional.CQS.ICommandHandler`2"/> and <see cref="T:Functional.CQS.IAsyncCommandHandler`2"/>.
-            Used internally by IQ.Vanilla.CQS.AOP.  Implement <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand`2"/> instead.
+            Used internally by Functional.CQS.AOP.  Implement <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand`2"/> instead.
             </summary>
         </member>
         <member name="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForCommand`2">
@@ -42,7 +42,7 @@
         <member name="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery">
             <summary>
             Marker interface for metrics capturing strategies used by <see cref="T:Functional.CQS.IQueryHandler`2"/> and <see cref="T:Functional.CQS.IAsyncQueryHandler`2"/>.
-            Used internally by IQ.Vanilla.CQS.AOP.  Implement <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery`2"/> instead.
+            Used internally by Functional.CQS.AOP.  Implement <see cref="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery`2"/> instead.
             </summary>
         </member>
         <member name="T:Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery`2">
@@ -76,7 +76,7 @@
         </member>
         <member name="T:Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy">
             <summary>
-            Interface for a metrics capturing strategy that is applied to all IQ.Vanilla.CQS handlers.
+            Interface for a metrics capturing strategy that is applied to all Functional.CQS handlers.
             </summary>
         </member>
         <member name="M:Functional.CQS.AOP.MetricsCapturing.IUniversalMetricsCapturingStrategy.OnInvocationStart">
