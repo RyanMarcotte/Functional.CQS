@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.MetricsC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests", "Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests\Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests.csproj", "{34E2696C-9ED4-4CC1-959C-4779FCC67E1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing", "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.csproj", "{04540474-8966-4E90-A90E-A7251F8B8118}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{34E2696C-9ED4-4CC1-959C-4779FCC67E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34E2696C-9ED4-4CC1-959C-4779FCC67E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34E2696C-9ED4-4CC1-959C-4779FCC67E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04540474-8966-4E90-A90E-A7251F8B8118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04540474-8966-4E90-A90E-A7251F8B8118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04540474-8966-4E90-A90E-A7251F8B8118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04540474-8966-4E90-A90E-A7251F8B8118}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,6 +70,7 @@ Global
 		{6A750B3C-029B-4932-955D-B2035DBAA757} = {3DB0C9FC-28E8-414D-8F16-B7C1EFF090E8}
 		{4C7AEC53-6783-45E3-8E81-348521FCAE88} = {26B803A7-BF86-48AA-9668-F48626FF9075}
 		{34E2696C-9ED4-4CC1-959C-4779FCC67E1F} = {26B803A7-BF86-48AA-9668-F48626FF9075}
+		{04540474-8966-4E90-A90E-A7251F8B8118} = {3DB0C9FC-28E8-414D-8F16-B7C1EFF090E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CCA6DAD-E6D2-4199-8295-0BBE8BF4E862}
