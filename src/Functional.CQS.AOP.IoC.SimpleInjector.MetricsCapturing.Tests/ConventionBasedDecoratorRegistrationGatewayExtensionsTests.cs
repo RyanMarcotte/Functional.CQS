@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using FluentAssertions;
 using Functional.CQS.AOP.CommonTestInfrastructure;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
+using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Configuration;
 using SimpleInjector;
 using Xunit;
 

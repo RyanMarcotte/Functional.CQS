@@ -4,9 +4,9 @@ using System.Linq;
 using Functional;
 using Functional.CQS;
 using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing;
-using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Configuration;
 using Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways;
 using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing;
+using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Configuration;
 using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.NullImplementations;
 using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 using Functional.CQS.AOP.MetricsCapturing;
@@ -43,15 +43,18 @@ namespace SimpleInjector
 		public static ConventionBasedDecoratorRegistrationGateway WithMetricsCapturingDecorator<TUniversalMetricsCapturingStrategy>(this ConventionBasedDecoratorRegistrationGateway gateway, MetricsCapturingModuleConfigurationParameters configurationParameters)
 			where TUniversalMetricsCapturingStrategy : class, IUniversalMetricsCapturingStrategy
 		{
-			gateway.RegisterMetricsCapturingDecoratorForIndividualQueryHandlerImplementations();
-			gateway.RegisterMetricsCapturingDecoratorForIndividualCommandHandlerImplementations();
+			gateway.RegisterMetricsCapturingDecoratorForIndividualQueryHandlerImplementations(configurationParameters);
+			gateway.RegisterMetricsCapturingDecoratorForIndividualCommandHandlerImplementations(configurationParameters);
 			gateway.RegisterUniversalMetricsCapturingDecorator<TUniversalMetricsCapturingStrategy>(configurationParameters);
 
 			return gateway;
 		}
 
-		private static void RegisterMetricsCapturingDecoratorForIndividualQueryHandlerImplementations(this ConventionBasedDecoratorRegistrationGateway gateway)
+		private static void RegisterMetricsCapturingDecoratorForIndividualQueryHandlerImplementations(this ConventionBasedDecoratorRegistrationGateway gateway, MetricsCapturingModuleConfigurationParameters configurationParameters)
 		{
+			if (!configurationParameters.QuerySpecificMetricsCapturingDecoratorEnabled)
+				return;
+
 			var queryAndResultTypeWithMetricsCapturingStrategyDefinedCollection = new HashSet<QueryAndResultType>(gateway.AssemblyCollection
 				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsClass && typeof(IMetricsCapturingStrategyForQuery).IsAssignableFrom(t)))
 				.Select(x => x.GetGenericParametersForQueryMetricsCapturingStrategyType())
@@ -63,8 +66,11 @@ namespace SimpleInjector
 			gateway.Container.RegisterDecorator(typeof(IAsyncQueryHandler<,>), typeof(AsyncQueryHandlerMetricsCapturingDecorator<,>), gateway.Lifestyle, hasMetricsCapturingStrategyDefinedForQuery);
 		}
 
-		private static void RegisterMetricsCapturingDecoratorForIndividualCommandHandlerImplementations(this ConventionBasedDecoratorRegistrationGateway gateway)
+		private static void RegisterMetricsCapturingDecoratorForIndividualCommandHandlerImplementations(this ConventionBasedDecoratorRegistrationGateway gateway, MetricsCapturingModuleConfigurationParameters configurationParameters)
 		{
+			if (!configurationParameters.CommandSpecificMetricsCapturingDecoratorEnabled)
+				return;
+
 			var commandAndErrorTypeWithCachingStrategyDefinedCollection = new HashSet<CommandAndErrorType>(gateway.AssemblyCollection
 				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsClass && typeof(IMetricsCapturingStrategyForCommand).IsAssignableFrom(t)))
 				.Select(x => x.GetGenericParametersForCommandMetricsCapturingStrategyType())
@@ -79,6 +85,9 @@ namespace SimpleInjector
 		private static void RegisterUniversalMetricsCapturingDecorator<TUniversalMetricsCapturingStrategy>(this ConventionBasedDecoratorRegistrationGateway gateway, MetricsCapturingModuleConfigurationParameters configurationParameters)
 			where TUniversalMetricsCapturingStrategy : class, IUniversalMetricsCapturingStrategy
 		{
+			if (!configurationParameters.UniversalMetricsCapturingDecoratorEnabled)
+				return;
+
 			gateway.Container.RegisterSingleton<IUniversalMetricsCapturingStrategy, TUniversalMetricsCapturingStrategy>();
 			gateway.Container.RegisterDecorator(typeof(IQueryHandler<,>), typeof(QueryHandlerMetricsCapturingDecoratorForUniversalStrategy<,>), gateway.Lifestyle);
 			gateway.Container.RegisterDecorator(typeof(IAsyncQueryHandler<,>), typeof(AsyncQueryHandlerMetricsCapturingDecoratorForUniversalStrategy<,>), gateway.Lifestyle);
