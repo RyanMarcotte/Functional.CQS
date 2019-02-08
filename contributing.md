@@ -6,13 +6,13 @@ Feature branches are created off of `master` and merged in after code review.
 
 All code submitted for code review must possess sufficient unit test coverage to demonstrate the correctness of the new code and demonstrate that the new code does not break existing systems.  The meaning of "sufficient" is dependent on the code being submitted for review.  When in doubt, submit a pull request.
 
-NuGet package releases are [semantically versioned](https://semver.org/).  A pull request into `production` branch from `master` will automatically deploy NuGet packages.
+NuGet package releases are [semantically versioned](https://semver.org/).  A pull request into the `production` branch from `master` will automatically deploy NuGet packages.
 
 ## Structure of the Code
 
 `Functional.CQS.AOP` is a set of .NET Standard 2.0 libraries.
 
-Individual projects adhere to one of three naming conventions:
+Individual projects adhere to one of the following naming conventions:
 - if the code is agnostic to any specific DI container and is not an infrastructural concern for decoration, then prefix your project `Functional.CQS.AOP`
 - if the code is specific to a DI container, then prefix your project `Functional.CQS.AOP.IoC.ContainerName`
 
