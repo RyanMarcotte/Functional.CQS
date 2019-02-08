@@ -1,6 +1,6 @@
 # Functional.CQS.AOP
 
-`Functional.CQS.AOP` is a set of NuGet packages that provide decoration facilities over implementations of [`Functional.CQS` handler contracts](src/Functional.CQS), specifically for [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming) / applying [cross-cutting concerns](https://stackoverflow.com/questions/23700540/cross-cutting-concern-example).
+`Functional.CQS.AOP` is a set of NuGet packages that provide decoration facilities over implementations of [`Functional.CQS` handler contracts](https://github.com/RyanMarcotte/Functional.CQS/tree/master/src/Functional.CQS), specifically for [aspect-oriented programming](https://en.wikipedia.org/wiki/Aspect-oriented_programming) / applying [cross-cutting concerns](https://stackoverflow.com/questions/23700540/cross-cutting-concern-example).
 
 The following contracts are defined:
 - [`IQueryParameters<TResult>`](src/Functional.CQS/IQueryParameters.cs), a marker interface for query parameter objects that associates the query parameter object with the type of result that is returned when invoking the query handler
