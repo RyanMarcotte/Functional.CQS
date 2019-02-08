@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
@@ -9,9 +8,6 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 	/// </summary>
 	public class DummyAsyncQueryReturnsNullHandler : IAsyncQueryHandler<DummyAsyncQueryReturnsNull, DummyAsyncQueryReturnsNullResult>
 	{
-		private static readonly DummyAsyncQueryReturnsNull _query = new DummyAsyncQueryReturnsNull();
-		private static readonly DummyAsyncQueryReturnsNullResult _result = null;
-
 		/// <summary>
 		/// Handle the query asynchronously.
 		/// </summary>
@@ -20,7 +16,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// <returns></returns>
 		public async Task<DummyAsyncQueryReturnsNullResult> HandleAsync(DummyAsyncQueryReturnsNull query, CancellationToken cancellationToken = new CancellationToken())
 		{
-			return await Task.Run(() => _result, cancellationToken);
+			return await Task.Run(() => (DummyAsyncQueryReturnsNullResult)null, cancellationToken);
 		}
 	}
 }

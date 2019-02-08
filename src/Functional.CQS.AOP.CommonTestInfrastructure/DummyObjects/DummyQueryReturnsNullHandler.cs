@@ -1,5 +1,3 @@
-using System.Reflection;
-
 namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 {
 	/// <summary>
@@ -7,9 +5,6 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 	/// </summary>
 	public class DummyQueryReturnsNullHandler : IQueryHandler<DummyQueryReturnsNull, DummyQueryReturnsNullResult>
 	{
-		private static readonly DummyQueryReturnsNull _query = new DummyQueryReturnsNull();
-		private static readonly DummyQueryReturnsNullResult _result = null;
-
 		/// <summary>
 		/// Handle the query.
 		/// </summary>
@@ -17,7 +12,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// <returns></returns>
 		public DummyQueryReturnsNullResult Handle(DummyQueryReturnsNull query)
 		{
-			return _result;
+			return null;
 		}
 	}
 }
