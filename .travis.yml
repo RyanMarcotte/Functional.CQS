@@ -4,14 +4,15 @@ sudo: required
 dist: xenial
 dotnet: 2.2
 
-services:
- - docker
- 
-install:
- - docker pull ellerbrock/link-checker
-  
+addons:
+ apt:
+  sources:
+   - sourceline: 'ppa:mike42/mdcheckr'
+  packages:
+   - mdcheckr
+
 script:
- - docker run ellerbrock/link-checker README.md
+ - git ls-files | grep '\.md$' | tr '\n' '\0' | xargs -0 mdcheckr
  - cd src
  - dotnet restore
  - dotnet build -c Release
