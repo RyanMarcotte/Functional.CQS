@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.MetricsCapturing\Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.MetricsCapturing\Functional.CQS.AOP.MetricsCapturing.csproj" />
+    <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
+  </ItemGroup>
+
+</Project>
