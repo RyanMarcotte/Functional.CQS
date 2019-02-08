@@ -5,7 +5,6 @@ dist: xenial
 dotnet: 2.2
 
 script:
- - sudo nuget update -Self
  - cd src
  - dotnet restore
  - dotnet build -c Release
