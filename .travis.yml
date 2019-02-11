@@ -23,4 +23,5 @@ deploy:
  provider: script
  script: chmod +x ./deploy/deploy.sh && ./deploy/deploy.sh $NUGET_API_KEY $NUGET_SOURCE
  on:
-  branch: production
+  tags: true
+  condition: "$TRAVIS_TAG =~ -release$"
