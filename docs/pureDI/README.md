@@ -35,8 +35,9 @@ var queryHandler = new GetSystemSettingsForCompanyQueryHandler();
 var metricsCapturingStrategy = new GetSystemSettingsForCompanyQueryMetricsCapturingStrategy();
 
 // decorate the original query handler
-// supply this instance to any components with a IQueryHandler<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>> dependency
 var decoratedQueryHandler = new QueryHandlerMetricsCapturingDecorator<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>>(
     queryHandler,
     metricsCapturingStrategy);
 ```
+
+The `decoratedQueryHandler` is then supplied to any other objects requiring a `IQueryHandler<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>>` dependency.
