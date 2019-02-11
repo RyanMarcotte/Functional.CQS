@@ -6,7 +6,7 @@ Feature branches are created off of `master` and merged in after code review.
 
 All code submitted for code review must possess sufficient unit test coverage to demonstrate the correctness of the new code and demonstrate that the new code does not break existing systems.  The meaning of "sufficient" is dependent on the code being submitted for review.  When in doubt, submit a pull request.
 
-NuGet package releases are [semantically versioned](https://semver.org/).  A pull request into the `production` branch from `master` will automatically deploy NuGet packages.
+NuGet package releases are [semantically versioned](https://semver.org/).  NuGet packages can be deployed automatically via Travis CI by tagging a commit with a `[somePrefix]-release` tag.
 
 ## Structure of the Code
 
