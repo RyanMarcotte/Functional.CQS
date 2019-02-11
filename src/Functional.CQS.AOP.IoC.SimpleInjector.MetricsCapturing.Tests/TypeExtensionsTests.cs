@@ -21,10 +21,10 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		public void ShouldReturnExpectedQueryAndResultTypeForDummyAsyncQueryReturnsReferenceTypeCachingStrategy() => VerifyQueryMetricsCapturingStrategyType<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult, DummyAsyncQueryReturnsReferenceTypeMetricsCapturingStrategy>();
 
 		[Fact]
-		public void ShouldReturnExpectedCommandAndErrorTypeForDummyCommandMetricsCapturingStrategy() => VerifyCommandMetricsCapturingStrategyType<DummyCommandThatSucceeds, DummyCommandError, DummyCommandMetricsCapturingStrategy>();
+		public void ShouldReturnExpectedCommandAndErrorTypeForDummyCommandMetricsCapturingStrategy() => VerifyCommandMetricsCapturingStrategyType<DummyCommandThatSucceeds, DummyCommandError, DummyCommandThatSucceedsMetricsCapturingStrategy>();
 
 		[Fact]
-		public void ShouldReturnExpectedCommandAndErrorTypeForDummyAsyncCommandMetricsCapturingStrategy() => VerifyCommandMetricsCapturingStrategyType<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError, DummyAsyncCommandMetricsCapturingStrategy>();
+		public void ShouldReturnExpectedCommandAndErrorTypeForDummyAsyncCommandMetricsCapturingStrategy() => VerifyCommandMetricsCapturingStrategyType<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError, DummyAsyncCommandThatSucceedsMetricsCapturingStrategy>();
 
 		private static void VerifyQueryMetricsCapturingStrategyType<TQuery, TResult, TMetricsCapturingStrategy>()
 			where TQuery : IQueryParameters<TResult>
