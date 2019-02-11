@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing\Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure\Functional.CQS.AOP.CommonTestInfrastructure.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.csproj" />
   </ItemGroup>

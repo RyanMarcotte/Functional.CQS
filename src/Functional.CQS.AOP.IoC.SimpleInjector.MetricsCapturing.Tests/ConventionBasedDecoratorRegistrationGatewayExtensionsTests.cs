@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using AutoFixture;
 using AutoFixture.Xunit2;
 using FluentAssertions;
 using Functional.CQS.AOP.CommonTestInfrastructure;
+using Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing;
 using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Configuration;
 using SimpleInjector;
 using Xunit;
@@ -33,7 +35,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private static void ShouldApplyDecoratorIfConfigurationHasCommandAndQuerySpecificDecorationsEnabled(Container container)
 		{
 			foreach (var type in TestUtility.CQSHandlerContractTypes)
-				container.GetInstance(type).Should().BeOfType(TestUtility.MetricsCapturingDecoratorTypeLookupByCQSHandlerContractType[type]);
+				container.GetInstance(type).Should().BeOfType(MetricsCapturingTestUtility.MetricsCapturingDecoratorTypeLookupByCQSHandlerContractType[type]);
 		}
 
 		[Theory, SingletonRegistrationWithUniversalDecorationsEnabledArrangement]
@@ -45,7 +47,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private static void ShouldApplyDecoratorIfConfigurationHasUniversalDecorationsEnabled(Container container)
 		{
 			foreach (var type in TestUtility.CQSHandlerContractTypes)
-				container.GetInstance(type).Should().BeOfType(TestUtility.UniversalMetricsCapturingDecoratorTypeLookupByCQSHandlerContractType[type]);
+				container.GetInstance(type).Should().BeOfType(MetricsCapturingTestUtility.UniversalMetricsCapturingDecoratorTypeLookupByCQSHandlerContractType[type]);
 		}
 
 		[Theory, SingletonRegistrationWithAllDecorationsEnabledArrangement]
@@ -57,15 +59,30 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private static void ShouldApplyDecoratorIfConfigurationHasAllDecorationsEnabled(Container container)
 		{
 			foreach (var type in TestUtility.CQSHandlerContractTypes)
-				container.GetInstance(type).Should().BeOfType(TestUtility.UniversalMetricsCapturingDecoratorTypeLookupByCQSHandlerContractType[type]);
+				container.GetInstance(type).Should().BeOfType(MetricsCapturingTestUtility.UniversalMetricsCapturingDecoratorTypeLookupByCQSHandlerContractType[type]);
+		}
+
+		[Theory, SingletonRegistrationWithCommandAndQuerySpecificDecorationsEnabledButNoStrategyImplementationsArrangement]
+		public void ShouldNotApplyDecoratorIfNoStrategyImplementationExists_SingletonRegistration(Container container) => ShouldNotApplyDecoratorIfNoStrategyImplementationExists(container);
+
+		[Theory, TransientRegistrationWithCommandAndQuerySpecificDecorationsEnabledButNoStrategyImplementationsArrangement]
+		public void ShouldNotApplyDecoratorIfNoStrategyImplementationExists_TransientRegistration(Container container) => ShouldNotApplyDecoratorIfNoStrategyImplementationExists(container);
+
+		private static void ShouldNotApplyDecoratorIfNoStrategyImplementationExists(Container container)
+		{
+			foreach (var type in TestUtility.CQSHandlerContractTypes)
+				container.GetInstance(type).Should().BeOfType(TestUtility.ImplementationTypeLookupByCQSHandlerContractType[type]);
 		}
 
 		#region Arrangements
 
+		private static readonly Assembly[] _assemblyCollectionWithHandlersOnly = { typeof(CommonTestInfrastructureAssemblyMarker).Assembly };
+		private static readonly Assembly[] _assemblyCollectionWithHandlersAndStrategies = { typeof(CommonTestInfrastructureAssemblyMarker).Assembly, typeof(CommonTestInfrastructureMetricsCapturingAssemblyMarker).Assembly };
+
 		private abstract class ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase : AutoDataAttribute
 		{
-			protected ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase(Lifestyle lifestyle, MetricsCapturingModuleConfigurationParameters configuration)
-				: base(() => new Fixture().Customize(new ContainerCustomization(lifestyle, configuration)))
+			protected ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase(Lifestyle lifestyle, MetricsCapturingModuleConfigurationParameters configuration, params Assembly[] assemblyCollection)
+				: base(() => new Fixture().Customize(new ContainerCustomization(lifestyle, configuration, assemblyCollection)))
 			{
 
 			}
@@ -74,7 +91,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class SingletonRegistrationWithNoDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public SingletonRegistrationWithNoDecorationsEnabledArrangement()
-				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(false, false, false))
+				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(false, false, false), _assemblyCollectionWithHandlersAndStrategies)
 			{
 			}
 		}
@@ -82,7 +99,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class TransientRegistrationWithNoDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public TransientRegistrationWithNoDecorationsEnabledArrangement()
-				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(false, false, false))
+				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(false, false, false), _assemblyCollectionWithHandlersAndStrategies)
 			{
 			}
 		}
@@ -90,7 +107,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class SingletonRegistrationWithCommandAndQuerySpecificDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public SingletonRegistrationWithCommandAndQuerySpecificDecorationsEnabledArrangement()
-				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(false, true, true))
+				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(false, true, true), _assemblyCollectionWithHandlersAndStrategies)
 			{
 			}
 		}
@@ -98,7 +115,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class TransientRegistrationWithCommandAndQuerySpecificDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public TransientRegistrationWithCommandAndQuerySpecificDecorationsEnabledArrangement()
-				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(false, true, true))
+				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(false, true, true), _assemblyCollectionWithHandlersAndStrategies)
 			{
 			}
 		}
@@ -106,7 +123,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class SingletonRegistrationWithUniversalDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public SingletonRegistrationWithUniversalDecorationsEnabledArrangement()
-				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(true, false, false))
+				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(true, false, false), _assemblyCollectionWithHandlersAndStrategies)
 			{
 			}
 		}
@@ -114,7 +131,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class TransientRegistrationWithUniversalDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public TransientRegistrationWithUniversalDecorationsEnabledArrangement()
-				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(true, false, false))
+				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(true, false, false), _assemblyCollectionWithHandlersAndStrategies)
 			{
 			}
 		}
@@ -122,7 +139,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class SingletonRegistrationWithAllDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public SingletonRegistrationWithAllDecorationsEnabledArrangement()
-				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(true, true, true))
+				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(true, true, true), _assemblyCollectionWithHandlersAndStrategies)
 			{
 			}
 		}
@@ -130,7 +147,23 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		private class TransientRegistrationWithAllDecorationsEnabledArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
 		{
 			public TransientRegistrationWithAllDecorationsEnabledArrangement()
-				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(true, true, true))
+				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(true, true, true), _assemblyCollectionWithHandlersAndStrategies)
+			{
+			}
+		}
+
+		private class SingletonRegistrationWithCommandAndQuerySpecificDecorationsEnabledButNoStrategyImplementationsArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
+		{
+			public SingletonRegistrationWithCommandAndQuerySpecificDecorationsEnabledButNoStrategyImplementationsArrangement()
+				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(false, true, true), _assemblyCollectionWithHandlersOnly)
+			{
+			}
+		}
+
+		private class TransientRegistrationWithCommandAndQuerySpecificDecorationsEnabledButNoStrategyImplementationsArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
+		{
+			public TransientRegistrationWithCommandAndQuerySpecificDecorationsEnabledButNoStrategyImplementationsArrangement()
+				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(false, true, true), _assemblyCollectionWithHandlersOnly)
 			{
 			}
 		}
@@ -141,19 +174,21 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 
 		private class ContainerCustomization : ICustomization
 		{
-			private readonly MetricsCapturingModuleConfigurationParameters _configuration;
 			private readonly Lifestyle _lifestyle;
+			private readonly Assembly[] _assemblyCollection;
+			private readonly MetricsCapturingModuleConfigurationParameters _configuration;
 
-			public ContainerCustomization(Lifestyle lifestyle, MetricsCapturingModuleConfigurationParameters configuration)
+			public ContainerCustomization(Lifestyle lifestyle, MetricsCapturingModuleConfigurationParameters configuration, params Assembly[] assemblyCollection)
 			{
 				_lifestyle = lifestyle ?? throw new ArgumentNullException(nameof(lifestyle));
+				_assemblyCollection = assemblyCollection ?? throw new ArgumentNullException(nameof(assemblyCollection));
 				_configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
 			}
 
 			public void Customize(IFixture fixture)
 			{
 				var container = new Container();
-				container.RegisterAllFunctionalCQSHandlers(_lifestyle, typeof(CommonTestInfrastructureAssemblyMarker).Assembly)
+				container.RegisterAllFunctionalCQSHandlers(_lifestyle, _assemblyCollection)
 					.WithMetricsCapturingDecorator(_configuration);
 
 				fixture.Inject(container);

@@ -1,18 +1,19 @@
 using System;
+using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 using Functional.CQS.AOP.MetricsCapturing;
 
-namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
+namespace Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing.DummyObjects
 {
 	/// <summary>
-	/// Metrics capturing strategy for <see cref="DummyQueryReturnsValueTypeHandler"/>.
+	/// Metrics capturing strategy for <see cref="DummyAsyncQueryReturnsReferenceType"/>.
 	/// </summary>
-	public class DummyQueryReturnsValueTypeMetricsCapturingStrategy : IMetricsCapturingStrategyForQuery<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult>
+	public class DummyAsyncQueryReturnsReferenceTypeMetricsCapturingStrategy : IMetricsCapturingStrategyForQuery<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult>
 	{
 		/// <summary>
 		/// Called immediately prior to handling the query.
 		/// </summary>
 		/// <param name="parameters">The query parameters.</param>
-		public void OnInvocationStart(DummyQueryReturnsValueType parameters)
+		public void OnInvocationStart(DummyAsyncQueryReturnsReferenceType parameters)
 		{
 			
 		}
@@ -23,7 +24,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// <param name="parameters">The query parameters.</param>
 		/// <param name="result">The query result.</param>
 		/// <param name="timeElapsed">The time elapsed since the start of invocation.</param>
-		public void OnInvocationCompletedSuccessfully(DummyQueryReturnsValueType parameters, DummyQueryReturnsValueTypeResult result, TimeSpan timeElapsed)
+		public void OnInvocationCompletedSuccessfully(DummyAsyncQueryReturnsReferenceType parameters, DummyAsyncQueryReturnsReferenceTypeResult result, TimeSpan timeElapsed)
 		{
 			
 		}
@@ -34,9 +35,9 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// <param name="parameters">The query parameters.</param>
 		/// <param name="exception">The exception that caused the query handler to fail.</param>
 		/// <param name="timeElapsed"></param>
-		public void OnInvocationException(DummyQueryReturnsValueType parameters, Exception exception, TimeSpan timeElapsed)
+		public void OnInvocationException(DummyAsyncQueryReturnsReferenceType parameters, Exception exception, TimeSpan timeElapsed)
 		{
-			
+
 		}
 	}
 }

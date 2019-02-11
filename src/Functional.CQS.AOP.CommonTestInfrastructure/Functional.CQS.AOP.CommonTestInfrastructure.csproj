@@ -13,8 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.MetricsCapturing\Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.csproj" />
-    <ProjectReference Include="..\Functional.CQS.AOP.MetricsCapturing\Functional.CQS.AOP.MetricsCapturing.csproj" />
     <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
+using Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing.DummyObjects;
 using Functional.CQS.AOP.MetricsCapturing;
 using Functional.Primitives.FluentAssertions;
 using Xunit;
