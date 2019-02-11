@@ -14,7 +14,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 	{
 		[Theory]
 		[AsyncCommandHandlerCompletesSuccessfully]
-		public async Task ShouldCaptureResultAndElapsedTime(
+		public async Task ShouldCaptureElapsedTime(
 			AsyncCommandHandlerMetricsCapturingDecoratorForUniversalStrategy<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError> sut,
 			IUniversalMetricsCapturingStrategy metricsCapturingStrategy)
 		{

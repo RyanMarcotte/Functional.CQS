@@ -12,7 +12,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 	{
 		[Theory]
 		[QueryHandlerCompletesSuccessfully]
-		public void ShouldCaptureResultAndElapsedTime(
+		public void ShouldCaptureElapsedTime(
 			QueryHandlerMetricsCapturingDecoratorForUniversalStrategy<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> sut,
 			IUniversalMetricsCapturingStrategy metricsCapturingStrategy)
 		{

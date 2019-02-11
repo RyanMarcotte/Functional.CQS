@@ -18,11 +18,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.IoC.SimpleInjector.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.IoC.SimpleInjector.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

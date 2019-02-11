@@ -12,7 +12,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 	{
 		[Theory]
 		[CommandHandlerCompletesSuccessfully]
-		public void ShouldCaptureResultAndElapsedTime(
+		public void ShouldCaptureElapsedTime(
 			CommandHandlerMetricsCapturingDecoratorForUniversalStrategy<DummyCommandThatSucceeds, DummyCommandError> sut,
 			IUniversalMetricsCapturingStrategy metricsCapturingStrategy)
 		{
