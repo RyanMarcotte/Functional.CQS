@@ -4,17 +4,17 @@ using Functional.CQS.AOP.MetricsCapturing;
 namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 {
 	/// <summary>
-	/// Metrics capturing strategy for <see cref="DummyAsyncCommandHandlerThatSucceeds"/> and <see cref="DummyAsyncCommandHandlerThatFails"/>.
+	/// Metrics capturing strategy for <see cref="DummyCommandHandlerThatFails"/>.
 	/// </summary>
-	public class DummyAsyncCommandMetricsCapturingStrategy : IMetricsCapturingStrategyForCommand<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError>
+	public class DummyCommandThatFailsMetricsCapturingStrategy : IMetricsCapturingStrategyForCommand<DummyCommandThatFails, DummyCommandError>
 	{
 		/// <summary>
 		/// Called immediately prior to handling the command.
 		/// </summary>
 		/// <param name="parameters">The command parameters.</param>
-		public void OnInvocationStart(DummyAsyncCommandThatSucceeds parameters)
+		public void OnInvocationStart(DummyCommandThatFails parameters)
 		{
-			
+
 		}
 
 		/// <summary>
@@ -23,7 +23,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// <param name="parameters">The command parameters.</param>
 		/// <param name="result">The command result.</param>
 		/// <param name="timeElapsed">The time elapsed since the start of invocation.</param>
-		public void OnInvocationCompletedSuccessfully(DummyAsyncCommandThatSucceeds parameters, Result<Unit, DummyAsyncCommandError> result, TimeSpan timeElapsed)
+		public void OnInvocationCompletedSuccessfully(DummyCommandThatFails parameters, Result<Unit, DummyCommandError> result, TimeSpan timeElapsed)
 		{
 			Console.WriteLine(result.Match(_ => "succeeded", _ => "failed"));
 		}
@@ -34,9 +34,9 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects
 		/// <param name="parameters">The command parameters.</param>
 		/// <param name="exception">The exception that caused the command handler to fail.</param>
 		/// <param name="timeElapsed">The time elapsed since the start of invocation.</param>
-		public void OnInvocationException(DummyAsyncCommandThatSucceeds parameters, Exception exception, TimeSpan timeElapsed)
+		public void OnInvocationException(DummyCommandThatFails parameters, Exception exception, TimeSpan timeElapsed)
 		{
-			
+
 		}
 	}
 }

@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.IoC.Pure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing", "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.csproj", "{04540474-8966-4E90-A90E-A7251F8B8118}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests", "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests.csproj", "{3B104AC4-23F1-4944-8B69-A13A812A3730}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests", "Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests.csproj", "{3B104AC4-23F1-4944-8B69-A13A812A3730}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
