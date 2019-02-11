@@ -4,7 +4,15 @@ sudo: required
 dist: xenial
 dotnet: 2.2
 
+addons:
+ apt:
+  sources:
+   - sourceline: 'ppa:mike42/mdcheckr'
+  packages:
+   - mdcheckr
+
 script:
+ - git ls-files | grep '\.md$' | tr '\n' '\0' | xargs -0 mdcheckr
  - cd src
  - dotnet restore
  - dotnet build -c Release
