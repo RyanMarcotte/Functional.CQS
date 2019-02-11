@@ -74,6 +74,18 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 				container.GetInstance(type).Should().BeOfType(TestUtility.ImplementationTypeLookupByCQSHandlerContractType[type]);
 		}
 
+		[Theory, SingletonRegistrationWithAllDecorationsEnabledButNoStrategyImplementationsArrangement]
+		public void ShouldApplyDecoratorIfConfigurationHasAllDecorationsEnabledButNoStrategyImplementationsExist_SingletonRegistration(Container container) => ShouldApplyDecoratorIfConfigurationHasAllDecorationsEnabledButNoStrategyImplementationsExist(container);
+
+		[Theory, TransientRegistrationWithAllDecorationsEnabledButNoStrategyImplementationsArrangement]
+		public void ShouldApplyDecoratorIfConfigurationHasAllDecorationsEnabledButNoStrategyImplementationsExist_TransientRegistration(Container container) => ShouldApplyDecoratorIfConfigurationHasAllDecorationsEnabledButNoStrategyImplementationsExist(container);
+
+		private static void ShouldApplyDecoratorIfConfigurationHasAllDecorationsEnabledButNoStrategyImplementationsExist(Container container)
+		{
+			foreach (var type in TestUtility.CQSHandlerContractTypes)
+				container.GetInstance(type).Should().BeOfType(MetricsCapturingTestUtility.UniversalMetricsCapturingDecoratorTypeLookupByCQSHandlerContractType[type]);
+		}
+
 		#region Arrangements
 
 		private static readonly Assembly[] _assemblyCollectionWithHandlersOnly = { typeof(CommonTestInfrastructureAssemblyMarker).Assembly };
@@ -164,6 +176,22 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 		{
 			public TransientRegistrationWithCommandAndQuerySpecificDecorationsEnabledButNoStrategyImplementationsArrangement()
 				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(false, true, true), _assemblyCollectionWithHandlersOnly)
+			{
+			}
+		}
+
+		private class SingletonRegistrationWithAllDecorationsEnabledButNoStrategyImplementationsArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
+		{
+			public SingletonRegistrationWithAllDecorationsEnabledButNoStrategyImplementationsArrangement()
+				: base(Lifestyle.Singleton, new MetricsCapturingModuleConfigurationParameters(true, true, true), _assemblyCollectionWithHandlersOnly)
+			{
+			}
+		}
+
+		private class TransientRegistrationWithAllDecorationsEnabledButNoStrategyImplementationsArrangement : ConventionBasedDecoratorRegistrationGatewayExtensionsTestsArrangementBase
+		{
+			public TransientRegistrationWithAllDecorationsEnabledButNoStrategyImplementationsArrangement()
+				: base(Lifestyle.Transient, new MetricsCapturingModuleConfigurationParameters(true, true, true), _assemblyCollectionWithHandlersOnly)
 			{
 			}
 		}
