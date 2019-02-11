@@ -18,11 +18,11 @@ Used with SimpleInjector container.</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>D:\Projects\Functional.CQS\src\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
