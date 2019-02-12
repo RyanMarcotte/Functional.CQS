@@ -30,6 +30,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		//
 		// Additional documentation about redis in Docker can be found at https://hub.docker.com/_/redis/
 		// In PowerShell, you can execute the following command to link redis-cli to the running Redis instance: "docker run -it --link FunctionalRedis:redis --rm redis redis-cli -h redis -p 6379"
+		//
+		// These tests will successfully run in pull requests using Travis CI because the build script sets up a Redis instance prior to executing the build and running all tests
 
 		[Theory]
 		[DistributedCacheArrangement]
