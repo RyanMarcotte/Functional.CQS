@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 
 namespace Functional.CQS.AOP.Caching.Infrastructure
 {
-	// ReSharper disable once InconsistentNaming
 	/// <summary>
-	/// Interface for caching data and specifying the amount of time that data shall be cached.
+	/// Interface for a cache used by Functional.CQS.AOP.Caching components.
 	/// </summary>
 	public interface IFunctionalCache
 	{
