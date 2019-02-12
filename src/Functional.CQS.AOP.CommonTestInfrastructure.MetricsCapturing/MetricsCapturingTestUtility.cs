@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing;
 
 namespace Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing
 {
+	/// <summary>
+	/// Contains common test infrastructure for metrics.
+	/// </summary>
 	public static class MetricsCapturingTestUtility
 	{
 		/// <summary>
