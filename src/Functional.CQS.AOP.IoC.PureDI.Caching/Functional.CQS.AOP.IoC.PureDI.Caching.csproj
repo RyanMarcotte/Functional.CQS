@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.IoC.PureDI.Caching.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.IoC.PureDI.Caching.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+    <PackageReference Include="Functional.Primitives.Extensions" Version="1.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching.Infrastructure\Functional.CQS.AOP.Caching.Infrastructure.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching\Functional.CQS.AOP.Caching.csproj" />
+    <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
+  </ItemGroup>
+
+</Project>
