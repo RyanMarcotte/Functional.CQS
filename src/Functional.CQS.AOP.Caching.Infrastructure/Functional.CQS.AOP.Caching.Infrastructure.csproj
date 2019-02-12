@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Defines contracts for infrastructural components required for Functional.CQS.AOP caching.
+- IFunctionalCache
+- ILogFunctionalCacheExceptions
+- ILogFunctionalCacheHitsAndMisses</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>2019</Copyright>
+    <Authors>Ryan Marcotte</Authors>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageTags>functional CQS netstandard netcore caching</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.Caching.Infrastructure.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.Caching.Infrastructure.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+  </ItemGroup>
+
+</Project>
