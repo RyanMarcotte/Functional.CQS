@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <Authors>Ryan Marcotte</Authors>
+    <PackageTags>functional CQS netstandard netcore metrics</PackageTags>
+    <Description>Provides metrics-capturing decorator implementations for Functional.CQS handler implementations:
+- IQueryHandler&lt;TQuery, TResult&gt;
+- IAsyncQueryHandler&lt;TQuery, TResult&gt;
+- ICommandHandler&lt;TCommand, TError&gt;
+- IAsyncCommandHandler&lt;TCommand, TError&gt;</Description>
+    <Copyright>2019</Copyright>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
