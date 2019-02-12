@@ -4,6 +4,9 @@ sudo: required
 dist: xenial
 dotnet: 2.2
 
+services:
+ - redis-server
+  
 addons:
  apt:
   sources:
