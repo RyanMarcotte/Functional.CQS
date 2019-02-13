@@ -2,6 +2,7 @@
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Extensions;
+using Functional.CQS.AOP.IoC.PureDI.Caching.Models;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching
 {
@@ -57,14 +58,14 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching
 			var result = _cache.Get(cacheKey, groupKey, () =>
 			{
 				isCacheHit = false;
-				return _queryHandler.Handle(query);
-			}, input => input != null && _cachingStrategy.ShouldCacheResult(input), _cachingStrategy.TimeToLive);
+				return new DataWrapper<TResult>(_queryHandler.Handle(query));
+			}, input => input.Data != null && _cachingStrategy.ShouldCacheResult(input.Data), _cachingStrategy.TimeToLive);
 
 			return result.Match(
 				itemFromCache =>
 				{
 					_hitAndMissLogger.DoCacheLogging(isCacheHit, typeof(TQuery), typeof(TResult), cacheKey);
-					return itemFromCache;
+					return itemFromCache.Data;
 				},
 				exception =>
 				{

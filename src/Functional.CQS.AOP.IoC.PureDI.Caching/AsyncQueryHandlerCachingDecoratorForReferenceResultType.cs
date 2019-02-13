@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Extensions;
+using Functional.CQS.AOP.IoC.PureDI.Caching.Models;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching
 {
@@ -60,14 +61,14 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching
 			var result = await _cache.GetAsync(cacheKey, groupKey, async () =>
 			{
 				isCacheHit = false;
-				return await _queryHandler.HandleAsync(query, cancellationToken);
-			}, input => input != null && _cachingStrategy.ShouldCacheResult(input), _cachingStrategy.TimeToLive);
+				return new DataWrapper<TResult>(await _queryHandler.HandleAsync(query, cancellationToken));
+			}, input => input.Data != null && _cachingStrategy.ShouldCacheResult(input.Data), _cachingStrategy.TimeToLive);
 
 			return await result.Match(
 				itemFromCache =>
 				{
 					_hitAndMissLogger.DoCacheLogging(isCacheHit, typeof(TQuery), typeof(TResult), cacheKey);
-					return Task.FromResult(itemFromCache);
+					return Task.FromResult(itemFromCache.Data);
 				},
 				async exception =>
 				{

@@ -84,7 +84,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 			private static void AddItemToCache(IFunctionalCache cache)
 			{
 				var cacheKey = new DummyAsyncQueryReturnsReferenceTypeCachingStrategy().BuildCacheKeyForQuery(new DummyAsyncQueryReturnsReferenceType());
-				cache.Add(cacheKey, Option.None<string>(), new DummyAsyncQueryReturnsReferenceTypeResult(), TimeSpan.FromMinutes(1));
+				cache.Add(cacheKey, Option.None<string>(), new DummyAsyncQueryReturnsReferenceTypeResult().ToDataWrapper(), TimeSpan.FromMinutes(1));
 			}
 
 			public ItemDoesExistInCache()

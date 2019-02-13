@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.Xunit2;
 using FakeItEasy;
@@ -44,17 +42,17 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 
 		[Theory]
 		[QueryHandlerReturnsNull]
-		public async Task NeverCacheIfQueryHandlerReturnsNull(
-			AsyncQueryHandlerCachingDecoratorForReferenceResultType<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> sut,
-			IAsyncQueryHandler<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> queryHandler,
+		public void NeverCacheIfQueryHandlerReturnsNull(
+			QueryHandlerCachingDecoratorForReferenceResultType<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> sut,
+			IQueryHandler<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> queryHandler,
 			ILogFunctionalCacheHitsAndMisses logger)
 		{
-			var query = new DummyAsyncQueryReturnsReferenceType();
-			await sut.HandleAsync(query);
-			await sut.HandleAsync(query);
-			A.CallTo(() => queryHandler.HandleAsync(query, A<CancellationToken>._)).MustHaveHappenedTwiceExactly();
-			A.CallTo(() => logger.LogCacheMiss(typeof(DummyAsyncQueryReturnsReferenceType), typeof(DummyAsyncQueryReturnsReferenceTypeResult), A<string>._)).MustHaveHappenedTwiceExactly();
-			A.CallTo(() => logger.LogCacheHit(typeof(DummyAsyncQueryReturnsReferenceType), typeof(DummyAsyncQueryReturnsReferenceTypeResult), A<string>._)).MustNotHaveHappened();
+			var query = new DummyQueryReturnsReferenceType();
+			sut.Handle(query);
+			sut.Handle(query);
+			A.CallTo(() => queryHandler.Handle(query)).MustHaveHappenedTwiceExactly();
+			A.CallTo(() => logger.LogCacheMiss(typeof(DummyQueryReturnsReferenceType), typeof(DummyQueryReturnsReferenceTypeResult), A<string>._)).MustHaveHappenedTwiceExactly();
+			A.CallTo(() => logger.LogCacheHit(typeof(DummyQueryReturnsReferenceType), typeof(DummyQueryReturnsReferenceTypeResult), A<string>._)).MustNotHaveHappened();
 		}
 
 		#region Arrangements
@@ -84,7 +82,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 			private static void AddItemToCache(IFunctionalCache cache)
 			{
 				var cacheKey = new DummyQueryReturnsReferenceTypeCachingStrategy().BuildCacheKeyForQuery(new DummyQueryReturnsReferenceType());
-				cache.Add(cacheKey, Option.None<string>(), new DummyQueryReturnsReferenceTypeResult(), TimeSpan.FromMinutes(1));
+				cache.Add(cacheKey, Option.None<string>(), new DummyQueryReturnsReferenceTypeResult().ToDataWrapper(), TimeSpan.FromMinutes(1));
 			}
 
 			public ItemDoesExistInCache()
