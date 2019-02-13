@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.IoC.PureDI.Caching.Extensions;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Models;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching

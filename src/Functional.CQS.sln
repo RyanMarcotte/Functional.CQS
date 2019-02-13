@@ -41,6 +41,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.Caching.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.IoC.PureDI.Caching", "Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj", "{0A414F5B-E1EB-48A9-B58F-23380A6F151F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.IoC.PureDI.Caching.Tests", "Functional.CQS.AOP.IoC.PureDI.Caching.Tests\Functional.CQS.AOP.IoC.PureDI.Caching.Tests.csproj", "{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -115,6 +117,10 @@ Global
 		{0A414F5B-E1EB-48A9-B58F-23380A6F151F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A414F5B-E1EB-48A9-B58F-23380A6F151F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A414F5B-E1EB-48A9-B58F-23380A6F151F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,6 +133,7 @@ Global
 		{04540474-8966-4E90-A90E-A7251F8B8118} = {3DB0C9FC-28E8-414D-8F16-B7C1EFF090E8}
 		{3B104AC4-23F1-4944-8B69-A13A812A3730} = {3DB0C9FC-28E8-414D-8F16-B7C1EFF090E8}
 		{0A414F5B-E1EB-48A9-B58F-23380A6F151F} = {26B803A7-BF86-48AA-9668-F48626FF9075}
+		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415} = {26B803A7-BF86-48AA-9668-F48626FF9075}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CCA6DAD-E6D2-4199-8295-0BBE8BF4E862}
