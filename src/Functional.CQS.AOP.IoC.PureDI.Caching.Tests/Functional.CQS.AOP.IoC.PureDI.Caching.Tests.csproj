@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Functional.CQS.AOP.Caching.Infrastructure.MemoryCache\Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure.Caching\Functional.CQS.AOP.CommonTestInfrastructure.Caching.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure\Functional.CQS.AOP.CommonTestInfrastructure.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj" />
   </ItemGroup>

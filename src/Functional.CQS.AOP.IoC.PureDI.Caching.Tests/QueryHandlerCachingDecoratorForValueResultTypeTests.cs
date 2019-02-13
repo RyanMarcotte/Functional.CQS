@@ -2,16 +2,18 @@
 using AutoFixture;
 using AutoFixture.Xunit2;
 using FakeItEasy;
-using IQ.Vanilla.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations;
+using Functional.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.CommonTestInfrastructure.Caching;
+using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
+using Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations;
 using Xunit;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.Caching.Tests
+namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 {
 	public class QueryHandlerCachingDecoratorForValueResultTypeTests
 	{
 		[Theory]
 		[ItemDoesNotExistInCache]
-		[SuffixFactoryDoesNotProduceSuffix]
 		public void ExecutesQueryHandlerIfItemDoesNotExistInCache(
 			QueryHandlerCachingDecoratorForValueResultType<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> sut,
 			IQueryHandler<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> queryHandler,
@@ -38,30 +40,15 @@ namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.Caching.Tests
 			A.CallTo(() => logger.LogCacheHit(typeof(DummyQueryReturnsValueType), typeof(DummyQueryReturnsValueTypeResult), A<string>._)).MustHaveHappenedOnceExactly();
 		}
 
-		[Theory]
-		[DecoratorIsDisabled]
-		public void DoesNotExecuteAnyDecorationCodeIfDecoratorIsDisabled(
-			QueryHandlerCachingDecoratorForValueResultType<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> sut,
-			IQueryHandler<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> queryHandler,
-			ILogFunctionalCacheHitsAndMisses logger)
-		{
-			var query = new DummyQueryReturnsValueType();
-			sut.Handle(query);
-			A.CallTo(() => queryHandler.Handle(A<DummyQueryReturnsValueType>._)).MustHaveHappenedOnceExactly();
-			A.CallTo(() => logger.LogCacheMiss(typeof(DummyQueryReturnsValueType), typeof(DummyQueryReturnsValueTypeResult), A<string>._)).MustNotHaveHappened();
-			A.CallTo(() => logger.LogCacheHit(typeof(DummyQueryReturnsValueType), typeof(DummyQueryReturnsValueTypeResult), A<string>._)).MustNotHaveHappened();
-		}
-
 		#region Arrangements
 
 		private abstract class QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase : AutoDataAttribute
 		{
-			protected QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase(Func<Option<string>> suffixFactory, Action<IFunctionalCache, IFunctionalCacheKeySuffixFactory> setupAction, bool decoratorEnabled)
+			protected QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase(Action<IFunctionalCache> setupAction)
 			: base(() => new Fixture()
-				.Customize(new QueryHandlerCustomization<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult>(() => new DummyQueryReturnsValueTypeCachingStrategy()))
+				.Customize(new QueryHandlerCustomization<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult>(() => new DummyQueryReturnsValueTypeResult(), () => new DummyQueryReturnsValueTypeCachingStrategy()))
 				.Customize(new CacheCustomization(setupAction))
-				.Customize(new CacheLoggerCustomization())
-				.Customize(new CachingModuleConfigurationParametersCustomization(new Configuration.CachingModuleConfigurationParameters(decoratorEnabled))))
+				.Customize(new CacheLoggerCustomization()))
 			{
 
 			}
@@ -70,37 +57,21 @@ namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.Caching.Tests
 		private class ItemDoesNotExistInCache : QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase
 		{
 			public ItemDoesNotExistInCache()
-				: base(() => Option.Some(string.Empty), (cache, suffixFactory) => { }, true)
+				: base(cache => { })
 			{
 			}
 		}
 
 		private class ItemDoesExistInCache : QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase
 		{
-			private static void AddItemToCache(IFunctionalCache cache, IFunctionalCacheKeySuffixFactory suffixFactory)
+			private static void AddItemToCache(IFunctionalCache cache)
 			{
-				var cacheKey = new DummyQueryReturnsValueTypeCachingStrategy().BuildCacheKeyForQueryWithSuffixApplied(suffixFactory, new DummyQueryReturnsValueType()).EnsureValue();
+				var cacheKey = new DummyQueryReturnsValueTypeCachingStrategy().BuildCacheKeyForQuery(new DummyQueryReturnsValueType());
 				cache.Add(cacheKey, Option.None<string>(), new DummyQueryReturnsValueTypeResult(), TimeSpan.FromMinutes(1));
 			}
 
 			public ItemDoesExistInCache()
-				: base(() => Option.Some(string.Empty), AddItemToCache, true)
-			{
-			}
-		}
-
-		private class SuffixFactoryDoesNotProduceSuffix : QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase
-		{
-			public SuffixFactoryDoesNotProduceSuffix()
-				: base(Option.None<string>, (cache, suffixFactory) => { }, true)
-			{
-			}
-		}
-
-		private class DecoratorIsDisabled : QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase
-		{
-			public DecoratorIsDisabled()
-				: base(() => Option.Some(string.Empty), (cache, suffixFactory) => { }, false)
+				: base(AddItemToCache)
 			{
 			}
 		}

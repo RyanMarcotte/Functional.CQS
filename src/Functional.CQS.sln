@@ -39,9 +39,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.Caching.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests", "Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests\Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests.csproj", "{C8735E54-E4EE-4D7D-8263-D79643A804E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.IoC.PureDI.Caching", "Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj", "{0A414F5B-E1EB-48A9-B58F-23380A6F151F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.IoC.PureDI.Caching", "Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj", "{0A414F5B-E1EB-48A9-B58F-23380A6F151F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.IoC.PureDI.Caching.Tests", "Functional.CQS.AOP.IoC.PureDI.Caching.Tests\Functional.CQS.AOP.IoC.PureDI.Caching.Tests.csproj", "{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functional.CQS.AOP.IoC.PureDI.Caching.Tests", "Functional.CQS.AOP.IoC.PureDI.Caching.Tests\Functional.CQS.AOP.IoC.PureDI.Caching.Tests.csproj", "{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functional.CQS.AOP.CommonTestInfrastructure.Caching", "Functional.CQS.AOP.CommonTestInfrastructure.Caching\Functional.CQS.AOP.CommonTestInfrastructure.Caching.csproj", "{D8D3B611-DC77-467D-A8CE-FB9225FCC2DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,10 @@ Global
 		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDB4D3EA-FDBA-4A23-A2BC-41541C352415}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8D3B611-DC77-467D-A8CE-FB9225FCC2DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8D3B611-DC77-467D-A8CE-FB9225FCC2DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8D3B611-DC77-467D-A8CE-FB9225FCC2DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8D3B611-DC77-467D-A8CE-FB9225FCC2DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

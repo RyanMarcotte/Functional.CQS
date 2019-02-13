@@ -3,7 +3,7 @@ using AutoFixture;
 using Functional.CQS.AOP.Caching.Infrastructure;
 using Functional.CQS.AOP.Caching.Infrastructure.MemoryCache;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations
+namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations
 {
 	internal class CacheCustomization : ICustomization
 	{
