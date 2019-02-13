@@ -1,8 +1,8 @@
 ﻿using AutoFixture;
 using FakeItEasy;
-using IQ.Vanilla.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.Caching.Infrastructure;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations
+namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations
 {
 	internal class CacheLoggerCustomization : ICustomization
 	{
