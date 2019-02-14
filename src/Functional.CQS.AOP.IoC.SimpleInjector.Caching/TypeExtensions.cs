@@ -22,5 +22,12 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching
 		{
 			typeof(IQueryResultCachingStrategy<,>)
 		};
+
+		public static bool IsCachingStrategyForQueryType(this Type type)
+		{
+			return type.IsClass && GetGenericParametersForQueryCachingStrategyType(type).Match(
+				queryAndResultType => typeof(IQueryResultCachingStrategy<,>).MakeGenericType(queryAndResultType.QueryType, queryAndResultType.ResultType).IsAssignableFrom(type),
+				() => false);
+		}
 	}
 }

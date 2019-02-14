@@ -2,12 +2,12 @@ using System;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 
-namespace Functional.CQS.AOP.CommonTestInfrastructure.Caching
+namespace Functional.CQS.AOP.CommonTestInfrastructure.Caching.DummyObjects
 {
 	/// <summary>
 	/// 
 	/// </summary>
-	public class DummyQueryReturnsReferenceTypeCachingStrategy : IQueryResultCachingStrategy<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult>
+	public class DummyAsyncQueryReturnsValueTypeCachingStrategy : IQueryResultCachingStrategy<DummyAsyncQueryReturnsValueType, DummyAsyncQueryReturnsValueTypeResult>
 	{
 		/// <summary>
 		/// The amount of time the item will live in the cache before a refresh is required.
@@ -19,20 +19,20 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.Caching
 		/// </summary>
 		/// <param name="query">The query.</param>
 		/// <returns></returns>
-		public string BuildCacheKeyForQuery(DummyQueryReturnsReferenceType query) => string.Empty;
+		public string BuildCacheKeyForQuery(DummyAsyncQueryReturnsValueType query) => string.Empty;
 
 		/// <summary>
 		/// Builds a key used for identifying groups of related cached items.  If null, the cached item does not belong to a group.
 		/// </summary>
 		/// <param name="query">The query.</param>
 		/// <returns></returns>
-		public Option<string> BuildCacheGroupKeyForQuery(DummyQueryReturnsReferenceType query) => Option.None<string>();
+		public Option<string> BuildCacheGroupKeyForQuery(DummyAsyncQueryReturnsValueType query) => Option.None<string>();
 
 		/// <summary>
 		/// Indicates if a particular result should be stored in the cache.
 		/// </summary>
 		/// <param name="result">The result from executing the query.</param>
 		/// <returns></returns>
-		public bool ShouldCacheResult(DummyQueryReturnsReferenceTypeResult result) => true;
+		public bool ShouldCacheResult(DummyAsyncQueryReturnsValueTypeResult result) => true;
 	}
 }

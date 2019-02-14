@@ -1,6 +1,7 @@
 ﻿using AutoFixture;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.CommonTestInfrastructure.Caching;
+using Functional.CQS.AOP.CommonTestInfrastructure.Caching.DummyObjects;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations

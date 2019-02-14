@@ -69,8 +69,11 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching
 			gateway.Container.RegisterSingleton(typeof(IInvalidateFunctionalCacheItem<,>), typeof(FunctionalCacheItemInvalidator<,>));
 			gateway.Container.RegisterSingleton(typeof(IReplaceFunctionalCacheItem<,>), typeof(FunctionalCacheItemOverwriter<,>));
 
+			if (!configurationParameters.QueryResultCachingDecoratorEnabled)
+				return gateway;
+
 			var queryAndResultTypeWithCachingStrategyDefinedCollection = new HashSet<QueryAndResultType>(gateway.AssemblyCollection
-				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsClass && typeof(IQueryResultCachingStrategy<,>).IsAssignableFrom(t)))
+				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsCachingStrategyForQueryType()))
 				.Select(x => x.GetGenericParametersForQueryCachingStrategyType())
 				.WhereSome());
 
