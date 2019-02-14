@@ -6,9 +6,11 @@ using Functional.CQS;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
 using Functional.CQS.AOP.IoC.PureDI.Caching;
+using Functional.CQS.AOP.IoC.PureDI.Caching.Invalidation;
 using Functional.CQS.AOP.IoC.SimpleInjector.Caching.Configuration;
 using Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways;
 using Functional.CQS.AOP.IoC.SimpleInjector.Models;
+using IQ.Vanilla.CQS.AOP.Caching.Invalidation;
 using IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Caching;
 using IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Caching.NullImplementations;
 

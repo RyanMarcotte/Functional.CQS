@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Functional.CQS.AOP.Caching.Infrastructure\Functional.CQS.AOP.Caching.Infrastructure.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching.Invalidation\Functional.CQS.AOP.Caching.Invalidation.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.Caching\Functional.CQS.AOP.Caching.csproj" />
     <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
   </ItemGroup>
