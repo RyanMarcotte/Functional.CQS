@@ -27,6 +27,7 @@ Used with SimpleInjector container.</Description>
 
   <ItemGroup>
     <PackageReference Include="Functional.Common.Extensions" Version="1.9.0" />
+    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
   </ItemGroup>
 
   <ItemGroup>
