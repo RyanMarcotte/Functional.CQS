@@ -12,7 +12,7 @@ namespace SimpleInjector
 	{
 		public static Option<QueryAndResultType> GetGenericParametersForQueryCachingStrategyType(this Type type)
 		{
-			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceTypes(_queryCachingStrategyTypeCollection).Map(queryHandlerInterface =>
+			return type.GetClosedGenericInterfaceTypeFromOpenGenericInterfaceTypes(_queryCachingStrategyTypeCollection).Select(queryHandlerInterface =>
 			{
 				var queryType = queryHandlerInterface.GenericTypeArguments[0];
 				var resultType = queryHandlerInterface.GenericTypeArguments[1];
