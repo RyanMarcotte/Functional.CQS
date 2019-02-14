@@ -3,20 +3,11 @@ using System;
 namespace Functional.CQS.AOP.MetricsCapturing
 {
 	/// <summary>
-	/// Marker interface for metrics capturing strategies used by <see cref="ICommandHandler{TCommand,TError}"/> and <see cref="IAsyncCommandHandler{TCommand, TError}"/>.
-	/// Used internally by Functional.CQS.AOP.  Implement <see cref="IMetricsCapturingStrategyForCommand{TCommand, TError}"/> instead.
-	/// </summary>
-	public interface IMetricsCapturingStrategyForCommand
-	{
-		
-	}
-
-	/// <summary>
 	/// Interface for metrics capturing strategies used by <see cref="ICommandHandler{TCommand,TError}"/> and <see cref="IAsyncCommandHandler{TCommand, TError}"/>.
 	/// </summary>
 	/// <typeparam name="TCommand">The command type.</typeparam>
 	/// <typeparam name="TError">The error type.</typeparam>
-	public interface IMetricsCapturingStrategyForCommand<in TCommand, TError> : IMetricsCapturingStrategyForCommand
+	public interface IMetricsCapturingStrategyForCommand<in TCommand, TError>
 		where TCommand : ICommandParameters<TError>
 	{
 		/// <summary>

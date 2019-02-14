@@ -3,20 +3,11 @@
 namespace Functional.CQS.AOP.MetricsCapturing
 {
 	/// <summary>
-	/// Marker interface for metrics capturing strategies used by <see cref="IQueryHandler{TQuery, TResult}"/> and <see cref="IAsyncQueryHandler{TQuery, TResult}"/>.
-	/// Used internally by Functional.CQS.AOP.  Implement <see cref="IMetricsCapturingStrategyForQuery{TQuery,TResult}"/> instead.
-	/// </summary>
-	public interface IMetricsCapturingStrategyForQuery
-	{
-		
-	}
-
-	/// <summary>
 	/// Interface for metrics capturing strategies used by <see cref="IQueryHandler{TQuery, TResult}"/> and <see cref="IAsyncQueryHandler{TQuery, TResult}"/>.
 	/// </summary>
 	/// <typeparam name="TQuery">The query type.</typeparam>
 	/// <typeparam name="TResult">The type of data returned from the query.</typeparam>
-	public interface IMetricsCapturingStrategyForQuery<in TQuery, in TResult> : IMetricsCapturingStrategyForQuery
+	public interface IMetricsCapturingStrategyForQuery<in TQuery, in TResult>
 		where TQuery : IQueryParameters<TResult>
 	{
 		/// <summary>
