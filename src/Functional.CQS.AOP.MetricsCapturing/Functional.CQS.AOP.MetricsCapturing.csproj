@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <Authors>Ryan Marcotte</Authors>
+    <Description>Defines contracts for metrics-capturing components to be used alongside Functional.CQS handler implementations:
+- IUniversalMetricsCapturingStrategy
+- IMetricsCapturingStrategyForQuery&lt;TQuery, TResult&gt;
+- IMetricsCapturingStrategyForCommand&lt;TCommand, TError&gt;</Description>
+    <Copyright>2019</Copyright>
+    <PackageTags>functional CQS netstandard netcore metrics</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.MetricsCapturing.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.MetricsCapturing.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
+  </ItemGroup>
+
+</Project>
