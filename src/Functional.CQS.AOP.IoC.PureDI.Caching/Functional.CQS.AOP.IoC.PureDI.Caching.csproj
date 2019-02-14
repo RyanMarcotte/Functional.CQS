@@ -2,6 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Supplies caching decorator implementations for Functional.CQS handler implementations:
+- IQueryHandler&lt;TQuery, TResult&gt;
+- IAsyncQueryHandler&lt;TQuery, TResult&gt;</Description>
+    <Authors>Ryan Marcotte</Authors>
+    <Copyright>2019</Copyright>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageTags>functional CQS netstandard netcore caching</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
