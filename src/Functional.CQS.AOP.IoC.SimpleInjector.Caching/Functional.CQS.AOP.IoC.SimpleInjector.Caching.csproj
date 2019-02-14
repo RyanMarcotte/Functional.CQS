@@ -20,7 +20,6 @@ Used with SimpleInjector container.</Description>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Functional.CQS.AOP.Caching.Invalidation\Functional.CQS.AOP.Caching.Invalidation.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.Caching\Functional.CQS.AOP.Caching.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.csproj" />

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Functional.CQS.AOP.Caching.Invalidation
+namespace Functional.CQS.AOP.Caching.Infrastructure.Invalidation
 {
 	// ReSharper disable once InconsistentNaming
 	/// <summary>

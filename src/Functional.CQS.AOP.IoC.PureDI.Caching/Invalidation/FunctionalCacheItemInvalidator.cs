@@ -1,6 +1,7 @@
 ﻿using System;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.Caching.Infrastructure.Invalidation;
 using Functional.CQS.AOP.Caching.Invalidation;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching.Invalidation

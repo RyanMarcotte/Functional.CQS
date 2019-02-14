@@ -1,5 +1,6 @@
 ﻿using System;
 using Functional.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.Caching.Infrastructure.Invalidation;
 
 namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching.NullImplementations
 {

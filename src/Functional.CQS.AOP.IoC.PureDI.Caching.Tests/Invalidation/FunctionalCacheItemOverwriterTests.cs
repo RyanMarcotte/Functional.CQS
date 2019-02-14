@@ -5,6 +5,7 @@ using AutoFixture.Xunit2;
 using FakeItEasy;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.Caching.Infrastructure.Invalidation;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Invalidation;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Models;
