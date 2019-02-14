@@ -2,7 +2,6 @@
 
 namespace Functional.CQS.AOP.Caching.Invalidation
 {
-	// ReSharper disable once InconsistentNaming
 	/// <summary>
 	/// Interface for an object that overwrites data already stored in the query result caching system.
 	/// </summary>
