@@ -5,7 +5,7 @@ using System.Text;
 namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching.Configuration
 {
 	/// <summary>
-	/// Encapsulates configuration parameters used by IQ.Vanilla.CQS.AOP.IoC.CastleWindsor.Caching components.
+	/// Encapsulates configuration parameters used by Functional.CQS.AOP.IoC.SimpleInjector.Caching components.
 	/// </summary>
 	public class CachingModuleConfigurationParameters
 	{

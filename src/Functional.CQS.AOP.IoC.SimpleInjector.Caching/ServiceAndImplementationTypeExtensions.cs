@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Functional.CQS.AOP.IoC.SimpleInjector;
 using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Caching
+namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching
 {
 	internal static class ServiceAndImplementationTypeExtensions
 	{

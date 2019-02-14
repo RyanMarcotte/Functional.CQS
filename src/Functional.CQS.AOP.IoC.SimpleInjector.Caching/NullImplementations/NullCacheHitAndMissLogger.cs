@@ -1,7 +1,7 @@
 ﻿using System;
 using Functional.CQS.AOP.Caching.Infrastructure;
 
-namespace IQ.Vanilla.CQS.AOP.IoC.SimpleInjector.Caching.NullImplementations
+namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching.NullImplementations
 {
 	internal class NullCacheHitAndMissLogger : ILogFunctionalCacheHitsAndMisses
 	{

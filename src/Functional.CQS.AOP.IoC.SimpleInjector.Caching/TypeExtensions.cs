@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Functional;
 using Functional.CQS.AOP.Caching;
-using Functional.CQS.AOP.IoC.SimpleInjector;
 using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 
 // ReSharper disable once CheckNamespace
-namespace SimpleInjector
+namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching
 {
 	internal static class TypeExtensions
 	{
