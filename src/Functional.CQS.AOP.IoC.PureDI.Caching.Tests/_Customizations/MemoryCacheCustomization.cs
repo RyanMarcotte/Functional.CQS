@@ -5,11 +5,11 @@ using Functional.CQS.AOP.Caching.Infrastructure.MemoryCache;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations
 {
-	internal class CacheCustomization : ICustomization
+	internal class MemoryCacheCustomization : ICustomization
 	{
 		private readonly Action<IFunctionalCache> _setupAction;
 
-		public CacheCustomization(Action<IFunctionalCache> setupAction)
+		public MemoryCacheCustomization(Action<IFunctionalCache> setupAction)
 		{
 			_setupAction = setupAction ?? throw new ArgumentNullException(nameof(setupAction));
 		}

@@ -3,8 +3,8 @@ using System.Collections.Concurrent;
 using System.Reflection;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.Caching.Invalidation;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Models;
-using IQ.Vanilla.CQS.AOP.Caching.Invalidation;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching.Invalidation
 {

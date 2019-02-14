@@ -49,7 +49,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 			protected QueryHandlerCachingDecoratorForValueResultTypeTestsArrangementBase(Action<IFunctionalCache> setupAction)
 				: base(() => new Fixture()
 					.Customize(new AsyncQueryHandlerCustomization<DummyAsyncQueryReturnsValueType, DummyAsyncQueryReturnsValueTypeResult>(() => new DummyAsyncQueryReturnsValueTypeResult(), () => new DummyAsyncQueryReturnsValueTypeCachingStrategy()))
-					.Customize(new CacheCustomization(setupAction))
+					.Customize(new MemoryCacheCustomization(setupAction))
 					.Customize(new CacheLoggerCustomization()))
 			{
 
