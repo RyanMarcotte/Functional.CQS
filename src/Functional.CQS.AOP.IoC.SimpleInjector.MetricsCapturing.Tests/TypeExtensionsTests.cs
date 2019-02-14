@@ -76,7 +76,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 			public void ShouldReturnFalseForDummyAsyncCommandThatFailsMetricsCapturingStrategy() => typeof(DummyAsyncCommandThatFailsMetricsCapturingStrategy).IsMetricsCapturingStrategyForQueryType().Should().BeFalse();
 
 			[Fact]
-			public void ShouldReturnFalseForAnyOtherType()
+			public void ShouldReturnFalseForOtherTypes()
 			{
 				typeof(int).IsMetricsCapturingStrategyForQueryType().Should().BeFalse();
 				typeof(object).IsMetricsCapturingStrategyForQueryType().Should().BeFalse();
@@ -110,7 +110,7 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 			public void ShouldReturnTrueForDummyAsyncCommandThatFailsMetricsCapturingStrategy() => typeof(DummyAsyncCommandThatFailsMetricsCapturingStrategy).IsMetricsCapturingStrategyForCommandType().Should().BeTrue();
 
 			[Fact]
-			public void ShouldReturnFalseForAnyOtherType()
+			public void ShouldReturnFalseForOtherTypes()
 			{
 				typeof(int).IsMetricsCapturingStrategyForCommandType().Should().BeFalse();
 				typeof(object).IsMetricsCapturingStrategyForCommandType().Should().BeFalse();
