@@ -2,7 +2,6 @@
 
 namespace Functional.CQS.AOP.Caching.Infrastructure.Invalidation
 {
-	// ReSharper disable once InconsistentNaming
 	/// <summary>
 	/// Used for logging cache item invalidation operations.
 	/// </summary>
