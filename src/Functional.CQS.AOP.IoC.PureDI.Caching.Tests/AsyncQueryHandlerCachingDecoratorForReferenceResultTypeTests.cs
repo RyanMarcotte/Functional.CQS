@@ -16,6 +16,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 	{
 		[Theory]
 		[ItemDoesNotExistInCache]
+		[NullItemDoesNotExistInCache]
 		public async Task ExecutesQueryHandlerIfItemDoesNotExistInCache(
 			AsyncQueryHandlerCachingDecoratorForReferenceResultType<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> sut,
 			IAsyncQueryHandler<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> queryHandler,
@@ -30,6 +31,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 
 		[Theory]
 		[ItemDoesExistInCache]
+		[NullItemDoesExistInCache]
 		public async Task DoesNotExecuteQueryHandlerIfItemDoesExistInCache(
 			AsyncQueryHandlerCachingDecoratorForReferenceResultType<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> sut,
 			IAsyncQueryHandler<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> queryHandler,
@@ -40,21 +42,6 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 			A.CallTo(() => queryHandler.HandleAsync(A<DummyAsyncQueryReturnsReferenceType>._, A<CancellationToken>._)).MustNotHaveHappened();
 			A.CallTo(() => logger.LogCacheMiss(typeof(DummyAsyncQueryReturnsReferenceType), typeof(DummyAsyncQueryReturnsReferenceTypeResult), A<string>._)).MustNotHaveHappened();
 			A.CallTo(() => logger.LogCacheHit(typeof(DummyAsyncQueryReturnsReferenceType), typeof(DummyAsyncQueryReturnsReferenceTypeResult), A<string>._)).MustHaveHappenedOnceExactly();
-		}
-
-		[Theory]
-		[AsyncQueryHandlerReturnsNull]
-		public async Task NeverCacheIfQueryHandlerReturnsNull(
-			AsyncQueryHandlerCachingDecoratorForReferenceResultType<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> sut,
-			IAsyncQueryHandler<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult> queryHandler,
-			ILogFunctionalCacheHitsAndMisses logger)
-		{
-			var query = new DummyAsyncQueryReturnsReferenceType();
-			await sut.HandleAsync(query);
-			await sut.HandleAsync(query);
-			A.CallTo(() => queryHandler.HandleAsync(query, A<CancellationToken>._)).MustHaveHappenedTwiceExactly();
-			A.CallTo(() => logger.LogCacheMiss(typeof(DummyAsyncQueryReturnsReferenceType), typeof(DummyAsyncQueryReturnsReferenceTypeResult), A<string>._)).MustHaveHappenedTwiceExactly();
-			A.CallTo(() => logger.LogCacheHit(typeof(DummyAsyncQueryReturnsReferenceType), typeof(DummyAsyncQueryReturnsReferenceTypeResult), A<string>._)).MustNotHaveHappened();
 		}
 
 		#region Arrangements
@@ -81,24 +68,32 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 
 		private class ItemDoesExistInCache : AsyncQueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
 		{
-			private static void AddItemToCache(IFunctionalCache cache)
-			{
-				var cacheKey = new DummyAsyncQueryReturnsReferenceTypeCachingStrategy().BuildCacheKeyForQuery(new DummyAsyncQueryReturnsReferenceType());
-				cache.Add(cacheKey, Option.None<string>(), new DummyAsyncQueryReturnsReferenceTypeResult().ToDataWrapper(), TimeSpan.FromMinutes(1));
-			}
-
 			public ItemDoesExistInCache()
 				: base(AddItemToCache, () => new DummyAsyncQueryReturnsReferenceTypeResult())
 			{
 			}
 		}
 
-		private class AsyncQueryHandlerReturnsNull : AsyncQueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
+		private class NullItemDoesNotExistInCache : AsyncQueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
 		{
-			public AsyncQueryHandlerReturnsNull()
+			public NullItemDoesNotExistInCache()
 				: base(cache => { }, () => null)
 			{
 			}
+		}
+
+		private class NullItemDoesExistInCache : AsyncQueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
+		{
+			public NullItemDoesExistInCache()
+				: base(AddItemToCache, () => new DummyAsyncQueryReturnsReferenceTypeResult())
+			{
+			}
+		}
+
+		private static void AddItemToCache(IFunctionalCache cache)
+		{
+			var cacheKey = new DummyAsyncQueryReturnsReferenceTypeCachingStrategy().BuildCacheKeyForQuery(new DummyAsyncQueryReturnsReferenceType());
+			cache.Add(cacheKey, Option.None<string>(), new DummyAsyncQueryReturnsReferenceTypeResult().ToDataWrapper(), TimeSpan.FromMinutes(1));
 		}
 
 		#endregion

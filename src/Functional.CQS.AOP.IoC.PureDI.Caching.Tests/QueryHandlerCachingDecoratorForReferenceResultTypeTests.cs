@@ -14,6 +14,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 	{
 		[Theory]
 		[ItemDoesNotExistInCache]
+		[NullItemDoesNotExistInCache]
 		public void ExecutesQueryHandlerIfItemDoesNotExistInCache(
 			QueryHandlerCachingDecoratorForReferenceResultType<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> sut,
 			IQueryHandler<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> queryHandler,
@@ -28,6 +29,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 
 		[Theory]
 		[ItemDoesExistInCache]
+		[NullItemDoesExistInCache]
 		public void DoesNotExecuteQueryHandlerIfItemDoesExistInCache(
 			QueryHandlerCachingDecoratorForReferenceResultType<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> sut,
 			IQueryHandler<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> queryHandler,
@@ -38,21 +40,6 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 			A.CallTo(() => queryHandler.Handle(A<DummyQueryReturnsReferenceType>._)).MustNotHaveHappened();
 			A.CallTo(() => logger.LogCacheMiss(typeof(DummyQueryReturnsReferenceType), typeof(DummyQueryReturnsReferenceTypeResult), A<string>._)).MustNotHaveHappened();
 			A.CallTo(() => logger.LogCacheHit(typeof(DummyQueryReturnsReferenceType), typeof(DummyQueryReturnsReferenceTypeResult), A<string>._)).MustHaveHappenedOnceExactly();
-		}
-
-		[Theory]
-		[QueryHandlerReturnsNull]
-		public void NeverCacheIfQueryHandlerReturnsNull(
-			QueryHandlerCachingDecoratorForReferenceResultType<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> sut,
-			IQueryHandler<DummyQueryReturnsReferenceType, DummyQueryReturnsReferenceTypeResult> queryHandler,
-			ILogFunctionalCacheHitsAndMisses logger)
-		{
-			var query = new DummyQueryReturnsReferenceType();
-			sut.Handle(query);
-			sut.Handle(query);
-			A.CallTo(() => queryHandler.Handle(query)).MustHaveHappenedTwiceExactly();
-			A.CallTo(() => logger.LogCacheMiss(typeof(DummyQueryReturnsReferenceType), typeof(DummyQueryReturnsReferenceTypeResult), A<string>._)).MustHaveHappenedTwiceExactly();
-			A.CallTo(() => logger.LogCacheHit(typeof(DummyQueryReturnsReferenceType), typeof(DummyQueryReturnsReferenceTypeResult), A<string>._)).MustNotHaveHappened();
 		}
 
 		#region Arrangements
@@ -79,24 +66,32 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 
 		private class ItemDoesExistInCache : QueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
 		{
-			private static void AddItemToCache(IFunctionalCache cache)
-			{
-				var cacheKey = new DummyQueryReturnsReferenceTypeCachingStrategy().BuildCacheKeyForQuery(new DummyQueryReturnsReferenceType());
-				cache.Add(cacheKey, Option.None<string>(), new DummyQueryReturnsReferenceTypeResult().ToDataWrapper(), TimeSpan.FromMinutes(1));
-			}
-
 			public ItemDoesExistInCache()
 				: base(AddItemToCache, () => new DummyQueryReturnsReferenceTypeResult())
 			{
 			}
 		}
 
-		private class QueryHandlerReturnsNull : QueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
+		private class NullItemDoesNotExistInCache : QueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
 		{
-			public QueryHandlerReturnsNull()
+			public NullItemDoesNotExistInCache()
 				: base(cache => { }, () => null)
 			{
 			}
+		}
+
+		private class NullItemDoesExistInCache : QueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase
+		{
+			public NullItemDoesExistInCache()
+				: base(AddItemToCache, () => null)
+			{
+			}
+		}
+
+		private static void AddItemToCache(IFunctionalCache cache)
+		{
+			var cacheKey = new DummyQueryReturnsReferenceTypeCachingStrategy().BuildCacheKeyForQuery(new DummyQueryReturnsReferenceType());
+			cache.Add(cacheKey, Option.None<string>(), new DummyQueryReturnsReferenceTypeResult().ToDataWrapper(), TimeSpan.FromMinutes(1));
 		}
 
 		#endregion
