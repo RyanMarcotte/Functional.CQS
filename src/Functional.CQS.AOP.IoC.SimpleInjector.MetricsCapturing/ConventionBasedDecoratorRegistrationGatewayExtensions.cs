@@ -56,7 +56,7 @@ namespace SimpleInjector
 				return;
 
 			var queryAndResultTypeWithMetricsCapturingStrategyDefinedCollection = new HashSet<QueryAndResultType>(gateway.AssemblyCollection
-				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsClass && typeof(IMetricsCapturingStrategyForQuery).IsAssignableFrom(t)))
+				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsMetricsCapturingStrategyForQueryType()))
 				.Select(x => x.GetGenericParametersForQueryMetricsCapturingStrategyType())
 				.WhereSome());
 
@@ -72,7 +72,7 @@ namespace SimpleInjector
 				return;
 
 			var commandAndErrorTypeWithCachingStrategyDefinedCollection = new HashSet<CommandAndErrorType>(gateway.AssemblyCollection
-				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsClass && typeof(IMetricsCapturingStrategyForCommand).IsAssignableFrom(t)))
+				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsMetricsCapturingStrategyForCommandType()))
 				.Select(x => x.GetGenericParametersForCommandMetricsCapturingStrategyType())
 				.WhereSome());
 

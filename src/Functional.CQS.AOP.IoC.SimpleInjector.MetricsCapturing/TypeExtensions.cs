@@ -25,5 +25,19 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing
 				return new CommandAndErrorType(commandType, errorType);
 			});
 		}
+
+		public static bool IsMetricsCapturingStrategyForQueryType(this Type type)
+		{
+			return type.IsClass && GetGenericParametersForQueryMetricsCapturingStrategyType(type).Match(
+				queryAndResultType => typeof(IMetricsCapturingStrategyForQuery<,>).MakeGenericType(queryAndResultType.QueryType, queryAndResultType.ResultType).IsAssignableFrom(type),
+				() => false);
+		}
+
+		public static bool IsMetricsCapturingStrategyForCommandType(this Type type)
+		{
+			return type.IsClass && GetGenericParametersForCommandMetricsCapturingStrategyType(type).Match(
+				commandAndErrorType => typeof(IMetricsCapturingStrategyForCommand<,>).MakeGenericType(commandAndErrorType.CommandType, commandAndErrorType.ErrorType).IsAssignableFrom(type),
+				() => false);
+		}
 	}
 }
