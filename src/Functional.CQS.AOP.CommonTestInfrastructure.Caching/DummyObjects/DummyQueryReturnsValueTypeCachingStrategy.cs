@@ -2,7 +2,7 @@ using System;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 
-namespace Functional.CQS.AOP.CommonTestInfrastructure.Caching
+namespace Functional.CQS.AOP.CommonTestInfrastructure.Caching.DummyObjects
 {
 	/// <summary>
 	/// Cache item factory for <see cref="DummyQueryReturnsValueType"/>.

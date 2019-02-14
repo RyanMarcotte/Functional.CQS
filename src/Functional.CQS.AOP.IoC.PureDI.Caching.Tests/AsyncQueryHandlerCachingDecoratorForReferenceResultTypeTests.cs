@@ -6,6 +6,7 @@ using AutoFixture.Xunit2;
 using FakeItEasy;
 using Functional.CQS.AOP.Caching.Infrastructure;
 using Functional.CQS.AOP.CommonTestInfrastructure.Caching;
+using Functional.CQS.AOP.CommonTestInfrastructure.Caching.DummyObjects;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Extensions;
