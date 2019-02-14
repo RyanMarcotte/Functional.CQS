@@ -4,6 +4,7 @@ using System.Linq;
 using Functional;
 using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.Caching.Infrastructure;
+using Functional.CQS.AOP.Caching.Infrastructure.Invalidation;
 using Functional.CQS.AOP.Caching.Invalidation;
 using Functional.CQS.AOP.IoC.PureDI.Caching;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Invalidation;
