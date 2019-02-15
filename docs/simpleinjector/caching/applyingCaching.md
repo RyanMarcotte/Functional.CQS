@@ -1,42 +1,42 @@
 # Applying Caching Concerns to Specific `IQueryHandler<TQuery, TResult>` and `IAsyncQueryHandler<TQuery, TResult>` Implementations
 
-The caching decorator requires that a query handler have a corresponding [`IQueryResultCachingStrategy<TQuery, TResult>`](../../../src/IQ.Vanilla.CQS.AOP.Caching/IQueryResultCachingStrategy.cs) implementation (hereafter referred to as **caching strategy implementation**) defined.
+The caching decorator requires that a query handler have a corresponding [`IQueryResultCachingStrategy<TQuery, TResult>`](../../../src/Functional.CQS.AOP.Caching/IQueryResultCachingStrategy.cs) implementation (hereafter referred to as **caching strategy implementation**) defined.
 
-The `IQueryResultCachingStrategy<TQuery, TResult>` contract is defined by the `IQ.Vanilla.CQS.AOP.Caching` NuGet package.  **As best practice, caching strategy implementations should be defined near the composition root**.  In other words, caching strategy implementations should be defined in the same assembly containing the `IQ.Vanilla.CQS.AOP` installer code, or in a dedicated component registration assembly.  It should _not_ be defined in the same assembly as query parameter objects (`TQuery`) or query handler implementations.  This is because caching is an infrastructural concern, and thus belongs [at the boundary of the system and not within the application domain](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/).
+The `IQueryResultCachingStrategy<TQuery, TResult>` contract is defined by the `Functional.CQS.AOP.Caching` NuGet package.  **As best practice, caching strategy implementations should be defined near the composition root**.  In other words, caching strategy implementations should be defined in the same assembly containing the `Functional.CQS.AOP` installer code, or in a dedicated component registration assembly.  It should _not_ be defined in the same assembly as query parameter objects (`TQuery`) or query handler implementations.  This is because caching is an infrastructural concern, and thus belongs [at the boundary of the system and not within the application domain](http://jeffreypalermo.com/blog/the-onion-architecture-part-1/).
 
 Here is an example query parameter object and query handler:
 
 ```
-// an IQ.Vanilla query parameter object
+// a Functional query parameter object
 // assume SystemSettingsForCompany is a POCO (plain old C# object)
 // query returns Option<SystemSettingsForCompany> because it is possible that a company entity ID is invalid and no result would be returned in that case
 // constructor boilerplate has been left out for brevity
-public class GetSystemSettingsForCompanyQuery : IQuery<Option<SystemSettingsForCompany>>
+public class GetSystemSettingsForCompanyQuery : IQuery<Result<Option<SystemSettingsForCompany>, Exception>>
 {
     public int CompanyEntityID { get; }
 }
 ```
 
 ```
-// an IQ.Vanilla query handler implementation
+// an Functional query handler implementation
 // actual implementation has not been included as it is not relevant to caching 
-public class GetSystemSettingsForCompanyQueryHandler : IQueryHandler<GetSystemSettingsForCompanyQuery, Option<SystemSettingsForCompany>>
+public class GetSystemSettingsForCompanyQueryHandler : IQueryHandler<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>>
 {
-    public Option<SystemSettingsForCompany> Handle(GetSystemSettingsForCompanyQuery query) => ...;
+    public Result<Option<SystemSettingsForCompany>, Exception> Handle(GetSystemSettingsForCompanyQuery query) => ...;
 }
 ```
 
-Note that this `IQueryHandler<TQuery, TResult>` implementation defines `TQuery` as `GetSystemSettingsForCompanyQuery` and `TResult` as `Option<SystemSettingsForCompany>`.  To apply caching to the query handler implementation shown above, we define a `IQueryResultCachingStrategy<TQuery, TResult>` implementation with `TQuery` and `TResult` types that are identical to those defined for the query handler implementation, like so: 
+Note that this `IQueryHandler<TQuery, TResult>` implementation defines `TQuery` as `GetSystemSettingsForCompanyQuery` and `TResult` as `Result<Option<SystemSettingsForCompany>, Exception>`.  To apply caching to the query handler implementation shown above, we define a `IQueryResultCachingStrategy<TQuery, TResult>` implementation with `TQuery` and `TResult` types that are identical to those defined for the query handler implementation, like so: 
 
 ```
-// the IQ.Vanilla.CQS.AOP.Caching.IQueryResultCachingStrategy implementation
+// the Functional.CQS.AOP.Caching.IQueryResultCachingStrategy implementation
 // it is required for caching to be applied to the query handler implementation above
-public class GetSystemSettingsForCompanyQueryCachingStrategy : IQueryResultCachingStrategy<GetSystemSettingsForCompanyQuery, Option<SystemSettingsForCompany>>
+public class GetSystemSettingsForCompanyQueryCachingStrategy : IQueryResultCachingStrategy<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>>
 {
     public string BuildCacheKeyForQuery(GetSystemSettingsForCompanyQuery query) => query.CompanyEntityID.ToString();
     public Option<string> BuildCacheGroupKeyForQuery(GetSystemSettingsForCompanyQuery query) => Option.None<string>();  
     public TimeSpan TimeToLive => TimeSpan.FromMinutes(30);
-    public bool ShouldCacheResult(Option<SystemSettingsForCompany> result) => result.HasValue;
+    public bool ShouldCacheResult(Result<Option<SystemSettingsForCompany>, Exception> result) => result.Match(x => x.HasValue(), _ => false);
 }
 ```
 
