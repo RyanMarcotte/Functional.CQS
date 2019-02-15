@@ -34,7 +34,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing.DummyObje
 		/// </summary>
 		/// <param name="parameters">The query parameters.</param>
 		/// <param name="exception">The exception that caused the query handler to fail.</param>
-		/// <param name="timeElapsed"></param>
+		/// <param name="timeElapsed">The time elapsed since the start of invocation.</param>
 		public void OnInvocationException(DummyAsyncQueryReturnsReferenceType parameters, Exception exception, TimeSpan timeElapsed)
 		{
 
