@@ -4,3 +4,6 @@ A series of NuGet packages are provided for integration with `SimpleInjector`, a
 
 The following NuGet packages are core dependencies and must be installed:
 - [`Functional.CQS.AOP.IoC.SimpleInjector`](gettingStarted.md)
+
+The following `Functional.CQS` handler decoration modules are available via NuGet and are optional:
+- [`Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing`](metricsCapturing/README.md) (for capturing performance metrics and unhandled errors)
