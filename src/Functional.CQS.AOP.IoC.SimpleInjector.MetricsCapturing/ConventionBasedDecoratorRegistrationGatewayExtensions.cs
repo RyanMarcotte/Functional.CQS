@@ -71,12 +71,12 @@ namespace SimpleInjector
 			if (!configurationParameters.CommandSpecificMetricsCapturingDecoratorEnabled)
 				return;
 
-			var commandAndErrorTypeWithCachingStrategyDefinedCollection = new HashSet<CommandAndErrorType>(gateway.AssemblyCollection
+			var commandAndErrorTypeWithMetricsCapturingStrategyDefinedCollection = new HashSet<CommandAndErrorType>(gateway.AssemblyCollection
 				.SelectMany(assembly => assembly.GetTypes().Where(t => t.IsMetricsCapturingStrategyForCommandType()))
 				.Select(x => x.GetGenericParametersForCommandMetricsCapturingStrategyType())
 				.WhereSome());
 
-			bool hasMetricsCapturingStrategyDefinedForCommand(DecoratorPredicateContext c) => c.ToServiceAndImplementationType().HasMetricsCapturingStrategyDefined(commandAndErrorTypeWithCachingStrategyDefinedCollection);
+			bool hasMetricsCapturingStrategyDefinedForCommand(DecoratorPredicateContext c) => c.ToServiceAndImplementationType().HasMetricsCapturingStrategyDefined(commandAndErrorTypeWithMetricsCapturingStrategyDefinedCollection);
 			gateway.Container.RegisterSingleton(typeof(IMetricsCapturingStrategyForCommand<,>), gateway.AssemblyCollection);
 			gateway.Container.RegisterDecorator(typeof(ICommandHandler<,>), typeof(CommandHandlerMetricsCapturingDecorator<,>), gateway.Lifestyle, hasMetricsCapturingStrategyDefinedForCommand);
 			gateway.Container.RegisterDecorator(typeof(IAsyncCommandHandler<,>), typeof(AsyncCommandHandlerMetricsCapturingDecorator<,>), gateway.Lifestyle, hasMetricsCapturingStrategyDefinedForCommand);
