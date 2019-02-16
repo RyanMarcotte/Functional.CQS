@@ -6,7 +6,7 @@ Rather than reference your application configuration file directly, `Functional.
 
 ```
 // instantiate the module configuration
-var metricsCapturingModuleConfiguration = new MetricsCapturingModuleConfigurationParameters(true, true, true, true);
+var metricsCapturingModuleConfiguration = new MetricsCapturingModuleConfigurationParameters(true, true, true);
 
 // register CQS handlers, metrics-capturing components
 // container.RegisterAllFunctionalCQSHandlers returns an object that enables fluent chaining, exposing WithMetricsCapturingDecorator extension method
