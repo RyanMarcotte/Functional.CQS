@@ -1,7 +1,7 @@
 ﻿namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Configuration
 {
 	/// <summary>
-	/// Encapsulates configuration parameters used by Functional.CQS.AOP.IoC.CastleWindsor.MetricsCapturing components.
+	/// Encapsulates configuration parameters used by Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing components.
 	/// </summary>
 	public class MetricsCapturingModuleConfigurationParameters
 	{
