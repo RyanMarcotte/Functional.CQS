@@ -26,14 +26,14 @@ public class GetSystemSettingsForCompanyQuery : IQuery<Result<Option<SystemSetti
 
 ```
 // a Functional query handler implementation
-// actual implementation has not been included as it is not relevant to caching 
+// actual implementation has not been included as it is not relevant to metrics-capturing 
 public class GetSystemSettingsForCompanyQueryHandler : IQueryHandler<GetSystemSettingsForCompanyQuery, Result<Option<SystemSettingsForCompany>, Exception>>
 {
     public Result<Option<SystemSettingsForCompany>, Exception> Handle(GetSystemSettingsForCompanyQuery query) => ...;
 }
 ```
 
-Note that this `IQueryHandler<TQuery, TResult>` implementation defines `TQuery` as `GetSystemSettingsForCompanyQuery` and `TResult` as `Result<Option<SystemSettingsForCompany>, Exception>`.  To apply metrics-capturing to the query handler implementation shown above, we define a `IMetricsCapturingStrategyForQuery<TQuery, TResult>` implementation with `TQuery` and `TResult` types that are identical to those defined for the query handler implementation, like so:
+Note that this `IQueryHandler<TQuery, TResult>` implementation defines `TQuery` as `GetSystemSettingsForCompanyQuery` and `TResult` as `Result<Option<SystemSettingsForCompany>, Exception>`.  To apply metrics-capturing to the query handler implementation shown above, we define an `IMetricsCapturingStrategyForQuery<TQuery, TResult>` implementation with `TQuery` and `TResult` types that are identical to those defined for the query handler implementation, like so:
 
 ```
 // the Functional.CQS.AOP.MetricsCapturing.IMetricsCapturingStrategyForQuery implementation
