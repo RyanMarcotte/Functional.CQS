@@ -11,7 +11,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing
 	public static class MetricsCapturingTestUtility
 	{
 		/// <summary>
-		/// Gets the collection of Functional.CQS metrics-capturing strategy implementation types associated with elements in <see cref="TestUtility.CQSHandlerContractTypes"/>.
+		/// Gets the collection of Functional.CQS handler-specific metrics-capturing strategy implementation types associated with elements in <see cref="TestUtility.CQSHandlerContractTypes"/>.
 		/// </summary>
 		public static IReadOnlyDictionary<Type, Type> MetricsCapturingDecoratorTypeLookupByCQSHandlerContractType { get; } = new Dictionary<Type, Type>()
 		{
@@ -26,7 +26,7 @@ namespace Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing
 		};
 
 		/// <summary>
-		/// Gets the collection of Functional.CQS metrics-capturing strategy implementation types associated with elements in <see cref="TestUtility.CQSHandlerContractTypes"/>.
+		/// Gets the collection of Functional.CQS universal metrics-capturing strategy implementation types associated with elements in <see cref="TestUtility.CQSHandlerContractTypes"/>.
 		/// </summary>
 		public static IReadOnlyDictionary<Type, Type> UniversalMetricsCapturingDecoratorTypeLookupByCQSHandlerContractType { get; } = new Dictionary<Type, Type>()
 		{
