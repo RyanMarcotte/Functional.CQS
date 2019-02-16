@@ -52,7 +52,7 @@ public class GetSystemSettingsForCompanyMetricsCapturingStrategy : IMetricsCaptu
         // perhaps post performance timings to Hosted Graphite
     }
 
-    public void OnInvocationException(TQuery parameters, Exception exception, TimeSpan timeElapsed)
+    public void OnInvocationException(GetSystemSettingsForCompanyQuery parameters, Exception exception, TimeSpan timeElapsed)
     {
         // perhaps post performance timings to Hosted Graphite
         // perhaps log exceptions to loggly / Serilog
