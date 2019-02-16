@@ -1,6 +1,6 @@
 # Adding Metrics and Exception Logging With `Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing`
 
-`Functional.CQS.AOP.IoC.PureDI.MetricsCapturing` supplies metrics-capturing decorator implementations, while `Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing` supplies a set of extension methods that make it easy to register that decoration with the `SimpleInjector` container.
+`Functional.CQS.AOP.IoC.PureDI.MetricsCapturing` supplies metrics-capturing decorator implementations, while `Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing` supplies a set of extension methods that make it easy to register those decorators with the `SimpleInjector` container.
 
 Metrics-capturing decorators can be applied to any `Functional.CQS` handler implementation.
 
