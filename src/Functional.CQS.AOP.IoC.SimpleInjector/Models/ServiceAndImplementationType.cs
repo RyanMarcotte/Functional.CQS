@@ -10,8 +10,8 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.Models
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ServiceAndImplementationType"/> struct.
 		/// </summary>
-		/// <param name="serviceType"></param>
-		/// <param name="implementationType"></param>
+		/// <param name="serviceType">The service interface type.</param>
+		/// <param name="implementationType">The service implementation type.</param>
 		public ServiceAndImplementationType(Type serviceType, Type implementationType)
 		{
 			ServiceType = serviceType ?? throw new ArgumentNullException(nameof(serviceType));

@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Provides extension methods for conveniently decorating Functional.CQS handler implementations with metrics-capturing concerns:
+- Functional.CQS.IQueryHandler&lt;TQuery, TResult&gt;
+- Functional.CQS.IAsyncQueryHandler&lt;TQuery, TResult&gt;
+- Functional.CQS.ICommandHandler&lt;TCommand, TError&gt;
+- Functional.CQS.IAsyncCommandHandler&lt;TCommand, TError&gt;
+
+Used with SimpleInjector container.</Description>
+    <Authors>Ryan Marcotte</Authors>
+    <Copyright>2019</Copyright>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>functional CQS netstandard netcore simpleinjector aop ioc metrics</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Functional.Common.Extensions" Version="1.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.MetricsCapturing\Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.MetricsCapturing\Functional.CQS.AOP.MetricsCapturing.csproj" />
+    <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
+  </ItemGroup>
+
+</Project>

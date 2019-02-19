@@ -17,6 +17,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.8.0" />
+    <PackageReference Include="AutoFixture.AutoFakeItEasy" Version="4.8.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.8.0" />
+    <PackageReference Include="FakeItEasy" Version="5.0.1" />
     <PackageReference Include="Functional.Primitives.FluentAssertions" Version="1.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -27,9 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing\Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure\Functional.CQS.AOP.CommonTestInfrastructure.csproj" />
-    <ProjectReference Include="..\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.csproj" />
-    <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing\Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.csproj" />
   </ItemGroup>
 
 </Project>
