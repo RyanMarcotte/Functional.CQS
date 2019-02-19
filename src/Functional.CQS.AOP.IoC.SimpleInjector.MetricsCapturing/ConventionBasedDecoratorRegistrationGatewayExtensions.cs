@@ -7,7 +7,6 @@ using Functional.CQS.AOP.IoC.PureDI.MetricsCapturing;
 using Functional.CQS.AOP.IoC.SimpleInjector.DecoratorRegistrationGateways;
 using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing;
 using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Configuration;
-using Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.NullImplementations;
 using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 using Functional.CQS.AOP.MetricsCapturing;
 
@@ -22,13 +21,17 @@ namespace SimpleInjector
 		/// <summary>
 		/// Register all core components required for applying metrics-capturing decorators to Functional.CQS handler implementations.
 		/// Only handlers with corresponding <see cref="IMetricsCapturingStrategyForQuery{TQuery, TResult}"/> and <see cref="IMetricsCapturingStrategyForCommand{TCommand, TError}"/> implementations will have the handler-specific metrics-capturing decorator applied to them.
+		/// No universal metrics-capturing decorator will be applied.
 		/// </summary>
 		/// <param name="gateway">The gateway.</param>
 		/// <param name="configurationParameters">The configuration parameters.</param>
 		/// <returns></returns>
 		public static ConventionBasedDecoratorRegistrationGateway WithMetricsCapturingDecorator(this ConventionBasedDecoratorRegistrationGateway gateway, MetricsCapturingModuleConfigurationParameters configurationParameters)
 		{
-			return gateway.WithMetricsCapturingDecorator<NullUniversalMetricsCapturingStrategy>(configurationParameters);
+			gateway.RegisterMetricsCapturingDecoratorForIndividualQueryHandlerImplementations(configurationParameters);
+			gateway.RegisterMetricsCapturingDecoratorForIndividualCommandHandlerImplementations(configurationParameters);
+
+			return gateway;
 		}
 
 		/// <summary>
