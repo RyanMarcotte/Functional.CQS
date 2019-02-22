@@ -1,0 +1,61 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Ryan Marcotte</Authors>
+    <Description>Defines a distributed cache using Redis that implements Functional.CQS.AOP.Caching.Infrastructure.IFunctionalCache</Description>
+    <Copyright>2019</Copyright>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageTags>functional CQS netstandard netcore caching redis</PackageTags>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="LuaScripts\addItemWithGroupKey.lua" />
+    <None Remove="LuaScripts\countGroupKeyItems.lua" />
+    <None Remove="LuaScripts\countKeyToGroupKeyAssociationItems.lua" />
+    <None Remove="LuaScripts\removeItem.lua" />
+    <None Remove="LuaScripts\removeItemGroup.lua" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="LuaScripts\addItemWithGroupKey.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LuaScripts\countGroupKeyItems.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LuaScripts\countKeyToGroupKeyAssociationItems.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LuaScripts\removeItem.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LuaScripts\removeItemGroup.lua">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Functional.Common.Extensions" Version="1.9.0" />
+    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+    <PackageReference Include="Functional.Primitives.Extensions" Version="1.9.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="ServiceStack.Redis" Version="5.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching.Infrastructure\Functional.CQS.AOP.Caching.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
