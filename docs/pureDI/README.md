@@ -3,7 +3,8 @@
 Perhaps you have decided that [using a DI container is more trouble than it's worth for your simple application](http://blog.ploeh.dk/2012/11/06/WhentouseaDIContainer/)?
 
 A series of NuGet packages are provided that enable manual decoration of CQS handlers, all prefixed with `Functional.CQS.AOP.IoC.PureDI`.  Those packages are listed below.  As a matter of best practice, all `Functional.CQS.AOP.IoC.PureDI`-prefixed packages should only be installed in your application's [composition root](http://blog.ploeh.dk/2011/07/28/CompositionRoot/), as the decorators are an infrastructure concern and not a business domain concern.
-- `Functional.CQs.AOP.IoC.PureDI.MetricsCapturing` (decorators for posting performance metrics and unhandled errors)
+- `Functional.CQS.AOP.IoC.PureDI.Caching` (decorators for caching results returned from `IQueryHandler<TQuery, TResult>` and `IAsyncQueryHandler<TQuery, TResult>` implementations)
+- `Functional.CQS.AOP.IoC.PureDI.MetricsCapturing` (decorators for posting performance metrics and unhandled errors)
 
 Decorators are applied to CQS handlers by fulfilling all decorator dependencies manually.  First, define a query parameter object and associated query handler, like the following:
 
