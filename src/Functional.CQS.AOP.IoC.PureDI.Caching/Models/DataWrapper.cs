@@ -9,7 +9,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Models
 	/// </summary>
 	/// <typeparam name="T">The type.</typeparam>
 	/// <remarks>
-	/// Used to ensure that cache implementations never store NULL.
+	/// Used to ensure that cache implementations never store NULL, and to ensure that all types assignable to <typeparamref name="T"/> are treated as <typeparamref name="T"/>.
 	/// </remarks>
 	public class DataWrapper<T>
 		where T : class
