@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Supplies caching decorator implementations for Functional.CQS handler implementations:
+- IQueryHandler&lt;TQuery, TResult&gt;
+- IAsyncQueryHandler&lt;TQuery, TResult&gt;</Description>
+    <Authors>Ryan Marcotte</Authors>
+    <Copyright>2019</Copyright>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageTags>functional CQS netstandard netcore caching</PackageTags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.IoC.PureDI.Caching.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.IoC.PureDI.Caching.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+    <PackageReference Include="Functional.Primitives.Extensions" Version="1.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching.Infrastructure\Functional.CQS.AOP.Caching.Infrastructure.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching\Functional.CQS.AOP.Caching.csproj" />
+    <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
+  </ItemGroup>
+
+</Project>

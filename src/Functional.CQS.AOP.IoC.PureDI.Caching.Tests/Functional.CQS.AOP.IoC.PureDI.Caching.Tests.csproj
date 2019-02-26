@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.8.0" />
+    <PackageReference Include="AutoFixture.AutoFakeItEasy" Version="4.8.0" />
+    <PackageReference Include="AutoFixture.Xunit2" Version="4.8.0" />
+    <PackageReference Include="FakeItEasy" Version="5.0.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching.Infrastructure.MemoryCache\Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure.Caching\Functional.CQS.AOP.CommonTestInfrastructure.Caching.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure\Functional.CQS.AOP.CommonTestInfrastructure.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj" />
+  </ItemGroup>
+
+</Project>

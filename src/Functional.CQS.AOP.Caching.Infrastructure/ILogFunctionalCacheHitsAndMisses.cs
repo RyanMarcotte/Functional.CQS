@@ -24,11 +24,10 @@ namespace Functional.CQS.AOP.Caching.Infrastructure
 		void LogCacheMiss(Type queryType, Type resultType, string cacheKey);
 	}
 
-	// ReSharper disable once InconsistentNaming
 	/// <summary>
 	/// Extension methods for <see cref="ILogFunctionalCacheHitsAndMisses"/>.
 	/// </summary>
-	public static class ExtensionsFor_ILogFunctionalCacheHitsAndMisses
+	public static class LogFunctionalCacheHitsAndMissesExtensions
 	{
 		/// <summary>
 		/// Log a cache hit or miss.
