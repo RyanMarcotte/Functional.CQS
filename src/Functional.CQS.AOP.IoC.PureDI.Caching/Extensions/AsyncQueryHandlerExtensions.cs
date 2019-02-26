@@ -8,8 +8,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Extensions
 	/// <summary>
 	/// Extension methods for <see cref="IAsyncQueryHandler{TQuery,TResult}"/>.
 	/// </summary>
-	// ReSharper disable once InconsistentNaming
-	internal static class ExtensionsFor_IAsyncQueryHandler
+	internal static class AsyncQueryHandlerExtensions
 	{
 		public static async Task<TResult> LogCacheMissWithNoKeyAndHandleAsync<TQuery, TResult>(this IAsyncQueryHandler<TQuery, TResult> queryHandler, TQuery query, CancellationToken cancellationToken, ILogFunctionalCacheHitsAndMisses logger)
 			where TQuery : IQueryParameters<TResult>

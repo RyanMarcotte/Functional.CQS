@@ -6,8 +6,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Extensions
 	/// <summary>
 	/// Extension methods for <see cref="IQueryHandler{TQuery,TResult}"/>.
 	/// </summary>
-	// ReSharper disable once InconsistentNaming
-	internal static class ExtensionsFor_IQueryHandler
+	internal static class QueryHandlerExtensions
 	{
 		public static TResult LogCacheMissWithNoKeyAndHandle<TQuery, TResult>(this IQueryHandler<TQuery, TResult> queryHandler, TQuery query, ILogFunctionalCacheHitsAndMisses logger)
 			where TQuery : IQueryParameters<TResult>
