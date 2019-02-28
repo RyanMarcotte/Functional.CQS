@@ -24,8 +24,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		// 1. If you do not have Docker already installed, do so
 		// 2. Open a Powershell window as administrator
 		// 3. Execute the following command: "docker run --name FunctionalRedis -p 6379:6379 -d redis"
-		//    - we name the container FunctionalRedis for easy identification
-		//    - this command spins up a Redis instance that listens on default port 6379
+		//	- we name the container FunctionalRedis for easy identification
+		//	- this command spins up a Redis instance that listens on default port 6379
 		// 4. Run the tests
 		//
 		// Additional documentation about redis in Docker can be found at https://hub.docker.com/_/redis/

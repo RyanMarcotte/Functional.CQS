@@ -6,7 +6,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.Invalidation
 	/// Used for logging cache item replacement operations.
 	/// </summary>
 	public interface ILogFunctionalCacheItemReplacementOperations
-    {
+	{
 		/// <summary>
 		/// Log a cache item replacement.
 		/// </summary>

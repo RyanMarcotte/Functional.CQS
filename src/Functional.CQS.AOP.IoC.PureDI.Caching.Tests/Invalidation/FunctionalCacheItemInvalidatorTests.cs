@@ -15,7 +15,7 @@ using Xunit;
 namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests.Invalidation
 {
 	public class FunctionalCacheItemInvalidatorTests
-    {
+	{
 		[Theory]
 		[CacheItemInvalidatorArrangement]
 		internal void ShouldInvalidateCacheItemAssociatedWithQueryParameters(
@@ -34,17 +34,17 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests.Invalidation
 			A.CallTo(() => exceptionLogger.LogException(A<Exception>._)).MustNotHaveHappened();
 		}
 
-	    [Theory]
-	    [FailingCacheArrangement]
-	    internal void ShouldLogErrorIfInvalidateCacheItemOperationFails(
-		    FunctionalCacheItemInvalidator<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> sut,
-		    ILogFunctionalCacheItemInvalidationOperations operationLogger,
+		[Theory]
+		[FailingCacheArrangement]
+		internal void ShouldLogErrorIfInvalidateCacheItemOperationFails(
+			FunctionalCacheItemInvalidator<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> sut,
+			ILogFunctionalCacheItemInvalidationOperations operationLogger,
 			ILogFunctionalCacheExceptions exceptionLogger)
-	    {
-		    var query = new DummyQueryReturnsValueType();
-		    sut.InvalidateCacheItem(query).Should().BeFaulted();
+		{
+			var query = new DummyQueryReturnsValueType();
+			sut.InvalidateCacheItem(query).Should().BeFaulted();
 
-		    A.CallTo(() => operationLogger.LogCacheItemInvalidation(A<Type>._, A<Type>._, A<string>._)).MustNotHaveHappened();
+			A.CallTo(() => operationLogger.LogCacheItemInvalidation(A<Type>._, A<Type>._, A<string>._)).MustNotHaveHappened();
 			A.CallTo(() => exceptionLogger.LogException(A<Exception>._)).MustHaveHappenedANumberOfTimesMatching(i => i == 1);
 		}
 
@@ -64,17 +64,17 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests.Invalidation
 			A.CallTo(() => exceptionLogger.LogException(A<Exception>._)).MustNotHaveHappened();
 		}
 
-	    [Theory]
-	    [FailingCacheArrangement]
-	    internal void ShouldLogErrorIfInvalidateCacheItemGroupOperationFails(
-		    FunctionalCacheItemInvalidator sut,
-		    ILogFunctionalCacheItemInvalidationOperations operationLogger,
+		[Theory]
+		[FailingCacheArrangement]
+		internal void ShouldLogErrorIfInvalidateCacheItemGroupOperationFails(
+			FunctionalCacheItemInvalidator sut,
+			ILogFunctionalCacheItemInvalidationOperations operationLogger,
 			ILogFunctionalCacheExceptions exceptionLogger)
-	    {
-		    const string GROUP = "9001";
-		    sut.InvalidateCacheItemGroup(GROUP).Should().BeFaulted();
+		{
+			const string GROUP = "9001";
+			sut.InvalidateCacheItemGroup(GROUP).Should().BeFaulted();
 
-		    A.CallTo(() => operationLogger.LogCacheGroupInvalidation(A<string>._)).MustNotHaveHappened();
+			A.CallTo(() => operationLogger.LogCacheGroupInvalidation(A<string>._)).MustNotHaveHappened();
 			A.CallTo(() => exceptionLogger.LogException(A<Exception>._)).MustHaveHappenedANumberOfTimesMatching(i => i == 1);
 		}
 
@@ -95,16 +95,16 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests.Invalidation
 
 		[Theory]
 		[FailingCacheArrangement]
-	    internal void ShouldLogErrorIfClearOperationFails(
-		    FunctionalCacheItemInvalidator sut,
-		    ILogFunctionalCacheItemInvalidationOperations operationLogger,
+		internal void ShouldLogErrorIfClearOperationFails(
+			FunctionalCacheItemInvalidator sut,
+			ILogFunctionalCacheItemInvalidationOperations operationLogger,
 			ILogFunctionalCacheExceptions exceptionLogger)
-	    {
+		{
 			sut.InvalidateAllCacheItems().Should().BeFaulted();
 
-		    A.CallTo(() => operationLogger.LogCacheInvalidation()).MustNotHaveHappened();
+			A.CallTo(() => operationLogger.LogCacheInvalidation()).MustNotHaveHappened();
 			A.CallTo(() => exceptionLogger.LogException(A<Exception>._)).MustHaveHappenedANumberOfTimesMatching(i => i == 1);
-	    }
+		}
 
 		#region Arrangements
 
@@ -130,14 +130,14 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests.Invalidation
 			}
 		}
 
-	    private class FailingCacheArrangement : CacheItemInvalidatorTestsArrangementBase
+		private class FailingCacheArrangement : CacheItemInvalidatorTestsArrangementBase
 		{
-		    public FailingCacheArrangement()
-			    : base(false)
-		    {
+			public FailingCacheArrangement()
+				: base(false)
+			{
 
-		    }
-	    }
+			}
+		}
 
 		#endregion
 

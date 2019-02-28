@@ -12,8 +12,8 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector
 	/// <summary>
 	/// Extension methods for <see cref="Type"/>.
 	/// </summary>
-    public static class TypeExtensions
-    {
+	public static class TypeExtensions
+	{
 		/// <summary>
 		/// Analyzes a type and returns a closed generic interface (i.e. typeof(IFoo&lt;int&gt;)) if that type implements the open generic interface (i.e. typeof(IFoo&lt;&gt;)).
 		/// </summary>

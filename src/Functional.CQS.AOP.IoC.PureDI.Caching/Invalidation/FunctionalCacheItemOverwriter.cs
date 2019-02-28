@@ -14,33 +14,33 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Invalidation
 	/// Base class for overwriting existing items in <see cref="IFunctionalCache"/> implementations.
 	/// </summary>
 	public abstract class FunctionalCacheItemOverwriter
-    {
+	{
 		// Each reference-type TResult needs its own cache-insertion method, obtained via reflection.
 		// This lookup of cache-insertion methods can be shared among all CacheItemOverwriter objects, not just those sharing the same &lt;TQuery, TResult&gt; type parameters.
 		//
 		// According to an excerpt from the JetBrains wiki found on StackOverflow:
-		//      "If you need to have a static field shared between instances with different generic arguments, define a non-generic base class to store your static members, then set
-		//       your generic type to inherit from this type."
+		//	  "If you need to have a static field shared between instances with different generic arguments, define a non-generic base class to store your static members, then set
+		//	   your generic type to inherit from this type."
 		// 
 		// AakashM, JetBrains. (2012, March 12). ReSharper warns: “Static field in generic type”.
-		//      Retrieved July 6, 2017, from https://stackoverflow.com/a/9665168.
+		//	  Retrieved July 6, 2017, from https://stackoverflow.com/a/9665168.
 		
 		private static readonly ConcurrentDictionary<QueryAndResultType, MethodInfo> _referenceTypeCacheInsertionMethodLookup = new ConcurrentDictionary<QueryAndResultType, MethodInfo>();
 		private static readonly MethodInfo _insertReferenceTypeReplacementValueIntoCacheMethodInfo = typeof(FunctionalCacheItemOverwriter).GetMethod(nameof(InsertReferenceTypeReplacementValueIntoCache), BindingFlags.Static | BindingFlags.NonPublic);
 
-	    /// <summary>
-	    /// Removes the item currently associated with the specified <paramref name="cacheKey"/> and inserts a replacement value.
-	    /// </summary>
-	    /// <typeparam name="TQuery">The query type.</typeparam>
-	    /// <typeparam name="TResult">The result type.</typeparam>
-	    /// <param name="cache">The cache.</param>
-	    /// <param name="cacheKey">The cache key.</param>
-	    /// <param name="groupKey">The optional cache group key.</param>
-	    /// <param name="replacementValue">The replacement value.</param>
-	    /// <param name="timeToLive">The time to live.</param>
-	    /// <param name="operationLogger">The replacement operation logger.</param>
-	    /// <param name="exceptionLogger">The exception logger.</param>
-	    protected static Result<Unit, Exception> RemoveCurrentValueAndInsertReplacementValueIntoCache<TQuery, TResult>(IFunctionalCache cache, string cacheKey, Option<string> groupKey, TResult replacementValue, TimeSpan timeToLive, ILogFunctionalCacheItemReplacementOperations operationLogger, ILogFunctionalCacheExceptions exceptionLogger)
+		/// <summary>
+		/// Removes the item currently associated with the specified <paramref name="cacheKey"/> and inserts a replacement value.
+		/// </summary>
+		/// <typeparam name="TQuery">The query type.</typeparam>
+		/// <typeparam name="TResult">The result type.</typeparam>
+		/// <param name="cache">The cache.</param>
+		/// <param name="cacheKey">The cache key.</param>
+		/// <param name="groupKey">The optional cache group key.</param>
+		/// <param name="replacementValue">The replacement value.</param>
+		/// <param name="timeToLive">The time to live.</param>
+		/// <param name="operationLogger">The replacement operation logger.</param>
+		/// <param name="exceptionLogger">The exception logger.</param>
+		protected static Result<Unit, Exception> RemoveCurrentValueAndInsertReplacementValueIntoCache<TQuery, TResult>(IFunctionalCache cache, string cacheKey, Option<string> groupKey, TResult replacementValue, TimeSpan timeToLive, ILogFunctionalCacheItemReplacementOperations operationLogger, ILogFunctionalCacheExceptions exceptionLogger)
 			where TQuery : IQueryParameters<TResult>
 		{
 			var result = cache.Remove(cacheKey).Bind(_ => typeof(TResult).IsValueType
