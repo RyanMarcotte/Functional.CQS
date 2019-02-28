@@ -59,8 +59,6 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching
 			if (cacheFactory == null) throw new ArgumentNullException(nameof(cacheFactory));
 			if (configurationParameters == null) throw new ArgumentNullException(nameof(configurationParameters));
 
-			gateway.Container.RegisterInstance(configurationParameters);
-
 			gateway.Container.RegisterSingleton<IFunctionalCache>(cacheFactory);
 			gateway.Container.RegisterSingleton<ILogFunctionalCacheHitsAndMisses, TCacheHitAndMissLogger>();
 			gateway.Container.RegisterSingleton<ILogFunctionalCacheItemReplacementOperations, TCacheItemReplacementOperationLogger>();
