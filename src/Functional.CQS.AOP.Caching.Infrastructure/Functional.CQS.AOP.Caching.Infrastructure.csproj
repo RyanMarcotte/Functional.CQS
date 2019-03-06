@@ -4,8 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Description>Defines contracts for infrastructural components required for Functional.CQS.AOP caching.
 - IFunctionalCache
+- IInvalidateFunctionalCacheItem&lt;TQuery, TResult&gt;
+- IInvalidateFunctionalCacheItems
 - ILogFunctionalCacheExceptions
-- ILogFunctionalCacheHitsAndMisses</Description>
+- ILogFunctionalCacheItemInvalidationOperations
+- ILogFunctionalCacheItemReplacementOperations
+- ILogFunctionalCacheHitsAndMisses
+- IReplaceFunctionalCacheItem&lt;TQuery, TResult&gt;</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>2019</Copyright>
     <Authors>Ryan Marcotte</Authors>
@@ -24,6 +29,10 @@
 
   <ItemGroup>
     <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS\Functional.CQS.csproj" />
   </ItemGroup>
 
 </Project>

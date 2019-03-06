@@ -6,8 +6,10 @@ using AutoFixture.Xunit2;
 using FakeItEasy;
 using Functional.CQS.AOP.Caching.Infrastructure;
 using Functional.CQS.AOP.CommonTestInfrastructure.Caching;
+using Functional.CQS.AOP.CommonTestInfrastructure.Caching.DummyObjects;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 using Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Customizations;
+using Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Extensions;
 using Xunit;
 
 namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
@@ -51,7 +53,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
 			protected AsyncQueryHandlerCachingDecoratorForReferenceResultTypeTestsArrangementBase(Action<IFunctionalCache> setupAction, Func<DummyAsyncQueryReturnsReferenceTypeResult> resultFactory)
 				: base(() => new Fixture()
 					.Customize(new AsyncQueryHandlerCustomization<DummyAsyncQueryReturnsReferenceType, DummyAsyncQueryReturnsReferenceTypeResult>(resultFactory, () => new DummyAsyncQueryReturnsReferenceTypeCachingStrategy()))
-					.Customize(new CacheCustomization(setupAction))
+					.Customize(new MemoryCacheCustomization(setupAction))
 					.Customize(new CacheLoggerCustomization()))
 			{
 

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>Provides extension methods for conveniently decorating Functional.CQS query handler implementations with caching concerns:
+- IQueryHandler&lt;TQuery, TResult&gt;
+- IAsyncQueryHandler&lt;TQuery, TResult&gt;
+
+Used with SimpleInjector container.</Description>
+    <Copyright>2019</Copyright>
+    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageTags>functional CQS netstandard netcore simpleinjector aop ioc caching</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Functional.Common.Extensions" Version="1.9.0" />
+    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching\Functional.CQS.AOP.Caching.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.SimpleInjector\Functional.CQS.AOP.IoC.SimpleInjector.csproj" />
+  </ItemGroup>
+
+</Project>

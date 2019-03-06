@@ -1,7 +1,7 @@
 ﻿using Functional.CQS.AOP.IoC.PureDI.Caching.Models;
 
 // ReSharper disable once CheckNamespace
-namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests
+namespace Functional.CQS.AOP.IoC.PureDI.Caching.Tests._Extensions
 {
 	internal static class ObjectExtensions
 	{

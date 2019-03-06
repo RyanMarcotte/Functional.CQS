@@ -6,4 +6,5 @@ The following NuGet packages are core dependencies and must be installed:
 - [`Functional.CQS.AOP.IoC.SimpleInjector`](gettingStarted.md)
 
 The following `Functional.CQS` handler decoration modules are available via NuGet and are optional:
+- [`Functional.CQS.AOP.IoC.SimpleInjector.Caching`](caching/README.md) (for caching results returned from query handlers)
 - [`Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing`](metricsCapturing/README.md) (for capturing performance metrics and unhandled errors)

@@ -6,7 +6,7 @@ namespace Functional.CQS.AOP.MetricsCapturing
 	/// Interface for a metrics capturing strategy that is applied to all Functional.CQS handlers.
 	/// </summary>
 	public interface IUniversalMetricsCapturingStrategy
-    {
+	{
 		/// <summary>
 		/// Called immediately prior to handling the query or command.
 		/// </summary>

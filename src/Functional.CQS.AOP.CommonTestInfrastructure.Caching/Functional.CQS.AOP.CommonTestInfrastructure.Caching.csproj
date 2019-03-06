@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Functional.CQS.AOP.Caching\Functional.CQS.AOP.Caching.csproj" />
     <ProjectReference Include="..\Functional.CQS.AOP.CommonTestInfrastructure\Functional.CQS.AOP.CommonTestInfrastructure.csproj" />
+    <ProjectReference Include="..\Functional.CQS.AOP.IoC.PureDI.Caching\Functional.CQS.AOP.IoC.PureDI.Caching.csproj" />
   </ItemGroup>
 
 </Project>
