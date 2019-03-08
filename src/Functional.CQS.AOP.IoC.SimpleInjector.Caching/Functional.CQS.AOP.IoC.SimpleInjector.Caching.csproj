@@ -12,6 +12,8 @@ Used with SimpleInjector container.</Description>
     <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageTags>functional CQS netstandard netcore simpleinjector aop ioc caching</PackageTags>
+    <Version>1.0.1</Version>
+    <Authors>Ryan Marcotte</Authors>
   </PropertyGroup>
 
   <ItemGroup>
