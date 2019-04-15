@@ -5,7 +5,10 @@ using FluentAssertions;
 using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonConverters;
 using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests.JsonConverters.Models;
 using Functional.Primitives.FluentAssertions;
+using Jmansar.SemanticComparisonExtensions;
 using Newtonsoft.Json;
+using SemanticComparison;
+using SemanticComparison.Fluent;
 using Xunit;
 
 namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests.JsonConverters
@@ -84,6 +87,52 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			new ResultJsonConverter().CanConvert(Result.Failure<int, string>("dead or alive, you're coming with me").GetType()).Should().BeTrue();
 			new ResultJsonConverter().CanConvert(Result.Failure<AppModel, Exception>(new Exception("some error")).GetType()).Should().BeTrue();
 			new ResultJsonConverter().CanConvert(Result.Failure<AppModelWithVersion, Exception>(new Exception("ERROR!", new Exception("inner error"))).GetType()).Should().BeTrue();
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfEnumerableCollection()
+		{
+			var collection = Enumerable.Range(0, 10).Select(x => x.ToString());
+			var json = JsonConvert.SerializeObject(Result.Failure<IEnumerable<int>, IEnumerable<string>>(collection));
+			var fromJson = (Result<IEnumerable<int>, IEnumerable<string>>)JsonConvert.DeserializeObject(json, typeof(Result<IEnumerable<int>, IEnumerable<string>>));
+
+			fromJson.Should().BeFaulted(x => x.SequenceEqual(collection).Should().BeTrue());
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfArray()
+		{
+			var array = Enumerable.Range(0, 10).Select(x => x.ToString()).ToArray();
+			var json = JsonConvert.SerializeObject(Result.Failure<int[], string[]>(array));
+			var fromJson = (Result<int[], string[]>)JsonConvert.DeserializeObject(json, typeof(Result<int[], string[]>));
+
+			fromJson.Should().BeFaulted(x => x.SequenceEqual(array).Should().BeTrue());
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfSimplePOCO()
+		{
+			var obj = AppError.Create();
+			var json = JsonConvert.SerializeObject(Result.Failure<AppModel, AppError>(obj));
+			var fromJson = (Result<AppModel, AppError>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, AppError>));
+
+			fromJson.Should().BeFaulted(x => x.IsLike(obj));
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfComplexPOCO()
+		{
+			var exception = new Exception("ERROR!", new Exception("inner error"));
+			var json = JsonConvert.SerializeObject(Result.Failure<AppModelWithVersion, Exception>(exception));
+			var fromJson = (Result<AppModelWithVersion, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Exception>));
+
+			fromJson.Should().BeFaulted(x =>
+			{
+				x.AsSource().OfLikeness<Exception>()
+					.WithInnerLikeness(d => d.InnerException, s => s.InnerException, l => l.Without(ex => ex.Data))
+					.Without(ex => ex.Data)
+					.ShouldEqual(exception);
+			});
 		}
 
 		[Fact]
