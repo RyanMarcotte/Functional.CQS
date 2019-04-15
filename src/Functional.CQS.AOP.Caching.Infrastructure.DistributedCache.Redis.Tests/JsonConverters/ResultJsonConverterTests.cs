@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonConverters;
 using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests.JsonConverters.Models;
@@ -35,6 +36,26 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var fromJson = (Result<int, string>)JsonConvert.DeserializeObject(json, typeof(Result<int, string>));
 
 			fromJson.Should().BeSuccessfulWithExpectedValue(SUCCESS_VALUE);
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSuccessfulResultOfEnumerableCollection()
+		{
+			var collection = Enumerable.Range(0, 10);
+			var json = JsonConvert.SerializeObject(Result.Success<IEnumerable<int>, Exception>(collection));
+			var fromJson = (Result<IEnumerable<int>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<IEnumerable<int>, Exception>));
+
+			fromJson.Should().BeSuccessful(x => x.SequenceEqual(collection).Should().BeTrue());
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSuccessfulResultOfArray()
+		{
+			var array = Enumerable.Range(0, 10).ToArray();
+			var json = JsonConvert.SerializeObject(Result.Success<int[], Exception>(array));
+			var fromJson = (Result<int[], Exception>)JsonConvert.DeserializeObject(json, typeof(Result<int[], Exception>));
+
+			fromJson.Should().BeSuccessful(x => x.SequenceEqual(array).Should().BeTrue());
 		}
 
 		[Fact]

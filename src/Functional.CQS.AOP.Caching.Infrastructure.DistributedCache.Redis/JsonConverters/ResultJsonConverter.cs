@@ -38,8 +38,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonC
 			var o = new JObject();
 			o.AddFirst(new JProperty(IS_SUCCESSFUL_PROPERTY_NAME, value.IsSuccess()));
 			value.Apply(
-				success => o.Add(new JProperty(VALUE_PROPERTY_NAME, success)),
-				failure => o.Add(new JProperty(VALUE_PROPERTY_NAME, failure)));
+				success => o.Add(new JProperty(VALUE_PROPERTY_NAME, JToken.FromObject(success))),
+				failure => o.Add(new JProperty(VALUE_PROPERTY_NAME, JToken.FromObject(failure))));
 
 			o.WriteTo(writer);
 		}
@@ -66,8 +66,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonC
 			var item = JToken.Load(reader);
 			var jsonObject = JObject.Parse(item.ToString());
 			return Result.Create(jsonObject[IS_SUCCESSFUL_PROPERTY_NAME].Value<bool>(),
-				() => jsonObject[VALUE_PROPERTY_NAME].Value<TSuccess>(),
-				() => jsonObject[VALUE_PROPERTY_NAME].Value<TFailure>());
+				() => jsonObject.ToType<TSuccess>(VALUE_PROPERTY_NAME),
+				() => jsonObject.ToType<TFailure>(VALUE_PROPERTY_NAME));
 		}
 
 		/// <summary>

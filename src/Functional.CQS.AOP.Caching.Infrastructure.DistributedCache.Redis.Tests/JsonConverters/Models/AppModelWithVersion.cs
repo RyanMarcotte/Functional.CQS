@@ -12,7 +12,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		public static AppModelWithVersion Create() => new AppModelWithVersion()
 		{
 			ApplicationInformation = AppModel.Create(),
-			Version = new Version(4, 20, 0)
+			Version = new Version(4, 20, 0, 0)
 		};
 	}
 
