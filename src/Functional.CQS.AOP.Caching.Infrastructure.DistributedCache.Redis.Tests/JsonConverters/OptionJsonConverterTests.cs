@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using FluentAssertions;
 using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonConverters;
+using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests.JsonConverters.Models;
 using Functional.Primitives.FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
@@ -18,16 +21,68 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		public void ShouldBeAbleToConvertSomeOption()
 		{
 			new OptionJsonConverter().CanConvert(Option.Some(1337).GetType()).Should().BeTrue();
+			new OptionJsonConverter().CanConvert(Option.Some("value").GetType()).Should().BeTrue();
+			new OptionJsonConverter().CanConvert(Option.Some(AppModel.Create()).GetType()).Should().BeTrue();
 		}
 
 		[Fact]
-		public void ShouldBeAbleToSerializeAndDeserializeSomeOption()
+		public void ShouldBeAbleToSerializeAndDeserializeSomeOptionOfInt()
 		{
 			const int SUCCESS_VALUE = 1337;
 			var json = JsonConvert.SerializeObject(Option.Some(SUCCESS_VALUE), _jsonSerializerSettings);
 			var fromJson = JsonConvert.DeserializeObject<Option<int>>(json, _jsonSerializerSettings);
 
 			fromJson.Should().HaveExpectedValue(SUCCESS_VALUE);
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSomeOptionOfString()
+		{
+			const string SUCCESS_VALUE = "value";
+			var json = JsonConvert.SerializeObject(Option.Some(SUCCESS_VALUE), _jsonSerializerSettings);
+			var fromJson = JsonConvert.DeserializeObject<Option<string>>(json, _jsonSerializerSettings);
+
+			fromJson.Should().HaveExpectedValue(SUCCESS_VALUE);
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSomeOptionOfEnumerableCollection()
+		{
+			var collection = Enumerable.Range(0, 10);
+			var json = JsonConvert.SerializeObject(Option.Some(collection), _jsonSerializerSettings);
+			var fromJson = JsonConvert.DeserializeObject<Option<IEnumerable<int>>>(json, _jsonSerializerSettings);
+
+			fromJson.Should().HaveValue(x => x.SequenceEqual(collection).Should().BeTrue());
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSomeOptionOfArray()
+		{
+			var array = Enumerable.Range(0, 10).ToArray();
+			var json = JsonConvert.SerializeObject(Option.Some(array), _jsonSerializerSettings);
+			var fromJson = JsonConvert.DeserializeObject<Option<int[]>>(json, _jsonSerializerSettings);
+
+			fromJson.Should().HaveValue(x => x.SequenceEqual(array).Should().BeTrue());
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSomeOptionOfSimplePOCO()
+		{
+			var obj = AppModel.Create();
+			var json = JsonConvert.SerializeObject(Option.Some(obj), _jsonSerializerSettings);
+			var fromJson = JsonConvert.DeserializeObject<Option<AppModel>>(json, _jsonSerializerSettings);
+
+			fromJson.Should().HaveValue(x => x.IsLike(obj));
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSomeOptionOfComplexPOCO()
+		{
+			var obj = AppModelWithVersion.Create();
+			var json = JsonConvert.SerializeObject(Option.Some(obj), _jsonSerializerSettings);
+			var fromJson = JsonConvert.DeserializeObject<Option<AppModelWithVersion>>(json, _jsonSerializerSettings);
+
+			fromJson.Should().HaveValue(x => x.IsLike(obj));
 		}
 
 		[Fact]

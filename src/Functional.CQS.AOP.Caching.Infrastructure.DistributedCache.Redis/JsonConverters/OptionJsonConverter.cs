@@ -36,7 +36,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonC
 		{
 			var jsonObject = new JObject();
 			jsonObject.AddFirst(new JProperty(HAS_VALUE_PROPERTY_NAME, value.HasValue()));
-			value.Apply(x => jsonObject.Add(new JProperty(VALUE_PROPERTY_NAME, x)));
+			value.Apply(x => jsonObject.Add(new JProperty(VALUE_PROPERTY_NAME, JToken.FromObject(x))));
 
 			jsonObject.WriteTo(writer);
 		}
@@ -52,7 +52,6 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonC
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
 			var optionType = objectType.GenericTypeArguments[0];
-
 			var genericMethod = _readJsonMethod.MakeGenericMethod(optionType);
 			return genericMethod.Invoke(null, new[] { reader });
 		}
@@ -60,8 +59,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonC
 		private static Option<T> ReadJson_Impl<T>(JsonReader reader)
 		{
 			var item = JToken.Load(reader);
-			var jsonObject = JObject.Parse(item.ToString());
-			return Option.Create(jsonObject[HAS_VALUE_PROPERTY_NAME].Value<bool>(), () => jsonObject[VALUE_PROPERTY_NAME].Value<T>());
+			var jsonObject = JToken.Parse(item.ToString());
+			return Option.Create(jsonObject[HAS_VALUE_PROPERTY_NAME].Value<bool>(), () => jsonObject.ToType<T>(VALUE_PROPERTY_NAME));
 		}
 
 		/// <summary>
