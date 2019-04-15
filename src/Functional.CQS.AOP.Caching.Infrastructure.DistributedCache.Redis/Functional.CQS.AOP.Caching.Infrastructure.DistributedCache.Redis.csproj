@@ -21,6 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="JsonConverters\Extensions\JTokenExtensions.cs~RF589e992a.TMP" />
     <None Remove="LuaScripts\addItemWithGroupKey.lua" />
     <None Remove="LuaScripts\countGroupKeyItems.lua" />
     <None Remove="LuaScripts\countKeyToGroupKeyAssociationItems.lua" />

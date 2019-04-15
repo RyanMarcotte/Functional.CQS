@@ -77,16 +77,4 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonC
 			return genericTypeDefinition == typeof(Option<>);
 		}
 	}
-
-	internal static class JTokenExtensions
-	{
-		public static T ToType<T>(this JToken source, string propertyName)
-		{
-			var jsonValue = source[propertyName];
-			if (jsonValue.Type == JTokenType.Object)
-				return JObject.Parse(jsonValue.ToString()).ToObject<T>();
-
-			return jsonValue.Value<T>();
-		}
-	}
 }
