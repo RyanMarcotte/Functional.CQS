@@ -16,7 +16,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		public FunctionalRedisCacheOptions(string connectionString, params JsonConverter[] jsonConverterCollection)
 		{
 			ConnectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
-			JsonConverterCollection = jsonConverterCollection;
+			JsonConverterCollection = jsonConverterCollection ?? throw new ArgumentNullException(nameof(jsonConverterCollection));
 		}
 
 		/// <summary>
