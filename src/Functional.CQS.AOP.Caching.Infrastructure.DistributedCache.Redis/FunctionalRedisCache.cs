@@ -17,17 +17,10 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 	public class FunctionalRedisCache : IFunctionalCache
 	{
 		private readonly ConcurrentDictionary<string, SemaphoreSlim> _semaphoreSlimLookup = new ConcurrentDictionary<string, SemaphoreSlim>();
-		private static readonly JsonSerializerSettings _serializerSettings = new JsonSerializerSettings()
-		{
-			Converters = new List<JsonConverter>
-			{
-				new OptionJsonConverter(),
-				new ResultJsonConverter()
-			}
-		};
 
 		private readonly IRedisClientsManager _managerPool;
 		private readonly FunctionalRedisCacheOptions _options;
+		private readonly JsonSerializerSettings _serializerSettings;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FunctionalRedisCache"/> class.
@@ -37,6 +30,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		{
 			_options = options ?? throw new ArgumentNullException(nameof(options));
 			_managerPool = new RedisManagerPool(_options.ConnectionString);
+
+			var jsonConverterCollection = new List<JsonConverter> { new OptionJsonConverter(), new ResultJsonConverter() };
+			jsonConverterCollection.AddRange(options.JsonConverterCollection);
+
+			_serializerSettings = new JsonSerializerSettings() { Converters = jsonConverterCollection };
 		}
 
 		/// <summary>
