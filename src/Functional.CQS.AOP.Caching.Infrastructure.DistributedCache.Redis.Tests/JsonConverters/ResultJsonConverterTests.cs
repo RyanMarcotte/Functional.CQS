@@ -200,7 +200,6 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[Fact]
 		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfOptionOfNoSimplePOCO()
 		{
-			var obj = AppError.Create();
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModel, Option<AppError>>(Option.None<AppError>()));
 			var fromJson = (Result<AppModel, Option<AppError>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, Option<AppError>>));
 
@@ -226,7 +225,6 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[Fact]
 		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfOptionOfNoComplexPOCO()
 		{
-			var exception = new Exception("ERROR!", new Exception("inner error"));
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModelWithVersion, Option<Exception>>(Option.None<Exception>()));
 			var fromJson = (Result<AppModelWithVersion, Option<Exception>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Option<Exception>>));
 
