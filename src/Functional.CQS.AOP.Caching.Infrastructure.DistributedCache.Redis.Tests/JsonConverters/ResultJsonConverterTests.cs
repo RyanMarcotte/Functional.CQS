@@ -19,7 +19,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		{
 			JsonConvert.DefaultSettings = () => new JsonSerializerSettings()
 			{
-				Converters = new List<JsonConverter> { new ResultJsonConverter() }
+				Converters = new List<JsonConverter> { new OptionJsonConverter(), new ResultJsonConverter() }
 			};
 		}
 
@@ -29,6 +29,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			new ResultJsonConverter().CanConvert(Result.Success<int, string>(1337).GetType()).Should().BeTrue();
 			new ResultJsonConverter().CanConvert(Result.Success<AppModel, Exception>(AppModel.Create()).GetType()).Should().BeTrue();
 			new ResultJsonConverter().CanConvert(Result.Success<AppModelWithVersion, Exception>(AppModelWithVersion.Create()).GetType()).Should().BeTrue();
+			new ResultJsonConverter().CanConvert(Result.Success<Option<AppModel>, Exception>(Option.Some(AppModel.Create())).GetType()).Should().BeTrue();
+			new ResultJsonConverter().CanConvert(Result.Success<Option<AppModel>, Exception>(Option.None<AppModel>()).GetType()).Should().BeTrue();
 		}
 
 		[Fact]
@@ -82,11 +84,61 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		}
 
 		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSuccessfulResultOfOptionOfSomeSimplePOCO()
+		{
+			var obj = AppModel.Create();
+			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModel>, Exception>(Option.Some(obj)));
+			var fromJson = (Result<Option<AppModel>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModel>, Exception>));
+
+			fromJson.Should().BeSuccessful(option => option.Should().HaveValue(x => x.IsLike(obj)));
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSuccessfulResultOfOptionOfNoSimplePOCO()
+		{
+			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModel>, Exception>(Option.None<AppModel>()));
+			var fromJson = (Result<Option<AppModel>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModel>, Exception>));
+
+			fromJson.Should().BeSuccessful(option => option.Should().NotHaveValue());
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSuccessfulResultOfOptionOfSomeComplexPOCO()
+		{
+			var obj = AppModelWithVersion.Create();
+			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModelWithVersion>, Exception>(Option.Some(obj)));
+			var fromJson = (Result<Option<AppModelWithVersion>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModelWithVersion>, Exception>));
+
+			fromJson.Should().BeSuccessful(option => option.Should().HaveValue(x => x.IsLike(obj)));
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeSuccessfulResultOfOptionOfNoComplexPOCO()
+		{
+			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModelWithVersion>, Exception>(Option.None<AppModelWithVersion>()));
+			var fromJson = (Result<Option<AppModelWithVersion>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModelWithVersion>, Exception>));
+
+			fromJson.Should().BeSuccessful(option => option.Should().NotHaveValue());
+		}
+
+		[Fact]
 		public void ShouldBeAbleToConvertFaultedResult()
 		{
 			new ResultJsonConverter().CanConvert(Result.Failure<int, string>("dead or alive, you're coming with me").GetType()).Should().BeTrue();
 			new ResultJsonConverter().CanConvert(Result.Failure<AppModel, Exception>(new Exception("some error")).GetType()).Should().BeTrue();
 			new ResultJsonConverter().CanConvert(Result.Failure<AppModelWithVersion, Exception>(new Exception("ERROR!", new Exception("inner error"))).GetType()).Should().BeTrue();
+			new ResultJsonConverter().CanConvert(Result.Failure<Option<AppModel>, Exception>(new Exception("some error")).GetType()).Should().BeTrue();
+			new ResultJsonConverter().CanConvert(Result.Failure<Option<AppModelWithVersion>, Exception>(new Exception("ERROR!", new Exception("inner error"))).GetType()).Should().BeTrue();
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResult()
+		{
+			const string FAIL_VALUE = "dead or alive, you're coming with me";
+			var json = JsonConvert.SerializeObject(Result.Failure<int, string>(FAIL_VALUE));
+			var fromJson = JsonConvert.DeserializeObject<Result<int, string>>(json, new ResultJsonConverter());
+
+			fromJson.Should().BeFaultedWithExpectedValue(FAIL_VALUE);
 		}
 
 		[Fact]
@@ -136,13 +188,47 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		}
 
 		[Fact]
-		public void ShouldBeAbleToSerializeAndDeserializeFaultedResult()
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfOptionOfSomeSimplePOCO()
 		{
-			const string FAIL_VALUE = "dead or alive, you're coming with me";
-			var json = JsonConvert.SerializeObject(Result.Failure<int, string>(FAIL_VALUE));
-			var fromJson = JsonConvert.DeserializeObject<Result<int, string>>(json, new ResultJsonConverter());
+			var obj = AppError.Create();
+			var json = JsonConvert.SerializeObject(Result.Failure<AppModel, Option<AppError>>(Option.Some(obj)));
+			var fromJson = (Result<AppModel, Option<AppError>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, Option<AppError>>));
 
-			fromJson.Should().BeFaultedWithExpectedValue(FAIL_VALUE);
+			fromJson.Should().BeFaulted(option => option.Should().HaveValue(x => x.IsLike(obj)));
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfOptionOfNoSimplePOCO()
+		{
+			var json = JsonConvert.SerializeObject(Result.Failure<AppModel, Option<AppError>>(Option.None<AppError>()));
+			var fromJson = (Result<AppModel, Option<AppError>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, Option<AppError>>));
+
+			fromJson.Should().BeFaulted(option => option.Should().NotHaveValue());
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfOptionOfSomeComplexPOCO()
+		{
+			var exception = new Exception("ERROR!", new Exception("inner error"));
+			var json = JsonConvert.SerializeObject(Result.Failure<AppModelWithVersion, Option<Exception>>(Option.Some(exception)));
+			var fromJson = (Result<AppModelWithVersion, Option<Exception>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Option<Exception>>));
+
+			fromJson.Should().BeFaulted(option => option.Should().HaveValue(x =>
+			{
+				x.AsSource().OfLikeness<Exception>()
+					.WithInnerLikeness(d => d.InnerException, s => s.InnerException, l => l.Without(ex => ex.Data))
+					.Without(ex => ex.Data)
+					.ShouldEqual(exception);
+			}));
+		}
+
+		[Fact]
+		public void ShouldBeAbleToSerializeAndDeserializeFaultedResultOfOptionOfNoComplexPOCO()
+		{
+			var json = JsonConvert.SerializeObject(Result.Failure<AppModelWithVersion, Option<Exception>>(Option.None<Exception>()));
+			var fromJson = (Result<AppModelWithVersion, Option<Exception>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Option<Exception>>));
+
+			fromJson.Should().BeFaulted(option => option.Should().NotHaveValue());
 		}
 	}
 }
