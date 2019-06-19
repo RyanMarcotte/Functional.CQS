@@ -47,9 +47,10 @@ public class GetSystemSettingsForCompanyMetricsCapturingStrategy : IMetricsCaptu
         // perhaps post counts to Hosted Graphite so that 'number of calls' can be analyzed  
     }
 
-    public void OnInvocationCompletedSuccessfully(GetSystemSettingsForCompanyQuery parameters, Option<SystemSettingsForCompany> result, TimeSpan timeElapsed)
+    public void OnInvocationCompletedSuccessfully(GetSystemSettingsForCompanyQuery parameters, Result<Option<SystemSettingsForCompany>, Exception> result, TimeSpan timeElapsed)
     {
         // perhaps post performance timings to Hosted Graphite
+        // perhaps log the occurence of a faulted Result<TSuccess, TFailure> object
     }
 
     public void OnInvocationException(GetSystemSettingsForCompanyQuery parameters, Exception exception, TimeSpan timeElapsed)
