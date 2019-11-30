@@ -401,8 +401,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		{
 			public void Customize(IFixture fixture)
 			{
-				// localhost = 127.0.0.1:6379 (per Redis convention at https://github.com/ServiceStack/ServiceStack.Redis#redis-connection-strings)
-				var cache = new FunctionalRedisCache(new FunctionalRedisCacheOptions("localhost"));
+				// localhost = 127.0.0.1:6379 (per Redis convention at https://stackexchange.github.io/StackExchange.Redis/Basics)
+				var cache = new FunctionalRedisCache(FunctionalRedisCacheConfiguration.ForLocalHostPort6379());
 				cache.Clear();
 				foreach (var item in _cacheItems)
 					cache.Add(item.Key, item.GroupKey, _cacheItemLookup[item.Key], TimeSpan.FromMinutes(5));

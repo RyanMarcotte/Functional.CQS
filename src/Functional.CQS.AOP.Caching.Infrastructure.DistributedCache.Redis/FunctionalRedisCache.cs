@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonConverters;
 using Newtonsoft.Json;
-using ServiceStack.Redis;
+using StackExchange.Redis;
 
 namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 {
@@ -18,21 +19,21 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 	{
 		private readonly ConcurrentDictionary<string, SemaphoreSlim> _semaphoreSlimLookup = new ConcurrentDictionary<string, SemaphoreSlim>();
 
-		private readonly IRedisClientsManager _managerPool;
-		private readonly FunctionalRedisCacheOptions _options;
+		private readonly ConnectionMultiplexer _managerPool;
+		private readonly FunctionalRedisCacheConfiguration _configuration;
 		private readonly JsonSerializerSettings _serializerSettings;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FunctionalRedisCache"/> class.
 		/// </summary>
-		/// <param name="options">The cache configuration options.</param>
-		public FunctionalRedisCache(FunctionalRedisCacheOptions options)
+		/// <param name="configuration">The cache configuration.</param>
+		public FunctionalRedisCache(FunctionalRedisCacheConfiguration configuration)
 		{
-			_options = options ?? throw new ArgumentNullException(nameof(options));
-			_managerPool = new RedisManagerPool(_options.ConnectionString);
+			_configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+			_managerPool = ConnectionMultiplexer.Connect($"{_configuration.HostURL}:{_configuration.PortNumber},allowAdmin=true");
 
 			var jsonConverterCollection = new List<JsonConverter> { new OptionJsonConverter(), new ResultJsonConverter() };
-			jsonConverterCollection.AddRange(options.JsonConverterCollection);
+			jsonConverterCollection.AddRange(configuration.JsonConverterCollection);
 
 			_serializerSettings = new JsonSerializerSettings() { Converters = jsonConverterCollection };
 		}
@@ -47,12 +48,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <param name="timeToLive">The amount of time to keep the item in the cache.</param>
 		public Result<Unit, Exception> Add<T>(string key, Option<string> groupKey, T item, TimeSpan timeToLive)
 		{
-			using (var client = _managerPool.GetClient())
-			{
-				return groupKey.Match(
-					gk => client.SetWithGroupKeySafely(key, gk, item, timeToLive, _serializerSettings).Select(_ => Unit.Value),
-					() => client.SetSafely(key, item, timeToLive, _serializerSettings).Select(_ => Unit.Value));
-			}
+			var client = _managerPool.GetRedisClient(_configuration);
+			
+			return groupKey.Match(
+				gk => client.SetWithGroupKeySafely(key, gk, item, timeToLive, _serializerSettings).Select(_ => Unit.Value),
+				() => client.SetSafely(key, item, timeToLive, _serializerSettings).Select(_ => Unit.Value));
 		}
 
 		/// <summary>
@@ -62,8 +62,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <returns></returns>
 		public bool Contains(string key)
 		{
-			using (var client = _managerPool.GetClient())
-				return client.ContainsKey(key);
+			return _managerPool.GetRedisClient(_configuration).ContainsKey(key);
 		}
 
 		/// <summary>
@@ -78,12 +77,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <returns></returns>
 		public Result<T, Exception> Get<T>(string key, Option<string> groupKey, Func<T> dataRetriever, Func<T, bool> shouldCacheData, TimeSpan timeToLive) where T : class
 		{
-			using (var client = _managerPool.GetClient())
-			{
-				return TryGetItem<T>(client, key).Bind(itemFromCache => itemFromCache.Match(
-					item => Result.Success<T, Exception>(item),
-					() => ExecuteDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => x, timeToLive)));
-			}
+			var client = _managerPool.GetRedisClient(_configuration);
+			
+			return TryGetItem<T>(client, key).Bind(itemFromCache => itemFromCache.Match(
+				item => Result.Success<T, Exception>(item),
+				() => ExecuteDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => x, timeToLive)));
 		}
 
 		/// <summary>
@@ -98,12 +96,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <returns></returns>
 		public Result<object, Exception> Get(string key, Option<string> groupKey, Type type, Func<object> dataRetriever, Func<object, bool> shouldCacheData, TimeSpan timeToLive)
 		{
-			using (var client = _managerPool.GetClient())
-			{
-				return TryGetItem(client, key, type).Bind(itemFromCache => itemFromCache.Match(
-					item => Result.Success<object, Exception>(item),
-					() => ExecuteDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
-			}
+			var client = _managerPool.GetRedisClient(_configuration);
+			
+			return TryGetItem(client, key, type).Bind(itemFromCache => itemFromCache.Match(
+				item => Result.Success<object, Exception>(item),
+				() => ExecuteDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
 		}
 
 		/// <summary>
@@ -118,12 +115,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <returns></returns>
 		public async Task<Result<T, Exception>> GetAsync<T>(string key, Option<string> groupKey, Func<Task<T>> dataRetriever, Func<T, bool> shouldCacheData, TimeSpan timeToLive) where T : class
 		{
-			using (var client = _managerPool.GetClient())
-			{
-				return await TryGetItem<T>(client, key).BindAsync(itemFromCache => itemFromCache.MatchAsync(
-					async item => await Task.FromResult(Result.Success<T, Exception>(item)),
-					async () => await ExecuteAsyncDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => x, timeToLive)));
-			}
+			var client = _managerPool.GetRedisClient(_configuration);
+			
+			return await TryGetItem<T>(client, key).BindAsync(itemFromCache => itemFromCache.MatchAsync(
+				async item => await Task.FromResult(Result.Success<T, Exception>(item)),
+				async () => await ExecuteAsyncDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => x, timeToLive)));
 		}
 
 		/// <summary>
@@ -138,12 +134,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <returns></returns>
 		public async Task<Result<object, Exception>> GetAsync(string key, Option<string> groupKey, Type type, Func<Task<object>> dataRetriever, Func<object, bool> shouldCacheData, TimeSpan timeToLive)
 		{
-			using (var client = _managerPool.GetClient())
-			{
-				return await TryGetItem(client, key, type).BindAsync(itemFromCache => itemFromCache.MatchAsync(
-					async item => await Task.FromResult(Result.Success<object, Exception>(item)),
-					async () => await ExecuteAsyncDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
-			}
+			var client = _managerPool.GetRedisClient(_configuration);
+			
+			return await TryGetItem(client, key, type).BindAsync(itemFromCache => itemFromCache.MatchAsync(
+				async item => await Task.FromResult(Result.Success<object, Exception>(item)),
+				async () => await ExecuteAsyncDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
 		}
 
 		/// <summary>
@@ -152,8 +147,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <param name="key">The key used to uniquely identify the cached item.</param>
 		public Result<Unit, Exception> Remove(string key)
 		{
-			using (var client = _managerPool.GetClient())
-				return client.RemoveSafely(key).Select(_ => Unit.Value);
+			var client = _managerPool.GetRedisClient(_configuration);
+			return client.RemoveSafely(key).Select(_ => Unit.Value);
 		}
 
 		/// <summary>
@@ -162,8 +157,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// <param name="groupKey">The key used to identify a group of cached items.</param>
 		public Result<Unit, Exception> RemoveGroup(string groupKey)
 		{
-			using (var client = _managerPool.GetClient())
-				return client.RemoveGroupSafely(groupKey).Select(_ => Unit.Value);
+			var client = _managerPool.GetRedisClient(_configuration);
+			return client.RemoveGroupSafely(groupKey).Select(_ => Unit.Value);
 		}
 
 		/// <summary>
@@ -171,13 +166,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// </summary>
 		public Result<Unit, Exception> Clear()
 		{
-			return Result.Try(() =>
-			{
-				using (var client = _managerPool.GetClient())
-					client.FlushAll();
-
-				return Unit.Value;
-			});
+			return Result.Try(() => _managerPool.GetServer(_configuration.HostURL, _configuration.PortNumber).FlushDatabase());
 		}
 
 		/// <summary>
@@ -187,12 +176,13 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		{
 			get
 			{
-				using (var client = _managerPool.GetClient())
-				{
-					int keyToGroupKeyItemCount = client.CountKeyToGroupKeyAssociationItems().Match(value => value, ex => throw ex);
-					int groupKeySetItemCount = client.CountGroupKeySetItems().Match(value => value, ex => throw ex);
-					return (int)client.DbSize - keyToGroupKeyItemCount - groupKeySetItemCount;
-				}
+				var client = _managerPool.GetRedisClient(_configuration);
+
+				int itemCount = client.Server.Keys().Count();
+				int keyToGroupKeyItemCount = client.CountKeyToGroupKeyAssociationItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(KeyToGroupKeyItemCount)}'!", ex));
+				int groupKeySetItemCount = client.CountGroupKeySetItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(GroupKeySetItemCount)}'!", ex));
+
+				return itemCount - keyToGroupKeyItemCount - groupKeySetItemCount;
 			}
 		}
 
@@ -203,8 +193,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		{
 			get
 			{
-				using (var client = _managerPool.GetClient())
-					return client.CountKeyToGroupKeyAssociationItems().Match(value => value, ex => throw ex);
+				var client = _managerPool.GetRedisClient(_configuration);
+				return client.CountKeyToGroupKeyAssociationItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(KeyToGroupKeyItemCount)}'!", ex));
 			}
 		}
 
@@ -215,12 +205,12 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		{
 			get
 			{
-				using (var client = _managerPool.GetClient())
-					return client.CountGroupKeySetItems().Match(value => value, ex => throw ex);
+				var client = _managerPool.GetRedisClient(_configuration);
+				return client.CountGroupKeySetItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(GroupKeySetItemCount)}'!", ex));
 			}
 		}
 
-		private Result<Option<T>, Exception> TryGetItem<T>(IRedisClient client, string key)
+		private Result<Option<T>, Exception> TryGetItem<T>(RedisClient client, string key)
 		{
 			return client.ContainsKey(key)
 				? Result.Try(() => Option.Some((T)JsonConvert.DeserializeObject(client.GetValue(key), typeof(T), _serializerSettings)))
@@ -229,12 +219,12 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 
 		private object NullIfNotSpecifiedType(object value, Type type) => value.GetType() == type ? value : null;
 
-		private Result<Option<object>, Exception> TryGetItem(IRedisClient client, string key, Type type)
+		private Result<Option<object>, Exception> TryGetItem(RedisClient client, string key, Type type)
 		{
 			return Result.Try(() => Option.Create(client.ContainsKey(key), () => JsonConvert.DeserializeObject(client.GetValue(key), type, _serializerSettings)));
 		}
 
-		private Result<T, Exception> ExecuteDataRetrieval<T>(IRedisClient client, string key, Option<string> groupKey, Func<T> dataRetriever, Func<T, bool> shouldCacheData, Func<T, T> dataTransformer, TimeSpan timeToLive) where T : class
+		private Result<T, Exception> ExecuteDataRetrieval<T>(RedisClient client, string key, Option<string> groupKey, Func<T> dataRetriever, Func<T, bool> shouldCacheData, Func<T, T> dataTransformer, TimeSpan timeToLive) where T : class
 		{
 			// block retrieval if it is already being executed
 			using (var semaphore = new CachedSemaphoreDisposable(_semaphoreSlimLookup, key))
@@ -246,7 +236,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 			}
 		}
 
-		private async Task<Result<T, Exception>> ExecuteAsyncDataRetrieval<T>(IRedisClient client, string key, Option<string> groupKey, Func<Task<T>> dataRetriever, Func<T, bool> shouldCacheData, Func<T, T> dataTransformer, TimeSpan timeToLive) where T : class
+		private async Task<Result<T, Exception>> ExecuteAsyncDataRetrieval<T>(RedisClient client, string key, Option<string> groupKey, Func<Task<T>> dataRetriever, Func<T, bool> shouldCacheData, Func<T, T> dataTransformer, TimeSpan timeToLive) where T : class
 		{
 			// block retrieval if it is already being executed
 			using (var semaphore = new CachedSemaphoreDisposable(_semaphoreSlimLookup, key))
@@ -269,6 +259,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		{
 			private readonly ConcurrentDictionary<string, SemaphoreSlim> _semaphoreSlimLookup;
 			private readonly string _key;
+			
+			[System.Diagnostics.CodeAnalysis.SuppressMessage(
+				"Code Quality", 
+				"IDE0069:Disposable fields should be disposed",
+				Justification = "Just a reference to a value stored in the semaphore lookup.  Disposing the semaphore causes a deadlock.")]
 			private readonly SemaphoreSlim _semaphore;
 
 			public CachedSemaphoreDisposable(ConcurrentDictionary<string, SemaphoreSlim> semaphoreSlimLookup, string key)
