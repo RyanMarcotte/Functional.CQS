@@ -93,14 +93,14 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[DistributedCacheArrangement]
 		public async Task ShouldOnlyCallDataRetrievalMethodOnceWhenMultipleThreadsAccessCacheAtTheSameTime_NonGenericOverload(FunctionalRedisCache sut)
 		{
-			int numberOfCalls = 0;
-			await Parallel.ForEach(Enumerable.Range(0, 25), n => sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(int), () =>
+			int numberOfCallsMade = 0;
+			await Parallel.ForEach(Enumerable.Range(0, CONCURRENT_REQUEST_COUNT), n => sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(int), () =>
 			{
-				Interlocked.Increment(ref numberOfCalls);
+				Interlocked.Increment(ref numberOfCallsMade);
 				return n;
 			}, _ => true, TimeSpan.FromMinutes(5))).AsTask();
 
-			numberOfCalls.Should().Be(1);
+			numberOfCallsMade.Should().Be(1);
 		}
 
 		[Theory]
@@ -214,14 +214,14 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[DistributedCacheArrangement]
 		public async Task ShouldOnlyCallDataRetrievalMethodOnceWhenMultipleThreadsAccessCacheAtTheSameTime_GenericOverload(FunctionalRedisCache sut)
 		{
-			int numberOfCalls = 0;
-			await Parallel.ForEach(Enumerable.Range(0, 25), n => sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), () =>
+			int numberOfCallsMade = 0;
+			await Parallel.ForEach(Enumerable.Range(0, CONCURRENT_REQUEST_COUNT), n => sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), () =>
 			{
-				Interlocked.Increment(ref numberOfCalls);
+				Interlocked.Increment(ref numberOfCallsMade);
 				return n.ToString();
 			}, _ => true, TimeSpan.FromMinutes(5))).AsTask();
 
-			numberOfCalls.Should().Be(1);
+			numberOfCallsMade.Should().Be(1);
 		}
 
 		[Theory]
@@ -255,15 +255,15 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[DistributedCacheArrangement]
 		public async Task ShouldOnlyCallAsyncDataRetrievalMethodOnceWhenMultipleThreadsAccessCacheAtTheSameTime_NonGenericOverload(FunctionalRedisCache sut)
 		{
-			int numberOfCalls = 0;
-			var tasks = Enumerable.Range(0, 25).Select(x => Task.Run(() => sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(int), async () =>
+			int numberOfCallsMade = 0;
+			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT).Select(x => Task.Run(() => sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(int), async () =>
 			{
-				Interlocked.Increment(ref numberOfCalls);
+				Interlocked.Increment(ref numberOfCallsMade);
 				return await Task.FromResult(x);
 			}, _ => true, TimeSpan.FromMinutes(5)))).Cast<Task>().ToArray();
 
 			await Task.WhenAll(tasks);
-			numberOfCalls.Should().Be(1);
+			numberOfCallsMade.Should().Be(1);
 		}
 
 		[Theory]
@@ -327,15 +327,15 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[DistributedCacheArrangement]
 		public async Task ShouldOnlyCallAsyncDataRetrievalMethodOnceWhenMultipleThreadsAccessCacheAtTheSameTime_GenericOverload(FunctionalRedisCache sut)
 		{
-			int numberOfCalls = 0;
-			var tasks = Enumerable.Range(0, 25).Select(x => Task.Run(() => sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), async () =>
+			int numberOfCallsMade = 0;
+			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT).Select(x => Task.Run(() => sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), async () =>
 			{
-				Interlocked.Increment(ref numberOfCalls);
+				Interlocked.Increment(ref numberOfCallsMade);
 				return await Task.FromResult(new object());
 			}, _ => true, TimeSpan.FromMinutes(5)))).Cast<Task>().ToArray();
 
 			await Task.WhenAll(tasks);
-			numberOfCalls.Should().Be(1);
+			numberOfCallsMade.Should().Be(1);
 		}
 
 		[Theory]
@@ -484,6 +484,8 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		#endregion
 
 		#region Data
+
+		private const int CONCURRENT_REQUEST_COUNT = 5;
 
 		private const string KEY1 = "1";
 		private const string KEY2A = "2a";

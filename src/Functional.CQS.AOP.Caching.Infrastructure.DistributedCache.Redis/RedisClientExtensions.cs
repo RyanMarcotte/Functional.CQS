@@ -84,8 +84,11 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 			});
 		}
 
-		private static Result<RedisValue, Exception> ExecuteLuaShaSafely(this RedisClient client, LoadedLuaScript script, string[] keys, string[] args) => Result.Try(() => (RedisValue)client.ExecuteScript(script, keys, args));
-		private static Result<string[], Exception> ExecuteLuaShaAsListSafely(this RedisClient client, LoadedLuaScript script, string[] keys, string[] args) => Result.Try(() => (string[])client.ExecuteScript(script, keys, args));
+		private static Result<RedisValue, Exception> ExecuteLuaShaSafely(this RedisClient client, LoadedLuaScript script, string[] keys, string[] args)
+			=> Result.Try(() => (RedisValue)client.ExecuteScript(script, keys, args));
+
+		private static Result<string[], Exception> ExecuteLuaShaAsListSafely(this RedisClient client, LoadedLuaScript script, string[] keys, string[] args)
+			=> Result.Try(() => (string[])client.ExecuteScript(script, keys, args));
 
 		private static T ExecCachedLua<T>(this RedisClient client, string script, Func<LoadedLuaScript, T> factory)
 		{
