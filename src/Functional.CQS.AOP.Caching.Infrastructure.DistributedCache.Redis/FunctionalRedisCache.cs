@@ -166,7 +166,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// </summary>
 		public Result<Unit, Exception> Clear()
 		{
-			return Result.Try(() => _managerPool.GetServer(_configuration.HostURL, _configuration.PortNumber).FlushDatabase());
+			return Result.Try(() => _managerPool.GetServer(_configuration).FlushDatabase());
 		}
 
 		/// <summary>
@@ -179,8 +179,12 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 				var client = _managerPool.GetRedisClient(_configuration);
 
 				int itemCount = client.Server.Keys().Count();
-				int keyToGroupKeyItemCount = client.CountKeyToGroupKeyAssociationItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(KeyToGroupKeyItemCount)}'!", ex));
-				int groupKeySetItemCount = client.CountGroupKeySetItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(GroupKeySetItemCount)}'!", ex));
+				int keyToGroupKeyItemCount = client.CountKeyToGroupKeyAssociationItems().Match(
+					value => value,
+					ex => throw new Exception($"An error occurred while attempting to compute '{nameof(KeyToGroupKeyItemCount)}'!", ex));
+				int groupKeySetItemCount = client.CountGroupKeySetItems().Match(
+					value => value,
+					ex => throw new Exception($"An error occurred while attempting to compute '{nameof(GroupKeySetItemCount)}'!", ex));
 
 				return itemCount - keyToGroupKeyItemCount - groupKeySetItemCount;
 			}
@@ -194,7 +198,9 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 			get
 			{
 				var client = _managerPool.GetRedisClient(_configuration);
-				return client.CountKeyToGroupKeyAssociationItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(KeyToGroupKeyItemCount)}'!", ex));
+				return client.CountKeyToGroupKeyAssociationItems().Match(
+					value => value,
+					ex => throw new Exception($"An error occurred while attempting to compute '{nameof(KeyToGroupKeyItemCount)}'!", ex));
 			}
 		}
 
@@ -206,7 +212,9 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 			get
 			{
 				var client = _managerPool.GetRedisClient(_configuration);
-				return client.CountGroupKeySetItems().Match(value => value, ex => throw new Exception($"An error occurred while attempting to compute '{nameof(GroupKeySetItemCount)}'!", ex));
+				return client.CountGroupKeySetItems().Match(
+					value => value,
+					ex => throw new Exception($"An error occurred while attempting to compute '{nameof(GroupKeySetItemCount)}'!", ex));
 			}
 		}
 
