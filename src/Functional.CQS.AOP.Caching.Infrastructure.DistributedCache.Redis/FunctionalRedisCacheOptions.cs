@@ -6,6 +6,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 	/// <summary>
 	/// Encapsulates Redis cache configuration options.
 	/// </summary>
+	[Obsolete("Use FunctionalRedisCacheConfiguration instead.")]
 	public class FunctionalRedisCacheOptions
 	{
 		/// <summary>

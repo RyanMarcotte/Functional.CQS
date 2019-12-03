@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Newtonsoft.Json;
-using ServiceStack.Redis;
+using StackExchange.Redis;
 
 namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 {
@@ -32,35 +33,40 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 			{ _countGroupKeyItems, _assembly.LoadScript("countGroupKeyItems.lua").Match(value => value, ex => throw ex) }
 		};
 
-		public static Result<bool, Exception> SetSafely<T>(this IRedisClient client, string key, T item, TimeSpan timeToLive, JsonSerializerSettings serializerSettings) => Result.Try(() => client.Set(key, item.ToJsonString(serializerSettings), timeToLive));
+		private static readonly ConcurrentDictionary<string, LoadedLuaScript> _loadedLuaScripts = new ConcurrentDictionary<string, LoadedLuaScript>();
 
-		public static Result<RedisText, Exception> SetWithGroupKeySafely<T>(this IRedisClient client, string key, string groupKey, T item, TimeSpan timeToLive, JsonSerializerSettings serializerSettings)
+		public static bool ContainsKey(this RedisClient client, string key) => client.Database.StringGet(key).HasValue;
+		public static string GetValue(this RedisClient client, string key) => client.Database.StringGet(key).ToString();
+
+		public static Result<bool, Exception> SetSafely<T>(this RedisClient client, string key, T item, TimeSpan timeToLive, JsonSerializerSettings serializerSettings) => Result.Try(() => client.Database.StringSet(key, item.ToJsonString(serializerSettings), timeToLive));
+
+		public static Result<RedisValue, Exception> SetWithGroupKeySafely<T>(this RedisClient client, string key, string groupKey, T item, TimeSpan timeToLive, JsonSerializerSettings serializerSettings)
 		{
 			var keys = new[] { key, groupKey };
 			var args = new[] { item.ToJsonString(serializerSettings), ((int) timeToLive.TotalSeconds).ToString(CultureInfo.InvariantCulture), KEY_TO_GROUP_KEY_PREFIX, GROUP_KEY_PREFIX };
 			return client.ExecCachedLua(_scriptLookup[_addItemWithGroupKeyScriptID], sha1 => client.ExecuteLuaShaSafely(sha1, keys, args));
 		}
 
-		public static Result<RedisText, Exception> RemoveSafely(this IRedisClient client, string key)
+		public static Result<RedisValue, Exception> RemoveSafely(this RedisClient client, string key)
 		{
 			var keys = new[] { key, };
 			var args = new[] { KEY_TO_GROUP_KEY_PREFIX };
 			return client.ExecCachedLua(_scriptLookup[_removeItemScriptID], sha1 => client.ExecuteLuaShaSafely(sha1, keys, args));
 		}
 
-		public static Result<RedisText, Exception> RemoveGroupSafely(this IRedisClient client, string groupKey)
+		public static Result<RedisValue, Exception> RemoveGroupSafely(this RedisClient client, string groupKey)
 		{
 			var keys = new[] { groupKey };
 			var args = new[] { KEY_TO_GROUP_KEY_PREFIX, GROUP_KEY_PREFIX };
 			return client.ExecCachedLua(_scriptLookup[_removeItemGroupScriptID], sha1 => client.ExecuteLuaShaSafely(sha1, keys, args));
 		}
 
-		public static Result<int, Exception> CountKeyToGroupKeyAssociationItems(this IRedisClient client)
+		public static Result<int, Exception> CountKeyToGroupKeyAssociationItems(this RedisClient client)
 		{
 			return client.ExecCachedLua(_scriptLookup[_countKeyToGroupKeyAssociationItems], sha1 => client.ExecuteLuaShaAsListSafely(sha1, new string[] { }, new[] { KEY_TO_GROUP_KEY_PREFIX }).Select(results => results.Count()));
 		}
 
-		public static Result<int, Exception> CountGroupKeySetItems(this IRedisClient client)
+		public static Result<int, Exception> CountGroupKeySetItems(this RedisClient client)
 		{
 			return client.ExecCachedLua(_scriptLookup[_countGroupKeyItems], sha1 => client.ExecuteLuaShaAsListSafely(sha1, new string[] { }, new[] { GROUP_KEY_PREFIX })).Select(results => results.Count());
 		}
@@ -78,7 +84,24 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 			});
 		}
 
-		private static Result<RedisText, Exception> ExecuteLuaShaSafely(this IRedisClient client, string sha1, string[] keys, string[] args) => Result.Try(() => client.ExecLuaSha(sha1, keys, args));
-		private static Result<IEnumerable<string>, Exception> ExecuteLuaShaAsListSafely(this IRedisClient client, string sha1, string[] keys, string[] args) => Result.Try(() => client.ExecLuaShaAsList(sha1, keys, args).AsEnumerable());
+		private static Result<RedisValue, Exception> ExecuteLuaShaSafely(this RedisClient client, LoadedLuaScript script, string[] keys, string[] args)
+			=> Result.Try(() => (RedisValue)client.ExecuteScript(script, keys, args));
+
+		private static Result<string[], Exception> ExecuteLuaShaAsListSafely(this RedisClient client, LoadedLuaScript script, string[] keys, string[] args)
+			=> Result.Try(() => (string[])client.ExecuteScript(script, keys, args));
+
+		private static T ExecCachedLua<T>(this RedisClient client, string script, Func<LoadedLuaScript, T> factory)
+		{
+			var luaScript = _loadedLuaScripts.GetOrAdd(script, s =>
+			{
+				var preparedScript = LuaScript.Prepare(s);
+				return preparedScript.Load(client.Server);
+			});
+
+			return factory.Invoke(luaScript);
+		}
+
+		private static RedisResult ExecuteScript(this RedisClient client, LoadedLuaScript script, string[] keys, string[] args)
+			=> client.Database.ScriptEvaluate(script.Hash, keys.Select(x => (RedisKey)x).ToArray(), args.Select(x => (RedisValue)x).ToArray());
 	}
 }
