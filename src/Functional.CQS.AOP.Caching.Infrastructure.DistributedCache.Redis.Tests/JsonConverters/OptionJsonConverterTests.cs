@@ -32,7 +32,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Option.Some(SUCCESS_VALUE), _jsonSerializerSettings);
 			var fromJson = JsonConvert.DeserializeObject<Option<int>>(json, _jsonSerializerSettings);
 
-			fromJson.Should().HaveExpectedValue(SUCCESS_VALUE);
+			fromJson.Should().HaveValue().AndValue.Should().Be(SUCCESS_VALUE);
 		}
 
 		[Fact]
@@ -42,7 +42,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Option.Some(SUCCESS_VALUE), _jsonSerializerSettings);
 			var fromJson = JsonConvert.DeserializeObject<Option<string>>(json, _jsonSerializerSettings);
 
-			fromJson.Should().HaveExpectedValue(SUCCESS_VALUE);
+			fromJson.Should().HaveValue().AndValue.Should().Be(SUCCESS_VALUE);
 		}
 
 		[Fact]
@@ -52,7 +52,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Option.Some(collection), _jsonSerializerSettings);
 			var fromJson = JsonConvert.DeserializeObject<Option<IEnumerable<int>>>(json, _jsonSerializerSettings);
 
-			fromJson.Should().HaveValue(x => x.SequenceEqual(collection).Should().BeTrue());
+			fromJson.Should().HaveValue().AndValue.SequenceEqual(collection).Should().BeTrue();
 		}
 
 		[Fact]
@@ -62,7 +62,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Option.Some(array), _jsonSerializerSettings);
 			var fromJson = JsonConvert.DeserializeObject<Option<int[]>>(json, _jsonSerializerSettings);
 
-			fromJson.Should().HaveValue(x => x.SequenceEqual(array).Should().BeTrue());
+			fromJson.Should().HaveValue().AndValue.SequenceEqual(array).Should().BeTrue();
 		}
 
 		[Fact]
@@ -72,7 +72,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Option.Some(obj), _jsonSerializerSettings);
 			var fromJson = JsonConvert.DeserializeObject<Option<AppModel>>(json, _jsonSerializerSettings);
 
-			fromJson.Should().HaveValue(x => x.IsLike(obj));
+			fromJson.Should().HaveValue().AndValue.IsLike(obj);
 		}
 
 		[Fact]
@@ -82,7 +82,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Option.Some(obj), _jsonSerializerSettings);
 			var fromJson = JsonConvert.DeserializeObject<Option<AppModelWithVersion>>(json, _jsonSerializerSettings);
 
-			fromJson.Should().HaveValue(x => x.IsLike(obj));
+			fromJson.Should().HaveValue().AndValue.IsLike(obj);
 		}
 
 		[Fact]

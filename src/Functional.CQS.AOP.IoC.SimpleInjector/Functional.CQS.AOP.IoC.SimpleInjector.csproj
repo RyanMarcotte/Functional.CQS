@@ -15,6 +15,7 @@
     <PackageTags>functional CQS netstandard netcore simpleinjector aop ioc</PackageTags>
     <Authors>Ryan Marcotte</Authors>
     <Company>Ryan Marcotte</Company>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,9 +27,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
-    <PackageReference Include="Functional.Primitives.Extensions" Version="1.9.0" />
-    <PackageReference Include="SimpleInjector" Version="4.4.3" />
+    <PackageReference Include="Functional.Primitives" Version="[2.*, 3.0)" />
+    <PackageReference Include="Functional.Primitives.Extensions" Version="[2.*, 3.0)" />
+    <PackageReference Include="SimpleInjector" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,6 +3,7 @@ using Functional.CQS.AOP.Caching;
 using Functional.CQS.AOP.CommonTestInfrastructure.Caching;
 using Functional.CQS.AOP.CommonTestInfrastructure.Caching.DummyObjects;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
+using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 using Functional.Primitives.FluentAssertions;
 using Xunit;
 
@@ -26,11 +27,12 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.Caching.Tests
 			where TQuery : IQueryParameters<TResult>
 			where TCachingStrategy : IQueryResultCachingStrategy<TQuery, TResult>
 		{
-			typeof(TCachingStrategy).GetGenericParametersForQueryCachingStrategyType().Should().HaveValue(x =>
-			{
-				x.QueryType.Should().Be(typeof(TQuery));
-				x.ResultType.Should().Be(typeof(TResult));
-			});
+			typeof(TCachingStrategy).GetGenericParametersForQueryCachingStrategyType()
+				.Should()
+				.HaveValue()
+				.AndValue
+				.Should()
+				.Match<QueryAndResultType>(x => x.QueryType == typeof(TQuery) && x.ResultType == typeof(TResult));
 		}
 
 		public class WhenCheckingIfTypeIsCachingStrategyForQueryType

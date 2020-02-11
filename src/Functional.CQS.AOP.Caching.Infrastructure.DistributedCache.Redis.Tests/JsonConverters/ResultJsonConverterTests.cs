@@ -40,7 +40,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<int, string>(SUCCESS_VALUE));
 			var fromJson = (Result<int, string>)JsonConvert.DeserializeObject(json, typeof(Result<int, string>));
 
-			fromJson.Should().BeSuccessfulWithExpectedValue(SUCCESS_VALUE);
+			fromJson.Should().BeSuccessful().AndSuccessValue.Should().Be(SUCCESS_VALUE);
 		}
 
 		[Fact]
@@ -50,7 +50,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<IEnumerable<int>, Exception>(collection));
 			var fromJson = (Result<IEnumerable<int>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<IEnumerable<int>, Exception>));
 
-			fromJson.Should().BeSuccessful(x => x.SequenceEqual(collection).Should().BeTrue());
+			fromJson.Should().BeSuccessful().AndSuccessValue.SequenceEqual(collection).Should().BeTrue();
 		}
 
 		[Fact]
@@ -60,7 +60,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<int[], Exception>(array));
 			var fromJson = (Result<int[], Exception>)JsonConvert.DeserializeObject(json, typeof(Result<int[], Exception>));
 
-			fromJson.Should().BeSuccessful(x => x.SequenceEqual(array).Should().BeTrue());
+			fromJson.Should().BeSuccessful().AndSuccessValue.SequenceEqual(array).Should().BeTrue();
 		}
 
 		[Fact]
@@ -70,7 +70,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<AppModel, Exception>(obj));
 			var fromJson = (Result<AppModel, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, Exception>));
 
-			fromJson.Should().BeSuccessful(x => x.IsLike(obj));
+			fromJson.Should().BeSuccessful().AndSuccessValue.IsLike(obj);
 		}
 
 		[Fact]
@@ -80,7 +80,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<AppModelWithVersion, Exception>(obj));
 			var fromJson = (Result<AppModelWithVersion, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Exception>));
 
-			fromJson.Should().BeSuccessful(x => x.IsLike(obj));
+			fromJson.Should().BeSuccessful().AndSuccessValue.IsLike(obj);
 		}
 
 		[Fact]
@@ -90,7 +90,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModel>, Exception>(Option.Some(obj)));
 			var fromJson = (Result<Option<AppModel>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModel>, Exception>));
 
-			fromJson.Should().BeSuccessful(option => option.Should().HaveValue(x => x.IsLike(obj)));
+			fromJson.Should().BeSuccessful().AndSuccessValue.Should().HaveValue().AndValue.IsLike(obj);
 		}
 
 		[Fact]
@@ -99,7 +99,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModel>, Exception>(Option.None<AppModel>()));
 			var fromJson = (Result<Option<AppModel>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModel>, Exception>));
 
-			fromJson.Should().BeSuccessful(option => option.Should().NotHaveValue());
+			fromJson.Should().BeSuccessful().AndSuccessValue.Should().NotHaveValue();
 		}
 
 		[Fact]
@@ -109,7 +109,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModelWithVersion>, Exception>(Option.Some(obj)));
 			var fromJson = (Result<Option<AppModelWithVersion>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModelWithVersion>, Exception>));
 
-			fromJson.Should().BeSuccessful(option => option.Should().HaveValue(x => x.IsLike(obj)));
+			fromJson.Should().BeSuccessful().AndSuccessValue.Should().HaveValue().AndValue.IsLike(obj);
 		}
 
 		[Fact]
@@ -118,7 +118,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Success<Option<AppModelWithVersion>, Exception>(Option.None<AppModelWithVersion>()));
 			var fromJson = (Result<Option<AppModelWithVersion>, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<Option<AppModelWithVersion>, Exception>));
 
-			fromJson.Should().BeSuccessful(option => option.Should().NotHaveValue());
+			fromJson.Should().BeSuccessful().AndSuccessValue.Should().NotHaveValue();
 		}
 
 		[Fact]
@@ -138,7 +138,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<int, string>(FAIL_VALUE));
 			var fromJson = JsonConvert.DeserializeObject<Result<int, string>>(json, new ResultJsonConverter());
 
-			fromJson.Should().BeFaultedWithExpectedValue(FAIL_VALUE);
+			fromJson.Should().BeFaulted().AndFailureValue.Should().Be(FAIL_VALUE);
 		}
 
 		[Fact]
@@ -148,7 +148,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<IEnumerable<int>, IEnumerable<string>>(collection));
 			var fromJson = (Result<IEnumerable<int>, IEnumerable<string>>)JsonConvert.DeserializeObject(json, typeof(Result<IEnumerable<int>, IEnumerable<string>>));
 
-			fromJson.Should().BeFaulted(x => x.SequenceEqual(collection).Should().BeTrue());
+			fromJson.Should().BeFaulted().AndFailureValue.SequenceEqual(collection).Should().BeTrue();
 		}
 
 		[Fact]
@@ -158,7 +158,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<int[], string[]>(array));
 			var fromJson = (Result<int[], string[]>)JsonConvert.DeserializeObject(json, typeof(Result<int[], string[]>));
 
-			fromJson.Should().BeFaulted(x => x.SequenceEqual(array).Should().BeTrue());
+			fromJson.Should().BeFaulted().AndFailureValue.SequenceEqual(array).Should().BeTrue();
 		}
 
 		[Fact]
@@ -168,7 +168,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModel, AppError>(obj));
 			var fromJson = (Result<AppModel, AppError>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, AppError>));
 
-			fromJson.Should().BeFaulted(x => x.IsLike(obj));
+			fromJson.Should().BeFaulted().AndFailureValue.IsLike(obj);
 		}
 
 		[Fact]
@@ -178,13 +178,14 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModelWithVersion, Exception>(exception));
 			var fromJson = (Result<AppModelWithVersion, Exception>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Exception>));
 
-			fromJson.Should().BeFaulted(x =>
-			{
-				x.AsSource().OfLikeness<Exception>()
-					.WithInnerLikeness(d => d.InnerException, s => s.InnerException, l => l.Without(ex => ex.Data))
-					.Without(ex => ex.Data)
-					.ShouldEqual(exception);
-			});
+			fromJson
+				.Should()
+				.BeFaulted()
+				.AndFailureValue
+				.AsSource().OfLikeness<Exception>()
+				.WithInnerLikeness(d => d.InnerException, s => s.InnerException, l => l.Without(ex => ex.Data))
+				.Without(ex => ex.Data)
+				.ShouldEqual(exception);
 		}
 
 		[Fact]
@@ -194,7 +195,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModel, Option<AppError>>(Option.Some(obj)));
 			var fromJson = (Result<AppModel, Option<AppError>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, Option<AppError>>));
 
-			fromJson.Should().BeFaulted(option => option.Should().HaveValue(x => x.IsLike(obj)));
+			fromJson.Should().BeFaulted().AndFailureValue.Should().HaveValue().AndValue.IsLike(obj);
 		}
 
 		[Fact]
@@ -203,7 +204,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModel, Option<AppError>>(Option.None<AppError>()));
 			var fromJson = (Result<AppModel, Option<AppError>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModel, Option<AppError>>));
 
-			fromJson.Should().BeFaulted(option => option.Should().NotHaveValue());
+			fromJson.Should().BeFaulted().AndFailureValue.Should().NotHaveValue();
 		}
 
 		[Fact]
@@ -213,13 +214,17 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModelWithVersion, Option<Exception>>(Option.Some(exception)));
 			var fromJson = (Result<AppModelWithVersion, Option<Exception>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Option<Exception>>));
 
-			fromJson.Should().BeFaulted(option => option.Should().HaveValue(x =>
-			{
-				x.AsSource().OfLikeness<Exception>()
-					.WithInnerLikeness(d => d.InnerException, s => s.InnerException, l => l.Without(ex => ex.Data))
-					.Without(ex => ex.Data)
-					.ShouldEqual(exception);
-			}));
+			fromJson
+				.Should()
+				.BeFaulted()
+				.AndFailureValue
+				.Should()
+				.HaveValue()
+				.AndValue
+				.AsSource().OfLikeness<Exception>()
+				.WithInnerLikeness(d => d.InnerException, s => s.InnerException, l => l.Without(ex => ex.Data))
+				.Without(ex => ex.Data)
+				.ShouldEqual(exception);
 		}
 
 		[Fact]
@@ -228,7 +233,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var json = JsonConvert.SerializeObject(Result.Failure<AppModelWithVersion, Option<Exception>>(Option.None<Exception>()));
 			var fromJson = (Result<AppModelWithVersion, Option<Exception>>)JsonConvert.DeserializeObject(json, typeof(Result<AppModelWithVersion, Option<Exception>>));
 
-			fromJson.Should().BeFaulted(option => option.Should().NotHaveValue());
+			fromJson.Should().BeFaulted().AndFailureValue.Should().NotHaveValue();
 		}
 	}
 }

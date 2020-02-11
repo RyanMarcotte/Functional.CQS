@@ -12,6 +12,7 @@
 - IMetricsCapturingStrategyForCommand&lt;TCommand, TError&gt;</Description>
     <Copyright>2019</Copyright>
     <PackageTags>functional CQS netstandard netcore metrics</PackageTags>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

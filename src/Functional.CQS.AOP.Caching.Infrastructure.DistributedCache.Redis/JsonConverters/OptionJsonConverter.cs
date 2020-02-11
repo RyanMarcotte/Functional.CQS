@@ -36,7 +36,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonC
 		{
 			var jsonObject = new JObject();
 			jsonObject.AddFirst(new JProperty(HAS_VALUE_PROPERTY_NAME, value.HasValue()));
-			value.Apply(x => jsonObject.Add(new JProperty(VALUE_PROPERTY_NAME, JToken.FromObject(x))));
+			value.Apply(x => jsonObject.Add(new JProperty(VALUE_PROPERTY_NAME, JToken.FromObject(x))), () => { });
 
 			jsonObject.WriteTo(writer);
 		}

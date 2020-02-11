@@ -15,6 +15,7 @@ Used with SimpleInjector container.</Description>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>functional CQS netstandard netcore simpleinjector aop ioc metrics</PackageTags>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,8 +27,8 @@ Used with SimpleInjector container.</Description>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Functional.Common.Extensions" Version="1.9.0" />
-    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
+    <PackageReference Include="Functional.Common.Extensions" Version="[2.*, 3.0)" />
+    <PackageReference Include="Functional.Primitives" Version="[2.*, 3.0)" />
   </ItemGroup>
 
   <ItemGroup>

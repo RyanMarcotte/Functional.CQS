@@ -44,7 +44,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, typeof(int), () => KEY_TO_STORE, _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(KEY_TO_STORE));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(KEY_TO_STORE);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -56,7 +56,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = sut.Get(KEY1, Option.None<string>(), typeof(object), () => _cacheItemLookup[KEY1], _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY1).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(_cacheItemLookup[KEY1]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(_cacheItemLookup[KEY1]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -85,7 +85,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, () => itemToStore, _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(itemToStore));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(itemToStore);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -97,7 +97,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = sut.Get(KEY1, Option.None<string>(), () => _cacheItemLookup[KEY1], _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY1).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(_cacheItemLookup[KEY1]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(_cacheItemLookup[KEY1]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -126,7 +126,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = await sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, typeof(int), () => Task.FromResult((object)KEY_TO_STORE), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(KEY_TO_STORE));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(KEY_TO_STORE);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -138,7 +138,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = await sut.GetAsync(KEY1, Option.None<string>(), typeof(object), () => Task.FromResult(_cacheItemLookup[KEY1]), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY1).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(_cacheItemLookup[KEY1]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(_cacheItemLookup[KEY1]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -168,7 +168,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = await sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, () => Task.FromResult(itemToStore), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(itemToStore));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(itemToStore);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -182,7 +182,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.MemoryCache.Tests
 			var result = await sut.GetAsync(KEY1, groupKey, () => Task.FromResult(_cacheItemLookup[KEY1]), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY1).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(_cacheItemLookup[KEY1]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(_cacheItemLookup[KEY1]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
