@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.JsonConverters;
@@ -30,7 +31,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		public FunctionalRedisCache(FunctionalRedisCacheConfiguration configuration)
 		{
 			_configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
-			_managerPool = ConnectionMultiplexer.Connect($"{_configuration.HostURL}:{_configuration.PortNumber},allowAdmin=true");
+			_managerPool = ConnectionMultiplexer.Connect($"{_configuration.ToConnectionString()},allowAdmin=true");
 
 			var jsonConverterCollection = new List<JsonConverter> { new OptionJsonConverter(), new ResultJsonConverter() };
 			jsonConverterCollection.AddRange(configuration.JsonConverterCollection);
