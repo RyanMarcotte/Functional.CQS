@@ -9,7 +9,7 @@
     <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageTags>functional CQS netstandard netcore caching redis</PackageTags>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <PackageReleaseNotes>Migrated from ServiceStack.Redis to StackExchange.Redis, as the former is a commercial product with free use limitations and the latter is a free use library under MIT license</PackageReleaseNotes>
   </PropertyGroup>
 

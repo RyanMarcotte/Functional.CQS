@@ -38,6 +38,15 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		/// </summary>
 		/// <param name="hostURL">The host URL.</param>
 		/// <param name="portNumber">The port number.</param>
+		/// <param name="jsonConverterCollection">The collection of custom JSON converters.</param>
+		public static FunctionalRedisCacheConfiguration ForRemoteHost(string hostURL, int portNumber, params JsonConverter[] jsonConverterCollection)
+			=> new FunctionalRedisCacheConfiguration(hostURL, portNumber, "", jsonConverterCollection);
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FunctionalRedisCacheConfiguration"/> class.
+		/// </summary>
+		/// <param name="hostURL">The host URL.</param>
+		/// <param name="portNumber">The port number.</param>
 		/// <param name="password">The password for the Redis connection.</param>
 		/// <param name="jsonConverterCollection">The collection of custom JSON converters.</param>
 		public static FunctionalRedisCacheConfiguration ForRemoteHost(string hostURL, int portNumber, string password, params JsonConverter[] jsonConverterCollection)
