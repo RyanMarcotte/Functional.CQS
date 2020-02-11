@@ -1,6 +1,6 @@
 # Contributing
 
-`Functional.CQS.AOP` is intended to be application-agnostic.  As such, library enhancements and modifications must be discussed first.  Please [log an issue](https://github.com/RyanMarcotte/Functional.CQS/issues) prior to writing any code.
+`Functional.CQS.AOP` is intended to be application-agnostic.  As such, library enhancements and modifications must be discussed first.  Please [log an issue](https://github.com/RyanMarcotte/Functional.CQS/issues) prior to writing any code.  **You will need to be added as a collaborator to this repository in order to push feature branches and submit pull requests**.
 
 Feature branches are created off of `master` and merged in after code review.
 
