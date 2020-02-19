@@ -6,11 +6,12 @@
     <Authors>Ryan Marcotte</Authors>
     <Description>Defines a distributed cache using Redis that implements Functional.CQS.AOP.Caching.Infrastructure.IFunctionalCache</Description>
     <Copyright>2019</Copyright>
-    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageTags>functional CQS netstandard netcore caching redis</PackageTags>
-    <Version>2.1.0</Version>
-    <PackageReleaseNotes>Added ability to specify password for remote Redis connection</PackageReleaseNotes>
+    <Version>3.0.0</Version>
+    <PackageReleaseNotes>Updated to Functional 2.0.0</PackageReleaseNotes>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -48,10 +49,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Functional.Common.Extensions" Version="1.9.0" />
-    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
-    <PackageReference Include="Functional.Primitives.Extensions" Version="1.9.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Functional.Common.Extensions" Version="[2.*, 3.0)" />
+    <PackageReference Include="Functional.Primitives" Version="[2.*, 3.0)" />
+    <PackageReference Include="Functional.Primitives.Extensions" Version="[2.*, 3.0)" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
   </ItemGroup>
 

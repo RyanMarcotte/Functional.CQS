@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -10,11 +10,13 @@
 - Functional.CQS.IAsyncCommandHandler&lt;TCommand, TError&gt;</Description>
     <RepositoryUrl></RepositoryUrl>
     <Copyright>2019</Copyright>
-    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageTags>functional CQS netstandard netcore simpleinjector aop ioc</PackageTags>
     <Authors>Ryan Marcotte</Authors>
     <Company>Ryan Marcotte</Company>
+    <Version>2.0.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,9 +28,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Functional.Primitives" Version="1.9.0" />
-    <PackageReference Include="Functional.Primitives.Extensions" Version="1.9.0" />
-    <PackageReference Include="SimpleInjector" Version="4.4.3" />
+    <PackageReference Include="Functional.Primitives" Version="[2.*, 3.0)" />
+    <PackageReference Include="Functional.Primitives.Extensions" Version="[2.*, 3.0)" />
+    <PackageReference Include="SimpleInjector" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>

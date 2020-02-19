@@ -73,7 +73,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, typeof(int), () => KEY_TO_STORE, _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(KEY_TO_STORE));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(KEY_TO_STORE);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -85,7 +85,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = sut.Get(KEY3, Option.None<string>(), _cacheItemLookup[KEY3].GetType(), () => (SampleStructData)_cacheItemLookup[KEY3], _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY3).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be((SampleStructData)_cacheItemLookup[KEY3]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be((SampleStructData)_cacheItemLookup[KEY3]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -114,7 +114,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, () => itemToStore, _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(itemToStore));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(itemToStore);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -126,7 +126,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = sut.Get(KEY1, Option.None<string>(), () => (string)_cacheItemLookup[KEY1], _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY1).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be((string)_cacheItemLookup[KEY1]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be((string)_cacheItemLookup[KEY1]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -138,7 +138,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = sut.Get(KEY2A, Option.None<string>(), () => (IEnumerable<int>)_cacheItemLookup[KEY2A], _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY2A).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().BeEquivalentTo((IEnumerable<int>)_cacheItemLookup[KEY2A]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().BeEquivalentTo((IEnumerable<int>)_cacheItemLookup[KEY2A]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -150,7 +150,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = sut.Get(KEY2B, Option.None<string>(), () => (SampleReferenceData)_cacheItemLookup[KEY2B], _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY2B).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be((SampleReferenceData)_cacheItemLookup[KEY2B]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be((SampleReferenceData)_cacheItemLookup[KEY2B]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -158,7 +158,13 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[DistributedCacheArrangement]
 		public void ShouldNotStoreOptionInCacheIfConfiguredToNotStoreNone(FunctionalRedisCache sut)
 		{
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => Option.None<int>(), option => ((Option<int>)option).HasValue(), TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Option<int>)value).Should().NotHaveValue());
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => Option.None<int>(), option => ((Option<int>)option).HasValue(), TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Option<int>>()
+				.Should()
+				.NotHaveValue();
+
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeFalse("configured to not store Option.None in the cache");
 		}
 
@@ -167,8 +173,26 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		public void ShouldReturnOptionSomeItemFromCache(FunctionalRedisCache sut)
 		{
 			const int VALUE = 1337;
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => Option.Some(VALUE), option => ((Option<int>)option).HasValue(), TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Option<int>)value).Should().HaveExpectedValue(VALUE));
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => throw new NotImplementedException(), option => ((Option<int>)option).HasValue(), TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Option<int>)value).Should().HaveExpectedValue(VALUE));
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => Option.Some(VALUE), option => ((Option<int>)option).HasValue(), TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Option<int>>()
+				.Should()
+				.HaveValue()
+				.AndValue
+				.Should()
+				.Be(VALUE);
+
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => throw new NotImplementedException(), option => ((Option<int>)option).HasValue(), TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Option<int>>()
+				.Should()
+				.HaveValue()
+				.AndValue
+				.Should()
+				.Be(VALUE);
+
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue("configured to store Option.Some in the cache");
 		}
 
@@ -176,8 +200,20 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		[DistributedCacheArrangement]
 		public void ShouldReturnOptionNoneItemFromCache(FunctionalRedisCache sut)
 		{
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => Option.None<int>(), option => true, TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Option<int>)value).Should().NotHaveValue());
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => throw new NotImplementedException(), option => true, TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Option<int>)value).Should().NotHaveValue());
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => Option.None<int>(), option => true, TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Option<int>>()
+				.Should()
+				.NotHaveValue();
+
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Option<int>), () => throw new NotImplementedException(), option => true, TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Option<int>>()
+				.Should()
+				.NotHaveValue();
+
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue("configured to store Option.None in the cache");
 		}
 
@@ -186,7 +222,16 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		public void ShouldNotStoreResultInCacheIfConfiguredToNotStoreFaultedResult(FunctionalRedisCache sut)
 		{
 			const string FAIL_VALUE = "all your base are belong to us";
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => Result.Failure<int, string>(FAIL_VALUE), result => ((Result<int, string>)result).IsSuccess(), TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Result<int, string>)value).Should().BeFaultedWithExpectedValue(FAIL_VALUE));
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => Result.Failure<int, string>(FAIL_VALUE), result => ((Result<int, string>)result).IsSuccess(), TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Result<int, string>>()
+				.Should()
+				.BeFaulted()
+				.AndFailureValue
+				.Should()
+				.Be(FAIL_VALUE);
+
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeFalse("configured to not store Result.Fail in the cache");
 		}
 
@@ -195,8 +240,26 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		public void ShouldReturnSuccessfulResultItemFromCache(FunctionalRedisCache sut)
 		{
 			const int SUCCESS_VALUE = 1337;
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => Result.Success<int, string>(SUCCESS_VALUE), result => ((Result<int, string>)result).IsSuccess(), TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Result<int, string>)value).Should().BeSuccessfulWithExpectedValue(SUCCESS_VALUE));
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => throw new NotImplementedException(), result => ((Result<int, string>)result).IsSuccess(), TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Result<int, string>)value).Should().BeSuccessfulWithExpectedValue(SUCCESS_VALUE));
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => Result.Success<int, string>(SUCCESS_VALUE), result => ((Result<int, string>)result).IsSuccess(), TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Result<int, string>>()
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue
+				.Should()
+				.Be(SUCCESS_VALUE);
+
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => throw new NotImplementedException(), result => ((Result<int, string>)result).IsSuccess(), TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Result<int, string>>()
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue
+				.Should()
+				.Be(SUCCESS_VALUE);
+
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue("configured to store Result.Success in the cache");
 		}
 
@@ -205,8 +268,26 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		public void ShouldReturnFaultedResultItemFromCache(FunctionalRedisCache sut)
 		{
 			const string FAIL_VALUE = "all your base are belong to us";
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => Result.Failure<int, string>(FAIL_VALUE), result => true, TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Result<int, string>)value).Should().BeFaultedWithExpectedValue(FAIL_VALUE));
-			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => throw new NotImplementedException(), result => true, TimeSpan.FromMinutes(5)).Should().BeSuccessful(value => ((Result<int, string>)value).Should().BeFaultedWithExpectedValue(FAIL_VALUE));
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => Result.Failure<int, string>(FAIL_VALUE), result => true, TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Result<int, string>>()
+				.Should()
+				.BeFaulted()
+				.AndFailureValue
+				.Should()
+				.Be(FAIL_VALUE);
+
+			sut.Get(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, string>), () => throw new NotImplementedException(), result => true, TimeSpan.FromMinutes(5))
+				.Should()
+				.BeSuccessful()
+				.AndSuccessValue.As<Result<int, string>>()
+				.Should()
+				.BeFaulted()
+				.AndFailureValue
+				.Should()
+				.Be(FAIL_VALUE);
+
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue("configured to store Result.Fail in the cache");
 		}
 
@@ -235,7 +316,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = await sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, typeof(int), () => Task.FromResult((object)KEY_TO_STORE), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(KEY_TO_STORE));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(KEY_TO_STORE);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -247,7 +328,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = await sut.GetAsync(KEY3, Option.None<string>(), _cacheItemLookup[KEY3].GetType(), () => Task.FromResult<object>((SampleStructData)_cacheItemLookup[KEY3]), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY3).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be((SampleStructData)_cacheItemLookup[KEY3]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be((SampleStructData)_cacheItemLookup[KEY3]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -277,7 +358,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = await sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, groupKey, () => Task.FromResult(itemToStore), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY_NOT_IN_ORIGINAL_CACHE).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be(itemToStore));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be(itemToStore);
 			sut.VerifyOneNewItemHasBeenAdded(_cacheItems, groupKey);
 		}
 
@@ -291,7 +372,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = await sut.GetAsync(KEY1, groupKey, () => Task.FromResult((string)_cacheItemLookup[KEY1]), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY1).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be((string)_cacheItemLookup[KEY1]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be((string)_cacheItemLookup[KEY1]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -305,7 +386,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = await sut.GetAsync(KEY2A, groupKey, () => Task.FromResult((IEnumerable<int>)_cacheItemLookup[KEY2A]), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY2A).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().BeEquivalentTo((IEnumerable<int>)_cacheItemLookup[KEY2A]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().BeEquivalentTo((IEnumerable<int>)_cacheItemLookup[KEY2A]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 
@@ -319,7 +400,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 			var result = await sut.GetAsync(KEY2B, groupKey, () => Task.FromResult((SampleReferenceData)_cacheItemLookup[KEY2B]), _ => true, TimeSpan.FromMinutes(5));
 
 			sut.Contains(KEY2B).Should().BeTrue();
-			result.Should().BeSuccessful(value => value.Should().Be((SampleReferenceData)_cacheItemLookup[KEY2B]));
+			result.Should().BeSuccessful().AndSuccessValue.Should().Be((SampleReferenceData)_cacheItemLookup[KEY2B]);
 			sut.VerifyNoNewItemsHaveBeenAdded(_cacheItems);
 		}
 

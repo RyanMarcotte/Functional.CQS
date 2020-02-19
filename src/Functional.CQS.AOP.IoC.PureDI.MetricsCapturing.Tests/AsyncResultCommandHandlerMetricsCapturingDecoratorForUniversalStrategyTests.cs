@@ -33,7 +33,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 			IUniversalMetricsCapturingStrategy metricsCapturingStrategy)
 		{
 			var command = new DummyAsyncCommandThatSucceeds();
-			await Result.Try(async () => await sut.HandleAsync(command, new CancellationToken()));
+			await Result.TryAsync(async () => await sut.HandleAsync(command, new CancellationToken()));
 
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationStart()).MustHaveHappenedOnceExactly();
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationCompletedSuccessfully(A<TimeSpan>._)).MustNotHaveHappened();
@@ -44,7 +44,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 
 		private abstract class AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase : AutoDataAttribute
 		{
-			protected AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Task<Result<Unit, DummyAsyncCommandError>>> resultFactory, bool decoratorEnabled)
+			protected AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase(Func<Task<Result<Unit, DummyAsyncCommandError>>> resultFactory)
 				: base(() => new Fixture()
 					.Customize(new AsyncCommandHandlerCustomization(resultFactory))
 					.Customize(new MetricsCapturingStrategyCustomization()))
@@ -56,7 +56,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class AsyncCommandHandlerCompletesSuccessfully : AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public AsyncCommandHandlerCompletesSuccessfully()
-				: base(() => Task.FromResult(Result.Success<Unit, DummyAsyncCommandError>(Unit.Value)), true)
+				: base(() => Task.FromResult(Result.Success<Unit, DummyAsyncCommandError>(Unit.Value)))
 			{
 			}
 		}
@@ -64,7 +64,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 		private class AsyncCommandHandlerThrowsException : AsyncCommandHandlerMetricsCapturingDecoratorTestsArrangementBase
 		{
 			public AsyncCommandHandlerThrowsException()
-				: base(() => Task.FromException<Result<Unit, DummyAsyncCommandError>>(new Exception()), true)
+				: base(() => Task.FromException<Result<Unit, DummyAsyncCommandError>>(new Exception()))
 			{
 			}
 		}

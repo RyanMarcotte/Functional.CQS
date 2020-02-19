@@ -1,6 +1,7 @@
 using FluentAssertions;
 using Functional.CQS.AOP.CommonTestInfrastructure.DummyObjects;
 using Functional.CQS.AOP.CommonTestInfrastructure.MetricsCapturing.DummyObjects;
+using Functional.CQS.AOP.IoC.SimpleInjector.Models;
 using Functional.CQS.AOP.MetricsCapturing;
 using Functional.Primitives.FluentAssertions;
 using Xunit;
@@ -31,22 +32,24 @@ namespace Functional.CQS.AOP.IoC.SimpleInjector.MetricsCapturing.Tests
 			where TQuery : IQueryParameters<TResult>
 			where TMetricsCapturingStrategy : IMetricsCapturingStrategyForQuery<TQuery, TResult>
 		{
-			typeof(TMetricsCapturingStrategy).GetGenericParametersForQueryMetricsCapturingStrategyType().Should().HaveValue(x =>
-			{
-				x.QueryType.Should().Be(typeof(TQuery));
-				x.ResultType.Should().Be(typeof(TResult));
-			});
+			typeof(TMetricsCapturingStrategy).GetGenericParametersForQueryMetricsCapturingStrategyType()
+				.Should()
+				.HaveValue()
+				.AndValue
+				.Should()
+				.Match<QueryAndResultType>(x => x.QueryType == typeof(TQuery) && x.ResultType == typeof(TResult));
 		}
 
 		private static void VerifyCommandMetricsCapturingStrategyType<TCommand, TError, TMetricsCapturingStrategy>()
 			where TCommand : ICommandParameters<TError>
 			where TMetricsCapturingStrategy : IMetricsCapturingStrategyForCommand<TCommand, TError>
 		{
-			typeof(TMetricsCapturingStrategy).GetGenericParametersForCommandMetricsCapturingStrategyType().Should().HaveValue(x =>
-			{
-				x.CommandType.Should().Be(typeof(TCommand));
-				x.ErrorType.Should().Be(typeof(TError));
-			});
+			typeof(TMetricsCapturingStrategy).GetGenericParametersForCommandMetricsCapturingStrategyType()
+				.Should()
+				.HaveValue()
+				.AndValue
+				.Should()
+				.Match<CommandAndErrorType>(x => x.CommandType == typeof(TCommand) && x.ErrorType == typeof(TError));
 		}
 
 		public class WhenCheckingIfTypeIsMetricsCapturingStrategyForQueryType

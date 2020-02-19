@@ -33,7 +33,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 			IMetricsCapturingStrategyForQuery<DummyQueryReturnsValueType, DummyQueryReturnsValueTypeResult> metricsCapturingStrategy)
 		{
 			var query = new DummyQueryReturnsValueType();
-			await Result.Try(async () => await sut.HandleAsync(query));
+			await Result.TryAsync(async () => await sut.HandleAsync(query));
 
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationStart(query)).MustHaveHappenedOnceExactly();
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationCompletedSuccessfully(query, A<DummyQueryReturnsValueTypeResult>._, A<TimeSpan>._)).MustNotHaveHappened();

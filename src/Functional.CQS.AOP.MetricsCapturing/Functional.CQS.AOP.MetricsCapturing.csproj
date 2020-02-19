@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <Authors>Ryan Marcotte</Authors>
     <Description>Defines contracts for metrics-capturing components to be used alongside Functional.CQS handler implementations:
 - IUniversalMetricsCapturingStrategy
@@ -12,6 +12,8 @@
 - IMetricsCapturingStrategyForCommand&lt;TCommand, TError&gt;</Description>
     <Copyright>2019</Copyright>
     <PackageTags>functional CQS netstandard netcore metrics</PackageTags>
+    <Version>2.0.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

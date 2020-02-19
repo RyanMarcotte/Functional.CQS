@@ -33,7 +33,7 @@ namespace Functional.CQS.AOP.IoC.PureDI.MetricsCapturing.Tests
 			IMetricsCapturingStrategyForCommand<DummyAsyncCommandThatSucceeds, DummyAsyncCommandError> metricsCapturingStrategy)
 		{
 			var command = new DummyAsyncCommandThatSucceeds();
-			await Result.Try(async () => await sut.HandleAsync(command, new CancellationToken()));
+			await Result.TryAsync(async () => await sut.HandleAsync(command, new CancellationToken()));
 
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationStart(command)).MustHaveHappenedOnceExactly();
 			A.CallTo(() => metricsCapturingStrategy.OnInvocationCompletedSuccessfully(command, A<Result<Unit, DummyAsyncCommandError>>._, A<TimeSpan>._)).MustNotHaveHappened();
