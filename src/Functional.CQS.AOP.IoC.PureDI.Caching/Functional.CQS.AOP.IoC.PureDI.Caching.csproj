@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -8,10 +8,11 @@
 - IAsyncQueryHandler&lt;TQuery, TResult&gt;</Description>
     <Authors>Ryan Marcotte</Authors>
     <Copyright>2019</Copyright>
-    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageTags>functional CQS netstandard netcore caching</PackageTags>
     <Version>2.0.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

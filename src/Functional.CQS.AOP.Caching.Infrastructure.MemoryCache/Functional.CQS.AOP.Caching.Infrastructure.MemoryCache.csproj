@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,10 +6,11 @@
     <Description>Defines an in-memory cache that implements Functional.CQS.AOP.Caching.Infrastructure.IFunctionalCache</Description>
     <Copyright>2019</Copyright>
     <Authors>Ryan Marcotte</Authors>
-    <PackageLicenseUrl>https://github.com/RyanMarcotte/Functional.CQS/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageTags>functional CQS netstandard netcore caching</PackageTags>
     <Version>2.0.0</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
