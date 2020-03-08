@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
+    <PackageTags>functional CQS netstandard netcore caching</PackageTags>
+    <Description>Defines FunctionalNullCache, a null object that implements Functional.CQS.AOP.Caching.Infrastructure.IFunctionalCache</Description>
+    <Copyright>2019</Copyright>
+    <Authors>Ryan Marcotte</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug</OutputPath>
+    <DocumentationFile>bin\Debug\Functional.CQS.AOP.Caching.Infrastructure.NullCache.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <OutputPath>bin\Release</OutputPath>
+    <DocumentationFile>bin\Release\Functional.CQS.AOP.Caching.Infrastructure.NullCache.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Functional.CQS.AOP.Caching.Infrastructure\Functional.CQS.AOP.Caching.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
