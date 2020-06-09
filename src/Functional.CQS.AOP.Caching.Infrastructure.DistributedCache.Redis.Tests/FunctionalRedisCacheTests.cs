@@ -307,6 +307,47 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 
 		[Theory]
 		[DistributedCacheArrangement]
+		public async Task ShouldConsistentlyRetrieveTheSameResultOfClassTypeWhenMultipleThreadsAccessCacheAtTheSameTime_NonGenericOverload(FunctionalRedisCache sut)
+		{
+			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT)
+				.Select(
+					x => Task.Run(()=>sut.Get(
+						KEY_NOT_IN_ORIGINAL_CACHE,
+						Option.None<string>(),
+						typeof(Result<TestPoco, Exception>),
+						 () => Result.Success<TestPoco, Exception>(new TestPoco { Value = x.ToString() }),
+						_ => true,
+						TimeSpan.FromMinutes(5))));
+
+			var results = await Task.WhenAll(tasks);
+			foreach (var result in results)
+			{
+				result.Should()
+					.BeSuccessful()
+					.AndSuccessValue.Should()
+					.BeAssignableTo<Result<TestPoco, Exception>>();
+			}
+		}
+
+		[Theory]
+		[DistributedCacheArrangement]
+		public async Task ShouldConsistentlyRetrieveTheSameResultOfClassTypeWhenMultipleThreadsAccessCacheAtTheSameTime_GenericOverload(FunctionalRedisCache sut)
+		{
+			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT)
+				.Select(
+					x => Task.Run(()=> sut.Get(
+						KEY_NOT_IN_ORIGINAL_CACHE,
+						Option.None<string>(),
+						 () => new TestPoco { Value = x.ToString() },
+						_ => true,
+						TimeSpan.FromMinutes(5))));
+
+			var results = await Task.WhenAll(tasks);
+			results.Should().AllBeAssignableTo<Result<TestPoco, Exception>>();
+		}
+
+		[Theory]
+		[DistributedCacheArrangement]
 		public async Task ShouldAddItemToCacheWhenAsynchronouslyRetrievingItemAndItIsNotAlreadyStoredInTheCache_NonGenericOverload(FunctionalRedisCache sut)
 		{
 			const int KEY_TO_STORE = 5;
@@ -337,14 +378,63 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 		public async Task ShouldOnlyCallAsyncDataRetrievalMethodOnceWhenMultipleThreadsAccessCacheAtTheSameTime_NonGenericOverload(FunctionalRedisCache sut)
 		{
 			int numberOfCallsMade = 0;
-			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT).Select(x => Task.Run(() => sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(int), async () =>
+			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT).Select(x => Task.Run(() => sut.GetAsync(KEY_NOT_IN_ORIGINAL_CACHE, Option.None<string>(), typeof(Result<int, Exception>), async () =>
 			{
 				Interlocked.Increment(ref numberOfCallsMade);
-				return await Task.FromResult(x);
+				return await Task.FromResult(Result.Success<int, Exception>(x));
 			}, _ => true, TimeSpan.FromMinutes(5)))).Cast<Task>().ToArray();
 
 			await Task.WhenAll(tasks);
 			numberOfCallsMade.Should().Be(1);
+		}
+
+		[Theory]
+		[DistributedCacheArrangement]
+		public async Task ShouldConsistentlyRetrieveTheSameResultOfClassTypeWhenMultipleThreadsAccessCacheAtTheSameTimeAsynchronously_NonGenericOverload(FunctionalRedisCache sut)
+		{
+			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT)
+				.Select(
+					x => sut.GetAsync(
+						KEY_NOT_IN_ORIGINAL_CACHE,
+						Option.None<string>(),
+						typeof(Result<TestPoco, Exception>),
+						async () =>
+						{
+							await Task.Delay(1);
+							return await Task.FromResult(Result.Success<TestPoco, Exception>(new TestPoco { Value = x.ToString() }));
+						},
+						_ => true,
+						TimeSpan.FromMinutes(5)));
+
+			var results = await Task.WhenAll(tasks);
+			foreach (var result in results)
+			{
+				result.Should()
+					.BeSuccessful()
+					.AndSuccessValue.Should()
+					.BeAssignableTo<Result<TestPoco, Exception>>();
+			}
+		}
+
+		[Theory]
+		[DistributedCacheArrangement]
+		public async Task ShouldConsistentlyRetrieveTheSameResultOfClassTypeWhenMultipleThreadsAccessCacheAtTheSameTimeAsynchronously_GenericOverload(FunctionalRedisCache sut)
+		{
+			var tasks = Enumerable.Range(0, CONCURRENT_REQUEST_COUNT)
+				.Select(
+					x => sut.GetAsync(
+						KEY_NOT_IN_ORIGINAL_CACHE,
+						Option.None<string>(),
+						async () =>
+						{
+							await Task.Delay(1);
+							return await Task.FromResult(new TestPoco { Value = x.ToString() });
+						},
+						_ => true,
+						TimeSpan.FromMinutes(5)));
+
+			var results = await Task.WhenAll(tasks);
+			results.Should().AllBeAssignableTo<Result<TestPoco, Exception>>();
 		}
 
 		[Theory]
@@ -612,5 +702,14 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis.Tests
 	internal static class ObjectExtensions
 	{
 		public static Task<T> AsTask<T>(this T obj) => Task.FromResult(obj);
+	}
+
+	internal class TestPoco
+	{
+		public TestPoco()
+		{
+
+		}
+		public string Value { get; set; }
 	}
 }
