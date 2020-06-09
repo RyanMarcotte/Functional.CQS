@@ -50,7 +50,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		public Result<Unit, Exception> Add<T>(string key, Option<string> groupKey, T item, TimeSpan timeToLive)
 		{
 			var client = _managerPool.GetRedisClient(_configuration);
-			
+
 			return groupKey.Match(
 				gk => client.SetWithGroupKeySafely(key, gk, item, timeToLive, _serializerSettings).Select(_ => Unit.Value),
 				() => client.SetSafely(key, item, timeToLive, _serializerSettings).Select(_ => Unit.Value));
@@ -79,7 +79,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		public Result<T, Exception> Get<T>(string key, Option<string> groupKey, Func<T> dataRetriever, Func<T, bool> shouldCacheData, TimeSpan timeToLive) where T : class
 		{
 			var client = _managerPool.GetRedisClient(_configuration);
-			
+
 			return TryGetItem<T>(client, key).Bind(itemFromCache => itemFromCache.Match(
 				item => Result.Success<T, Exception>(item),
 				() => ExecuteDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => x, timeToLive)));
@@ -98,10 +98,10 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		public Result<object, Exception> Get(string key, Option<string> groupKey, Type type, Func<object> dataRetriever, Func<object, bool> shouldCacheData, TimeSpan timeToLive)
 		{
 			var client = _managerPool.GetRedisClient(_configuration);
-			
+
 			return TryGetItem(client, key, type).Bind(itemFromCache => itemFromCache.Match(
 				item => Result.Success<object, Exception>(item),
-				() => ExecuteDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
+				() => ExecuteDataRetrieval(client, key, groupKey, type, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
 		}
 
 		/// <summary>
@@ -117,7 +117,7 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		public async Task<Result<T, Exception>> GetAsync<T>(string key, Option<string> groupKey, Func<Task<T>> dataRetriever, Func<T, bool> shouldCacheData, TimeSpan timeToLive) where T : class
 		{
 			var client = _managerPool.GetRedisClient(_configuration);
-			
+
 			return await TryGetItem<T>(client, key).BindAsync(itemFromCache => itemFromCache.MatchAsync(
 				async item => await Task.FromResult(Result.Success<T, Exception>(item)),
 				async () => await ExecuteAsyncDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => x, timeToLive)));
@@ -136,10 +136,10 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		public async Task<Result<object, Exception>> GetAsync(string key, Option<string> groupKey, Type type, Func<Task<object>> dataRetriever, Func<object, bool> shouldCacheData, TimeSpan timeToLive)
 		{
 			var client = _managerPool.GetRedisClient(_configuration);
-			
+
 			return await TryGetItem(client, key, type).BindAsync(itemFromCache => itemFromCache.MatchAsync(
 				async item => await Task.FromResult(Result.Success<object, Exception>(item)),
-				async () => await ExecuteAsyncDataRetrieval(client, key, groupKey, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
+				async () => await ExecuteAsyncDataRetrieval(client, key, groupKey, type, dataRetriever, shouldCacheData, x => NullIfNotSpecifiedType(x, type), timeToLive)));
 		}
 
 		/// <summary>
@@ -245,6 +245,18 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 			}
 		}
 
+		private Result<object, Exception> ExecuteDataRetrieval(RedisClient client, string key, Option<string> groupKey, Type type, Func<object> dataRetriever, Func<object, bool> shouldCacheData, Func<object, object> dataTransformer, TimeSpan timeToLive)
+		{
+			// block retrieval if it is already being executed
+			using (var semaphore = new CachedSemaphoreDisposable(_semaphoreSlimLookup, key))
+			{
+				semaphore.Wait();
+				return TryGetItem(client, key, type).Bind(itemFromCache => itemFromCache.Match(
+					item => Result.Success<object, Exception>(item),
+					() => AnalyzeItemAndAddToCacheIfAppropriate(key, groupKey, shouldCacheData, timeToLive, dataRetriever(), dataTransformer)));
+			}
+		}
+
 		private async Task<Result<T, Exception>> ExecuteAsyncDataRetrieval<T>(RedisClient client, string key, Option<string> groupKey, Func<Task<T>> dataRetriever, Func<T, bool> shouldCacheData, Func<T, T> dataTransformer, TimeSpan timeToLive) where T : class
 		{
 			// block retrieval if it is already being executed
@@ -253,6 +265,17 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 				await semaphore.WaitAsync();
 				return await TryGetItem<T>(client, key).BindAsync(itemFromCache => itemFromCache.MatchAsync(
 					item => Task.FromResult(Result.Success<T, Exception>(item)),
+					async () => AnalyzeItemAndAddToCacheIfAppropriate(key, groupKey, shouldCacheData, timeToLive, await dataRetriever(), dataTransformer)));
+			}
+		}
+		private async Task<Result<object, Exception>> ExecuteAsyncDataRetrieval(RedisClient client, string key, Option<string> groupKey, Type type, Func<Task<object>> dataRetriever, Func<object, bool> shouldCacheData, Func<object, object> dataTransformer, TimeSpan timeToLive)
+		{
+			// block retrieval if it is already being executed
+			using (var semaphore = new CachedSemaphoreDisposable(_semaphoreSlimLookup, key))
+			{
+				await semaphore.WaitAsync();
+				return await TryGetItem(client, key, type).BindAsync(itemFromCache => itemFromCache.MatchAsync(
+					item => Task.FromResult(Result.Success<object, Exception>(item)),
 					async () => AnalyzeItemAndAddToCacheIfAppropriate(key, groupKey, shouldCacheData, timeToLive, await dataRetriever(), dataTransformer)));
 			}
 		}
@@ -268,9 +291,9 @@ namespace Functional.CQS.AOP.Caching.Infrastructure.DistributedCache.Redis
 		{
 			private readonly ConcurrentDictionary<string, SemaphoreSlim> _semaphoreSlimLookup;
 			private readonly string _key;
-			
+
 			[System.Diagnostics.CodeAnalysis.SuppressMessage(
-				"Code Quality", 
+				"Code Quality",
 				"IDE0069:Disposable fields should be disposed",
 				Justification = "Just a reference to a value stored in the semaphore lookup.  Disposing the semaphore causes a deadlock.")]
 			private readonly SemaphoreSlim _semaphore;
