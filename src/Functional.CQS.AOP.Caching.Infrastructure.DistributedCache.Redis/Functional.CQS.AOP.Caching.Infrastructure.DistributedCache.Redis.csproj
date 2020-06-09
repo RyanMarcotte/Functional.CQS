@@ -9,8 +9,8 @@
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/RyanMarcotte/Functional.CQS</PackageProjectUrl>
     <PackageTags>functional CQS netstandard netcore caching redis</PackageTags>
-    <Version>3.0.0</Version>
-    <PackageReleaseNotes>Updated to Functional 2.0.0</PackageReleaseNotes>
+    <Version>3.0.1</Version>
+    <PackageReleaseNotes>Fixed deserialization race condition in FunctionalRedisCache</PackageReleaseNotes>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
